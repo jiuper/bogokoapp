@@ -1,4 +1,4 @@
-import { Section, List } from '@telegram-apps/telegram-ui';
+import { Section, List, } from '@telegram-apps/telegram-ui';
 import type { FC } from 'react';
 
 export const IndexPage: FC = () => {
