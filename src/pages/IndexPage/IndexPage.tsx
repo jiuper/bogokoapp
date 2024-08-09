@@ -9,7 +9,7 @@ export const IndexPage: FC = () => {
         footer='Тестовое приложение которое будем делать'
       >
           <Image src={IMG}/>
-            <Text>asd</Text>
+          <Text>asd</Text>
           <Button>Отправить</Button>
       </Section>
     </List>
