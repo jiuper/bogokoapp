@@ -5,10 +5,10 @@ export const IndexPage: FC = () => {
   return (
     <List>
       <Section
-        header='Application Launch Data'
-        footer='These pages help developer to learn more about current launch information'
+        header='Приложение для салона БОГОКО'
+        footer='Тестовое приложение которое будем делать'
       >
-            asd
+            А тут пока что разный текст
       </Section>
     </List>
   );
