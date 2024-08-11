@@ -1,9 +1,19 @@
 import {Section, List, Button} from '@telegram-apps/telegram-ui';
 import {FC, useEffect, useState} from 'react';
+interface MasterData {
+    id: string;
+    username: string;
+    post: string;
+    image: string;
+}
 
+interface ValueState {
+    masters: Record<string, MasterData>
+    masters_order: string[];
+}
 export const IndexPage: FC = () => {
-    const [value, setValue] = useState<{masters: { string:  {id: string, username: string, post: string, image: string}},masters_order: string[]}>
-    ({masters:{string:{id:"", image:"", post:"", username:""}},masters_order:[]});
+    const [value, setValue] = useState<ValueState>
+    ({masters: {master:{id:"", image:"", post:"", username:""} } ,masters_order:[]});
     useEffect(() => {
         fetch('/api/booking/masters?companyId=591511',{
             credentials: 'include',
@@ -28,7 +38,6 @@ export const IndexPage: FC = () => {
                               <p style={{padding: 0, margin: 0}}>{value.masters[el].post}</p>
                               <img src={value.masters[el].image} alt={value.masters[el].username}/>
                           </div>
-
                       </div>)
               }
           </div>
