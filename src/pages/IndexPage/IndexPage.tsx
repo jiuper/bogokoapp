@@ -14,11 +14,13 @@ interface ValueState {
 export const IndexPage: FC = () => {
     const [value, setValue] = useState<ValueState>
     ({masters: {master:{id:"", image:"", post:"", username:""} } ,masters_order:[]});
+
     useEffect(() => {
         fetch('/api/booking/masters?companyId=591511')
             .then(response => response.json())
             .then(json => setValue(json))
     }, []);
+
   return (
     <List>
       <Section
