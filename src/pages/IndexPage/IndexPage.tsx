@@ -30,7 +30,7 @@ export const IndexPage: FC = () => {
       >
           <div>
               {
-                  value.masters && Object.keys(value.masters).map(el =>
+                  value.masters ? Object.keys(value.masters).map(el =>
                       <div style={{display: 'flex', flexDirection: 'column', gap: '30px', marginBottom: '30px'}} key={el}>
                           <div style={{display: 'flex', flexDirection: 'column', gap: '5px'}}>
                               {el} -
@@ -38,7 +38,7 @@ export const IndexPage: FC = () => {
                               <p style={{padding: 0, margin: 0}}>{value.masters[el].post}</p>
                               <img src={value.masters[el].image} alt={value.masters[el].username}/>
                           </div>
-                      </div>)
+                      </div>) : 'Загрузка...'
               }
           </div>
           <Button>Отправить</Button>
