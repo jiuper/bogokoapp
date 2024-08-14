@@ -3,6 +3,7 @@ import type { ComponentType, JSX } from "react";
 import { Index } from "@/pages/index.page.tsx";
 import { MasterBooking } from "@/pages/master-booking.page.tsx";
 import { ServicesBooking } from "@/pages/services-booking.page.tsx";
+import { ROUTES } from "@/shared/const/Routes.ts";
 
 interface Route {
     path: string;
@@ -12,7 +13,7 @@ interface Route {
 }
 
 export const routes: Route[] = [
-    { path: "/", Component: Index },
-    { path: "/booking", Component: MasterBooking },
-    { path: "/services", Component: ServicesBooking },
+    { path: ROUTES.MAIN, Component: Index },
+    { path: ROUTES.BOOKING, Component: MasterBooking },
+    { path: ROUTES.SERVICES, Component: ServicesBooking },
 ];

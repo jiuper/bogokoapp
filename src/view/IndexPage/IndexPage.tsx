@@ -1,28 +1,34 @@
 import type { FC } from "react";
-import { List, Section } from "@telegram-apps/telegram-ui";
 import cnBind from "classnames/bind";
 
-import { Link } from "@/components/Link/Link.tsx";
+import { useInfoCompanyQuery } from "@/entities/company/api/getInfoCompanyApi";
+import DEF from "@/shared/assets/images/Cover.png";
+import AVATAR from "@/shared/assets/images/image 19.png";
+import { AddressCompany } from "@/view/IndexPage/components/AddressCompany";
+import { DescriptionCompany } from "@/view/IndexPage/components/DescriptionCompany";
+import { LinkGroup } from "@/view/IndexPage/components/LinkGroup";
+import { ReferralBlock } from "@/view/IndexPage/components/ReferralBlock";
 
 import styles from "./IndexPage.module.scss";
 
 const cx = cnBind.bind(styles);
 export const IndexPage: FC = () => {
+    const { data } = useInfoCompanyQuery();
+
     return (
-        <List>
-            <Section header="Запись онлайн салона БОГОКО" footer="Сервис TEZAM">
-                <div className={cx("wrapper", "container")}>
-                    <h1 className={cx("title")}>С чего начать?</h1>
-                    <div className={cx("links")}>
-                        <Link className={cx("link")} to="/services">
-                            Выбрать услугу
-                        </Link>
-                        <Link className={cx("link")} to="/booking">
-                            Выбрать мастера
-                        </Link>
-                    </div>
-                </div>
-            </Section>
-        </List>
+        <div className={cx("bg-wrapper")}>
+            <img className={cx("image-company")} src={data?.image || DEF} alt="DEF" />
+            <div className={cx("wrapper", "container")}>
+                <AddressCompany city="Витебск" address="ул. Кирова 12 каб.20" avatar={AVATAR} map="" />
+                <LinkGroup />
+                <ReferralBlock countCredits={10} />
+                <DescriptionCompany
+                    description={
+                        data?.description ||
+                        "Мы уверены в качестве своего обслуживания и даем абсолютную гарантию на результат."
+                    }
+                />
+            </div>
+        </div>
     );
 };
