@@ -1,0 +1,62 @@
+.master-info{
+  background: #fff;
+}
+.header{
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 20px;
+  .short-info{
+    display: flex;
+    flex-direction: column;
+
+    .name{
+      font-size: 20px;
+      font-style: normal;
+      font-weight: 500;
+      line-height: 28px; /* 140% */
+      letter-spacing: -0.26px;
+      color: #261A59
+    }
+    .post{
+      font-size: 12px;
+      font-style: normal;
+      font-weight: 600;
+      line-height: 16px;
+      color: #8E8EAD
+    }
+  }
+}
+.body{
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  border-radius: 24px 24px 0 0;
+  background: #EEF1FA;
+  padding: 20px;
+  height: 100%;
+  width: 100%;
+}
+.description{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+
+  .title{
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 16px;
+    color: #8E8EAD
+  }
+
+  .text{
+    background: #fff;
+    border-radius: 24px;
+    padding: 20px;
+  }
+}
+.button{
+  width: 100%;
+}

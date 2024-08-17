@@ -1,0 +1,23 @@
+.card-detailed{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  cursor: pointer;
+
+  .title{
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 16px;
+    color: #8E8EAD
+  }
+
+  .list{
+    background: #fff;
+    border-radius: 24px;
+
+    &>:nth-child(1n){
+      border-bottom: 1px solid #EEF1FA;
+    }
+  }
+}

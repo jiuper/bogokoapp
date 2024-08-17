@@ -1,0 +1,26 @@
+.button-arrow{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  padding: 20px;
+
+  &.empty{
+    border-radius: 10px;
+    border: 1px solid #D6DCE5;
+  }
+  &.white{
+    border: none;
+  }
+}
+.wrapper-button{
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.icon{
+  width: 20px;
+  height: 20px;
+  object-fit: cover;
+  border-radius: 50%;
+}

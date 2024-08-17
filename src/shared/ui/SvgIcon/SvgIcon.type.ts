@@ -3,4 +3,5 @@ export interface SvgIconPropTypes {
     width?: number;
     height?: number;
     className?: string;
+    onClick?: () => void;
 }

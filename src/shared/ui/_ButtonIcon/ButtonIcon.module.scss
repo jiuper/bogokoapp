@@ -1,0 +1,43 @@
+.button-icon {
+  padding: 0;
+  width: fit-content;
+  height: fit-content;
+  display: flex;
+  transition: $transition-default;
+  box-shadow: none;
+
+  @include touch-hover(&) {
+    background: transparent;
+  }
+
+  &.small {
+    svg {
+      width: 20px;
+      height: 20px;
+    }
+
+    i {
+      font-size: 16px
+    }
+  }
+
+  &.purple {
+    svg {
+      @include svg-color($color-purple);
+    }
+
+    span {
+      color: $color-purple;
+    }
+  }
+
+  &.red {
+    svg {
+      @include svg-color($color-red-60);
+    }
+
+    span {
+      color: $color-red-60;
+    }
+  }
+}

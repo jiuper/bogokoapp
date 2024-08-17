@@ -1,5 +1,7 @@
 import cnBind from "classnames/bind";
 
+import { ROUTES } from "@/shared/const/Routes.ts";
+import { Link } from "@/shared/ui/Link/Link.tsx";
 import { SvgIcon } from "@/shared/ui/SvgIcon/SvgIcon.tsx";
 
 import styles from "./ServiceInfoCard.module.scss";
@@ -10,14 +12,14 @@ type ServiceInfoCardProps = {
     name?: string;
     post?: string;
 };
-export const ServiceInfoCard = ({ post, name }: ServiceInfoCardProps) => {
+export const ServiceInfoCard = ({ id, post, name }: ServiceInfoCardProps) => {
     return (
-        <div className={cx("card")}>
+        <Link to={`${ROUTES.SERVICE}/${id}`} className={cx("card")}>
             <div className={cx("info")}>
                 <span className={cx("name")}>{name}</span>
                 <span className={cx("post")}>{post}</span>
             </div>
             <SvgIcon name="ArrowDown" className={cx("arrow")} />
-        </div>
+        </Link>
     );
 };
