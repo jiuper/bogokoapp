@@ -1,4 +1,3 @@
-import React from "react";
 import cnBind from "classnames/bind";
 import type { CheckboxProps } from "primereact/checkbox";
 import { Checkbox } from "primereact/checkbox";

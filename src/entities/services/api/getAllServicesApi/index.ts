@@ -1,1 +1,1 @@
-export * from "./getAllMastersApi.ts";
+export * from "./getAllServicesApi.ts";

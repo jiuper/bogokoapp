@@ -1,4 +1,3 @@
-import React from "react";
 import cnBind from "classnames/bind";
 import type { InputTextareaProps } from "primereact/inputtextarea";
 import { InputTextarea } from "primereact/inputtextarea";

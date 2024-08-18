@@ -1,4 +1,3 @@
-import React from "react";
 import cnBind from "classnames/bind";
 import type { MultiSelectProps } from "primereact/multiselect";
 import { MultiSelect } from "primereact/multiselect";

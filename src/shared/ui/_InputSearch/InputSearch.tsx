@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import cnBind from "classnames/bind";
 import { InputText, type InputTextProps } from "primereact/inputtext";
 
@@ -26,11 +26,12 @@ export const InputSearch = ({
     value,
     ...props
 }: InputSearchProps) => {
-    const [inputValue, setInputValue] = useState<string | undefined>(value);
+    const [inputValue, setInputValue] = useState<string | undefined | null>(value);
 
     const debounceValue = useDebouncedValue(inputValue, debounceDelay);
 
     useEffect(() => {
+        if(debounceValue)
         onChange?.(debounceValue);
     }, [debounceValue, onChange]);
 
