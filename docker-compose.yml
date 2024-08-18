@@ -1,0 +1,15 @@
+services:
+  dikidi_frontend:
+    image: imageName
+    container_name: dikidi_frontend
+    restart: always
+    ports:
+      - 80:80
+      - 443:443
+    networks:
+      - dikidi
+
+networks:
+  dikidi:
+    external: true
+    name: dikidi
