@@ -31,7 +31,7 @@ export const InputSearch = ({
     const debounceValue = useDebouncedValue(inputValue, debounceDelay);
 
     useEffect(() => {
-        if(debounceValue)
+        if(debounceValue || debounceValue === "")
         onChange?.(debounceValue);
     }, [debounceValue, onChange]);
 
@@ -49,7 +49,6 @@ export const InputSearch = ({
                 onChange={(e) => setInputValue(e.target.value)}
                 {...props}
             />
-            <i className={cx("icon", { "pi pi-search": true, disabled })} />
         </label>
     );
 };

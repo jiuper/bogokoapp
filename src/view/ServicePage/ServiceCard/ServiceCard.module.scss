@@ -19,6 +19,8 @@
     background: white;
     width: 100%;
     bottom: 0;
+    padding: 8px 12px;
+    gap: 8px;
     box-shadow: 0px 0px 2px 1px rgba(0, 0, 0, 0.02), 0px 32px 64px 0px rgba(0, 0, 0, 0.04);
   }
   .info{
@@ -26,7 +28,6 @@
     flex-direction: column;
     gap: 8px;
     height: 50%;
-    padding: 8px 12px;
   }
   .title{
     overflow: hidden;
@@ -53,10 +54,11 @@
     position: absolute;
     top: 10%;
     right: 5%;
-    background: #fff;
     padding: 0 4px;
     border-radius: 10px;
+    background: rgba(255, 255, 255, 0.50);
     box-shadow: 0px 12px 24px 0px rgba(0, 0, 0, 0.05);
+    backdrop-filter: blur(10px);
   }
 
 .image{
@@ -68,9 +70,8 @@
 .button{
   border-radius: 20px;
   border:  1px solid  rgba(0, 0, 0, 0.05);
-  max-width: 150px;
   width: 100%;
-  padding: 8px 0px;
+  padding: 8px 12px;
   background: transparent;
   font-size: 15px;
   font-style: normal;
@@ -78,4 +79,9 @@
   line-height: 20px; /* 133.333% */
   letter-spacing: -0.23px;
   color: #1c1b1f;
+
+  &.isChoose{
+    background: #FF7648;
+  }
+
 }

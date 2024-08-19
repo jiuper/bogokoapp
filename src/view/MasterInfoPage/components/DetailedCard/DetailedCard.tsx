@@ -27,6 +27,7 @@ export const DetailedCard = ({ listItem, title, onClick }: DetailedCardProps) =>
                         icon={el.image || exm}
                         key={i}
                         label={el.name}
+                        text="Перейти"
                     />
                 ))}
             </div>

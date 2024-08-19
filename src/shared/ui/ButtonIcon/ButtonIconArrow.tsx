@@ -1,17 +1,17 @@
 import { useNavigate } from "react-router";
 import cnBind from "classnames/bind";
-import { Image } from "primereact/image";
 
-import { SvgIcon } from "@/shared/ui/SvgIcon/SvgIcon.tsx";
 
 import styles from "./ButtonIconArrow.module.scss";
+import { Avatar } from "@telegram-apps/telegram-ui";
+import { Button } from "primereact/button";
 
 const cx = cnBind.bind(styles);
 export type ButtonIconArrowProps = {
     icon: string;
     label: string;
+    text: string;
     onClick?: () => void;
-    arrow?: boolean;
     path?: string;
     color?: "empty" | "white";
 };
@@ -20,19 +20,19 @@ export const ButtonIconArrow = ({
     icon,
     label,
     onClick,
-    arrow = true,
     path,
     color = "white",
+    text,
 }: ButtonIconArrowProps) => {
     const href = useNavigate();
 
     return (
-        <div className={cx("button-arrow", color)} onClick={path ? () => href(path) : onClick}>
+        <div className={cx("button-arrow", color)} >
             <div className={cx("wrapper-button")}>
-                <Image className={cx("icon")} width="20" height="20" src={icon} alt={label} />
+                <Avatar size={40} className={cx("icon")} src={icon} alt={label} />
                 <span>{label}</span>
             </div>
-            {arrow && <SvgIcon name="ArrowRight" />}
+            <Button className={cx("button")} onClick={path ? () => href(path) : onClick} label={text}/>
         </div>
     );
 };

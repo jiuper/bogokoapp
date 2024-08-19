@@ -3,6 +3,7 @@
   gap: 15px;
   justify-content: space-between;
   width: 100%;
+
 }
 
 .link{
@@ -10,19 +11,25 @@
   padding: 8px 30px;
   background: #fff;
   width: 100%;
-  color:#000;
+  color:#3D5266;
   text-decoration: none;
   text-align: center;
-  font-size: 13px;
+  font-size: 12px;
   font-style: normal;
   font-weight: 600;
   line-height: 16px; /* 123.077% */
   letter-spacing: -0.08px;
+  cursor: pointer;
 
   .link-container{
     display: flex;
     align-items: center;
     flex-direction: column;
     gap: 4px;
+  }
+  .icon{
+
+    fill: #FF7648;
+    color: #FF7648;
   }
 }

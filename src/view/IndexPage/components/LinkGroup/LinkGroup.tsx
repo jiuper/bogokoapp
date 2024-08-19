@@ -1,27 +1,26 @@
 import cnBind from "classnames/bind";
 
-import { ROUTES } from "@/shared/const/Routes.ts";
-import { Link } from "@/shared/ui/Link/Link.tsx";
 import { SvgIcon } from "@/shared/ui/SvgIcon/SvgIcon.tsx";
 
 import styles from "./LinkGroup.module.scss";
+import { useNavigate } from "react-router";
 
 const cx = cnBind.bind(styles);
-export const LinkGroup = () => {
-    const listLink = [
-        { name: "Выбрать услугу", href: ROUTES.SERVICES, icon: "notebook" },
-        { name: "Выбрать мастера", href: ROUTES.BOOKING, icon: "add-master" },
-    ];
+type LinkGroupProps = {
+    listLink: { name: string; href?: string; icon: string, onClick?: () => void }[];
+};
+export const LinkGroup = ({listLink}:LinkGroupProps) => {
+    const href = useNavigate();
 
     return (
         <div className={cx("links")}>
             {listLink.map((item) => (
-                <Link className={cx("link")} to={item.href}>
+                <div className={cx("link")} onClick={item.href ? () => href(item.href || "") : item.onClick}>
                     <div className={cx("link-container")}>
-                        <SvgIcon name={item.icon} />
+                        <SvgIcon className={cx("icon")} name={item.icon} />
                         <span>{item.name}</span>
                     </div>
-                </Link>
+                </div>
             ))}
         </div>
     );

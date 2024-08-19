@@ -3,11 +3,12 @@
   justify-content: space-between;
   align-items: center;
   gap: 8px;
-  padding: 20px;
+  padding: 8px 16px;
 
   &.empty{
-    border-radius: 10px;
-    border: 1px solid #D6DCE5;
+    border-radius: 28px;
+    background: rgba(0, 0, 0, 0.04);
+    border: none;
   }
   &.white{
     border: none;
@@ -18,9 +19,14 @@
   align-items: center;
   gap: 8px;
 }
-.icon{
-  width: 20px;
-  height: 20px;
-  object-fit: cover;
-  border-radius: 50%;
+.button{
+  border-radius: 20px;
+  background: #FF7648;
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 20px; /* 133.333% */
+  letter-spacing: -0.23px;
+  color: #fff;
+  border: none;
 }
