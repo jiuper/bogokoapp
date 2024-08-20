@@ -1,11 +1,12 @@
 .button-icon {
-  padding: 0;
-  width: fit-content;
   height: fit-content;
   display: flex;
   transition: $transition-default;
   box-shadow: none;
 
+  [data-pc-section="label"]{
+    flex: auto;
+  }
   @include touch-hover(&) {
     background: transparent;
   }
@@ -23,14 +24,23 @@
 
   &.purple {
     svg {
-      @include svg-color($color-purple);
+      @include svg-color(rgba(0, 0, 0, 0.80));
     }
 
     span {
-      color: $color-purple;
+      color: rgba(0, 0, 0, 0.80);
     }
   }
 
+  &.orange {
+    svg {
+      @include svg-color(#FFF);
+    }
+
+    span {
+      color: #FFF;
+    }
+  }
   &.red {
     svg {
       @include svg-color($color-red-60);

@@ -1,4 +1,3 @@
-import React from "react";
 import cnBind from "classnames/bind";
 import type { InputSwitchProps } from "primereact/inputswitch";
 import { InputSwitch } from "primereact/inputswitch";

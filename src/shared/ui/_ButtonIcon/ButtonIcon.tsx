@@ -8,7 +8,7 @@ const cx = cnBind.bind(styles);
 
 export interface ButtonIconProps extends Omit<ButtonProps, "size"> {
     size?: "small";
-    color?: "red" | "purple" | "empty";
+    color?: "red" | "purple" | "empty" | "orange";
 }
 
 export const ButtonIcon = ({ className, size = "small", color = "purple", ...props }: ButtonIconProps) => {

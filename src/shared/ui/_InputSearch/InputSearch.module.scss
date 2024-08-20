@@ -1,7 +1,6 @@
 .input-search {
     position: relative;
     display: block;
-    width: fit-content;
     transform: $transition-fast;
     box-shadow: none;
 
@@ -40,13 +39,9 @@
 
     @include text-Body1;
 
-    @include touch-hover(&) {
-        border-color: rgba($color-purple, 1);
-    }
-
     &:focus {
         background: transparent;
-        border-color: rgba($color-purple, 1);
+        border-color: rgba(120, 120, 128, 0.12);
     }
 
     &:disabled {
@@ -64,13 +59,12 @@
     width: 48px;
     height: 32px;
     border-radius: 0px 6px 6px 0;
-    right: 0;
+    left: 0;
     top: 50%;
     transform: translateY(-50%);
     color: $color-light;
     font-size: 26px;
     transition: $transition-default;
-    border-left: 1px solid rgba($color-purple, 0);
     color: $color-light;
 
     &::after {
@@ -83,7 +77,6 @@
         left: 0;
         right: 0;
         bottom: 0;
-        background: rgba($color-purple, 1);
         border-radius: 0px 6px 6px 0;
         transform: translate(-2px, -8px);
         z-index: -1;

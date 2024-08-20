@@ -1,9 +1,11 @@
 import cnBind from "classnames/bind";
-import { Button } from "primereact/button";
+
 
 import notFound from "@/shared/assets/images/Empty-image-icon.png";
 
 import styles from "./ServiceCard.module.scss";
+import { ButtonIcon } from "@/shared/ui/_ButtonIcon";
+import { SvgIcon } from "@/shared/ui/SvgIcon/SvgIcon.tsx";
 
 const cx = cnBind.bind(styles);
 type ServiceCardProps = {
@@ -12,12 +14,13 @@ type ServiceCardProps = {
     image?: string;
     time?: number;
     price?: number;
-    onClick?: (id?: string) => void;
+    onClick?: (id?: string, flag?: boolean) => void;
+    isChoose?: boolean;
 };
-export const ServiceCard = ({ name, price, time, image, onClick, id }: ServiceCardProps) => {
+export const ServiceCard = ({ name, price, time, image, onClick, id,isChoose }: ServiceCardProps) => {
     return (
         <div className={cx("card")}>
-            <div className={cx("header")} onClick={() => onClick?.(id)}>
+            <div className={cx("header")} onClick={() => onClick?.(id, true)}>
                 <img className={cx("image")} alt="Card" src={image || notFound} />
                 <span className={cx("subtitle")}>{`${time} мин.`}</span>
             </div>
@@ -25,7 +28,7 @@ export const ServiceCard = ({ name, price, time, image, onClick, id }: ServiceCa
                 <div className={cx("info")}>
                     <span className={cx("title")}>{name}</span>
                 </div>
-                <Button className={cx("button")} label={`+ ${price} BYN`} />
+                <ButtonIcon onClick={() =>onClick?.(id)} color={isChoose ? "orange" : "purple"} className={cx("button", { isChoose })} icon={<SvgIcon name={isChoose ? "Checked" : "star-rate"}/>} label={`${price} BYN`} />
             </div>
         </div>
     );

@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-import React from "react";
 import cnBind from "classnames/bind";
 import type { DropdownProps } from "primereact/dropdown";
 import { Dropdown } from "primereact/dropdown";

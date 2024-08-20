@@ -25,7 +25,6 @@ export const App: FC = () => {
     useEffect(() => {
         return bindMiniAppCSSVars(miniApp, themeParams);
     }, [miniApp, themeParams]);
-
     useEffect(() => {
         return bindThemeParamsCSSVars(themeParams);
     }, [themeParams]);

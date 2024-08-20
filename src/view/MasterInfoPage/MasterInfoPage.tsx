@@ -1,15 +1,17 @@
-import { useMemo, useState } from "react";
-import { Avatar } from "@telegram-apps/telegram-ui";
+import { useEffect, useMemo, useState } from "react";
+import { Avatar, Badge } from "@telegram-apps/telegram-ui";
 import cnBind from "classnames/bind";
 
 import { ModalDetailedService } from "@/_Modals/ModalDetailedService";
 import { ModalSocialNetworks } from "@/_Modals/ModalSocialNetworks";
 import { useMasterQuery } from "@/entities/masters/api/getMasterApi";
 import { useBooleanState } from "@/shared/hooks/useBooleanState.ts";
-import { Button } from "@/shared/ui/_Button";
-import { DetailedCard } from "@/view/MasterInfoPage/components/DetailedCard";
 
 import styles from "./MasterInfoPage.module.scss";
+import { LinkGroup } from "@/view/IndexPage/components/LinkGroup";
+import { ServiceCard } from "@/view/ServicePage/ServiceCard";
+import { InputSearch } from "@/shared/ui/_InputSearch";
+import { ModalBookingService } from "@/_Modals/ModalBookingService";
 
 const cx = cnBind.bind(styles);
 type MasterInfoPageProps = {
@@ -18,55 +20,79 @@ type MasterInfoPageProps = {
 };
 export const MasterInfoPage = ({ masterId, companyId }: MasterInfoPageProps) => {
     const { data } = useMasterQuery({ masterId, companyId });
-    const listDataConnect = [
-        { name: "Отзывы", image: "" },
-        { name: "Рейтинг", image: "" },
-        { name: "Социальные сети", image: "" },
-    ];
-
+    const listData = useMemo(() => data?.services || [], [data?.services]);
+    const [searchValue, setSearchValue] = useState<string | undefined>("");
     const [isOpenModalNetWork, onOpenModalNetWork, onCloseModalNetWork] = useBooleanState(false);
     const [isOpenModalService, onOpenModalService, onCloseModalService] = useBooleanState(false);
+    const [isOpenModalBookingService, onOpenModalBookingService, onCloseModalBookingService] = useBooleanState(false);
     const [serviceId, setServiceId] = useState<string>("");
-    const handleOpenModalService = (id?: string) => {
-        if (id) setServiceId(id);
-        onOpenModalService();
+    const [servicesId, setServicesId] = useState<string[]>([]);
+
+    const handleOpenModalService = (id?: string, flag?: boolean) => {
+        if(flag && id){
+           setServiceId(id);
+           onOpenModalService();
+        }
+        if(id){
+            if(servicesId.includes(id)){
+                setServicesId(servicesId.filter((el) => el !== id));
+            }else{
+                setServicesId([...servicesId, id]);
+            }
+        }
+        onOpenModalBookingService()
     };
+
+    useEffect(() =>{
+        if(servicesId.length === 0) onCloseModalBookingService();
+    },[servicesId.length])
+
     const service = useMemo(
         () => data?.services?.find((service) => service.id === serviceId),
         [data?.services, serviceId],
     );
+    const filterListData = useMemo(
+        () =>  listData.filter((el) => el.name.toLowerCase().includes(searchValue?.toLowerCase() || "")),
+        [listData, searchValue],
+    );
+
+    const listLink = [
+        { name: "Отзывы", onClick: () => onOpenModalNetWork(), icon: "star-rate" },
+        { name: "Связаться", onClick: () => onOpenModalNetWork(), icon: "message" },
+    ];
 
     return (
         <div className={cx("master-info")}>
             <div className={cx("wrapper")}>
                 <div className={cx("header")}>
-                    <Avatar src={data?.image} />
+                    <div className={cx("avatar")}>
+                        <Avatar size={96} src={data?.image} />
+                        <Badge className={cx("badge")} type={"number"}>3.9</Badge>
+                    </div>
                     <div className={cx("short-info")}>
                         <span className={cx("name")}>{data?.name}</span>
                         <span className={cx("post")}>{data?.post}</span>
                     </div>
                 </div>
                 <div className={cx("body")}>
-                    <div className={cx("description")}>
-                        <h2 className={cx("title")}>Описание</h2>
-                        <div className={cx("text")}>
-                            Тут будет огромное описание мастераТут будет огромное описание мастераТут будет огромное
-                            описание мастераТут будет огромное описание мастераТут будет огромное описание мастераТут
-                            будет огромное описание мастераТут будет огромное описание мастераТут будет огромное
-                            описание мастера
-                        </div>
+                    <LinkGroup listLink={listLink}/>
+                    <div className={cx("list-services")}>
+                        <h2>Услуги</h2>
+                        <InputSearch value={searchValue} onChange={setSearchValue}/>
+                        {filterListData.length !== 0
+                            ? <div className={cx("list")}>
+                                { filterListData.map((card) => (
+                                    <ServiceCard isChoose={servicesId.includes(card.id || "")} onClick={handleOpenModalService} key={card.id} {...card} />
+                                ))}
+                            </div>
+                            : <div className={cx("not-found")}>Такой услуги нет</div>
+                        }
                     </div>
-                    <DetailedCard
-                        onClick={onOpenModalNetWork}
-                        listItem={listDataConnect}
-                        title="Информация о мастере"
-                    />
-                    <DetailedCard listItem={data?.services || []} title="Услуги" onClick={handleOpenModalService} />
-                    <Button className={cx("button")} label="Записаться" onClick={() => {}} />
                 </div>
             </div>
             <ModalSocialNetworks listHrefNetworks={[]} isOpen={isOpenModalNetWork} onClose={onCloseModalNetWork} />
             <ModalDetailedService {...service} isOpen={isOpenModalService} onClose={onCloseModalService} />
+            <ModalBookingService count={servicesId.length} isOpen={isOpenModalBookingService} />
         </div>
     );
 };
