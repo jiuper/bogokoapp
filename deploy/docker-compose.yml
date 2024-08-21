@@ -11,9 +11,9 @@ services:
       - 443:443
     networks:
       - dikidi
-    environment:
+    # environment:
     #   - NGINX_SERVER_NAME=your_domain.com
-      - NGINX_INTERNAL_API_URL=http://89.110.91.103:5000
+    #   - NGINX_INTERNAL_API_URL=http://localhost:8080/api
     #   - NGINX_SECURE=false
     #   - NGINX_SSL_CERTIFICATE=/etc/nginx/ssl/nginx.crt
     #   - NGINX_SSL_CERTIFICATE_KEY=/etc/nginx/ssl/nginx.key
@@ -22,5 +22,5 @@ services:
 
 networks:
   dikidi:
-    # external: true
+    external: true
     name: dikidi
