@@ -82,6 +82,11 @@ jobs:
         if [ -n "${{ vars.VITE_BACKEND_URL }}" ]; then
           echo "window.VITE_BACKEND_URL = '${{ vars.VITE_BACKEND_URL }}';" > $SERVER_PATH/env-config.js
         fi
+        echo NGINX_SERVER_NAME=${{ vars.NGINX_SERVER_NAME }} >> .env
+        echo NGINX_INTERNAL_API_URL=${{ vars.NGINX_INTERNAL_API_URL }} >> .env
+        echo NGINX_SECURE=${{ vars.NGINX_SECURE }} >> .env
+        echo NGINX_SSL_CERTIFICATE=${{ vars.NGINX_SSL_CERTIFICATE }} >> .env
+        echo NGINX_SSL_CERTIFICATE_KEY=${{ vars.NGINX_SSL_CERTIFICATE_KEY }} >> .env
         docker compose pull
         docker compose up -d
 
@@ -91,9 +96,4 @@ jobs:
           docker rmi $unused_images
         fi
         EOF
-      env:
-        NGINX_SERVER_NAME: ${{ vars.NGINX_SERVER_NAME }}
-        NGINX_INTERNAL_API_URL: ${{ vars.NGINX_INTERNAL_API_URL }}
-        NGINX_SECURE: ${{ vars.NGINX_SECURE }}
-        NGINX_SSL_CERTIFICATE: ${{ vars.NGINX_SSL_CERTIFICATE }}
-        NGINX_SSL_CERTIFICATE_KEY: ${{ vars.NGINX_SSL_CERTIFICATE_KEY }}
+
