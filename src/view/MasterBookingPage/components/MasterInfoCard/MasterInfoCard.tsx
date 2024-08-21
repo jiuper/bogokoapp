@@ -17,7 +17,7 @@ type MasterInfoCard = {
 export const MasterInfoCard = ({ id, post, name, image }: MasterInfoCard) => {
     return (
         <Link to={`${ROUTES.MASTER}/${id}`} className={cx("card")}>
-            <Image className={cx("avatar")} src={image} alt="avatar" />
+            <Image width="64px" height="64px" className={cx("avatar")} src={image} alt="avatar" />
             <div className={cx("info")}>
                 <span className={cx("name")}>{name}</span>
                 <span className={cx("post")}>{post}</span>

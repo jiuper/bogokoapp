@@ -23,7 +23,17 @@ export const ModalDetailedService = ({ price, time, image, name, isOpen, onClose
     };
 
     return (
-        <Modal className={cx("modal-detailed")} open={isOpen} onOpenChange={(open) => handleOpen(open)}>
+        <Modal
+            style={{
+                borderRadius: "44px 44px 0 0",
+                background: "rgba(255, 255, 255, 0.95)",
+                boxShadow: "0px -1px 12px 0px rgba(255, 118, 72, 0.12)",
+                backdropFilter: "blur(20px)",
+            }}
+            className={cx("modal-detailed")}
+            open={isOpen}
+            onOpenChange={(open) => handleOpen(open)}
+        >
             <div className={cx("modal-detailed-service")}>
                 <div className={cx("header")}>
                     <Image className={cx("image")} width="100%" height="375px" src={image || def} alt={name} />

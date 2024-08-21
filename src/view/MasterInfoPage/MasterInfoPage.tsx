@@ -2,16 +2,16 @@ import { useEffect, useMemo, useState } from "react";
 import { Avatar, Badge } from "@telegram-apps/telegram-ui";
 import cnBind from "classnames/bind";
 
+import { ModalBookingService } from "@/_Modals/ModalBookingService";
 import { ModalDetailedService } from "@/_Modals/ModalDetailedService";
 import { ModalSocialNetworks } from "@/_Modals/ModalSocialNetworks";
 import { useMasterQuery } from "@/entities/masters/api/getMasterApi";
 import { useBooleanState } from "@/shared/hooks/useBooleanState.ts";
-
-import styles from "./MasterInfoPage.module.scss";
+import { InputSearch } from "@/shared/ui/_InputSearch";
 import { LinkGroup } from "@/view/IndexPage/components/LinkGroup";
 import { ServiceCard } from "@/view/ServicePage/ServiceCard";
-import { InputSearch } from "@/shared/ui/_InputSearch";
-import { ModalBookingService } from "@/_Modals/ModalBookingService";
+
+import styles from "./MasterInfoPage.module.scss";
 
 const cx = cnBind.bind(styles);
 type MasterInfoPageProps = {
@@ -29,30 +29,31 @@ export const MasterInfoPage = ({ masterId, companyId }: MasterInfoPageProps) => 
     const [servicesId, setServicesId] = useState<string[]>([]);
 
     const handleOpenModalService = (id?: string, flag?: boolean) => {
-        if(flag && id){
-           setServiceId(id);
-           onOpenModalService();
+        if (flag && id) {
+            setServiceId(id);
+            onOpenModalService();
         }
-        if(id){
-            if(servicesId.includes(id)){
+
+        if (id) {
+            if (servicesId.includes(id)) {
                 setServicesId(servicesId.filter((el) => el !== id));
-            }else{
+            } else {
                 setServicesId([...servicesId, id]);
             }
         }
-        onOpenModalBookingService()
+        onOpenModalBookingService();
     };
 
-    useEffect(() =>{
-        if(servicesId.length === 0) onCloseModalBookingService();
-    },[servicesId.length])
+    useEffect(() => {
+        if (servicesId.length === 0) onCloseModalBookingService();
+    }, [servicesId.length]);
 
     const service = useMemo(
         () => data?.services?.find((service) => service.id === serviceId),
         [data?.services, serviceId],
     );
     const filterListData = useMemo(
-        () =>  listData.filter((el) => el.name.toLowerCase().includes(searchValue?.toLowerCase() || "")),
+        () => listData.filter((el) => el.name.toLowerCase().includes(searchValue?.toLowerCase() || "")),
         [listData, searchValue],
     );
 
@@ -61,13 +62,20 @@ export const MasterInfoPage = ({ masterId, companyId }: MasterInfoPageProps) => 
         { name: "Связаться", onClick: () => onOpenModalNetWork(), icon: "message" },
     ];
 
+    const price = filterListData
+        .filter((el) => servicesId.includes(el.id || ""))
+        .reduce((acc, el) => acc + el.price, 0);
+    const time = filterListData.filter((el) => servicesId.includes(el.id || "")).reduce((acc, el) => acc + el.time, 0);
+
     return (
         <div className={cx("master-info")}>
             <div className={cx("wrapper")}>
                 <div className={cx("header")}>
                     <div className={cx("avatar")}>
                         <Avatar size={96} src={data?.image} />
-                        <Badge className={cx("badge")} type={"number"}>3.9</Badge>
+                        <Badge className={cx("badge")} type="number">
+                            3.9
+                        </Badge>
                     </div>
                     <div className={cx("short-info")}>
                         <span className={cx("name")}>{data?.name}</span>
@@ -75,24 +83,35 @@ export const MasterInfoPage = ({ masterId, companyId }: MasterInfoPageProps) => 
                     </div>
                 </div>
                 <div className={cx("body")}>
-                    <LinkGroup listLink={listLink}/>
+                    <LinkGroup listLink={listLink} />
                     <div className={cx("list-services")}>
                         <h2>Услуги</h2>
-                        <InputSearch value={searchValue} onChange={setSearchValue}/>
-                        {filterListData.length !== 0
-                            ? <div className={cx("list")}>
-                                { filterListData.map((card) => (
-                                    <ServiceCard isChoose={servicesId.includes(card.id || "")} onClick={handleOpenModalService} key={card.id} {...card} />
+                        <InputSearch value={searchValue} onChange={setSearchValue} />
+                        {filterListData.length !== 0 ? (
+                            <div className={cx("list")}>
+                                {filterListData.map((card) => (
+                                    <ServiceCard
+                                        isChoose={servicesId.includes(card.id || "")}
+                                        onClick={handleOpenModalService}
+                                        key={card.id}
+                                        {...card}
+                                    />
                                 ))}
                             </div>
-                            : <div className={cx("not-found")}>Такой услуги нет</div>
-                        }
+                        ) : (
+                            <div className={cx("not-found")}>Такой услуги нет</div>
+                        )}
                     </div>
                 </div>
             </div>
             <ModalSocialNetworks listHrefNetworks={[]} isOpen={isOpenModalNetWork} onClose={onCloseModalNetWork} />
             <ModalDetailedService {...service} isOpen={isOpenModalService} onClose={onCloseModalService} />
-            <ModalBookingService count={servicesId.length} isOpen={isOpenModalBookingService} />
+            <ModalBookingService
+                price={price}
+                time={time}
+                count={servicesId.length}
+                isOpen={isOpenModalBookingService}
+            />
         </div>
     );
 };
