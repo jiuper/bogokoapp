@@ -7,14 +7,20 @@ COPY package*.json ./
 RUN npm install --force
 
 COPY . .
+RUN sed -i 's|base: "/bogokoapp"|base: "/"|' vite.config.ts
 RUN npm run build
 
 # Stage 2: Serve with nginx
-FROM nginx:alpine
+FROM nginx:latest
 
-COPY --from=build /app/build /usr/share/nginx/html
+COPY deploy/nginx.conf.template /etc/nginx/templates/
+COPY deploy/generate_nginx_config.sh /usr/local/bin/
+COPY --from=build /app/dist /usr/share/nginx/html/
+
+RUN apt-get update && apt-get install -y gettext-base && apt-get clean
+RUN chmod +x /usr/local/bin/generate_nginx_config.sh
 
 EXPOSE 80
 EXPOSE 443
 
-CMD ["nginx", "-g", "daemon off;"]
+CMD ["generate_nginx_config.sh"]
