@@ -22,8 +22,8 @@ export const axiosInstance = axios.create({
     baseURL:
         // eslint-disable-next-line
         !!(window as any).VITE_BACKEND_URL
-            ? `${(window as any).VITE_BACKEND_URL}/api/v1`
-            : "http://localhost:5173/api/v1",
+            ? `${(window as any).VITE_BACKEND_URL}/api/`
+            : "http://localhost:5173/api/",
 });
 
 export const createAxiosApi = () => {
