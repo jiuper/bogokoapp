@@ -1,0 +1,20 @@
+server {
+    listen 80;
+    server_name ${NGINX_SERVER_NAME};
+
+    root /usr/share/nginx/html;
+    index index.html;
+
+    location / {
+        try_files $uri $uri/ /index.html;
+    }
+
+    location /api {
+        proxy_pass ${NGINX_INTERNAL_API_URL};
+    }
+
+    # Перенаправление на HTTPS, если secure: true
+    ${NGINX_REDIRECT_TO_HTTPS}
+}
+
+${NGINX_HTTPS_CONFIG}
