@@ -1,1 +1,1 @@
-window.VITE_BACKEND_URL = '';
+window.VITE_BACKEND_URL = 'https://89.110.91.103';
