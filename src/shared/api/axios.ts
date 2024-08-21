@@ -19,7 +19,11 @@ type CustomAxiosArgs =
     | { type: "postForm"; url: string; body: object; config?: AxiosRequestConfig };
 
 export const axiosInstance = axios.create({
-    baseURL: "https://dikidi-booking-api.onrender.com/api",
+    baseURL:
+        // eslint-disable-next-line
+        !!(window as any).VITE_BACKEND_URL
+            ? `${(window as any).VITE_BACKEND_URL}/api/v1`
+            : "http://localhost:5173/api/v1",
 });
 
 export const createAxiosApi = () => {

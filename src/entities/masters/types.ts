@@ -1,6 +1,6 @@
 export type GetMasterDto = {
     id?: string;
-    name?: string;
+    name: string;
     post?: string;
     image?: string;
 };
@@ -23,7 +23,7 @@ export interface WorkData {
 }
 
 export interface GetMasterFullInfoDto {
-    id?: string;
+    id: string;
     name?: string;
     post?: string;
     description?: string;
@@ -46,9 +46,9 @@ export interface Gallery {
 }
 
 export interface ServiceDateTimes {
-    id?: string;
+    id: string;
     name: string;
     image: string;
-    time?: number;
-    price?: number;
+    time: number;
+    price: number;
 }

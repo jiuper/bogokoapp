@@ -5,6 +5,7 @@ import {
     bindMiniAppCSSVars,
     bindThemeParamsCSSVars,
     bindViewportCSSVars,
+    initBackButton,
     initNavigator,
     initSettingsButton,
     useLaunchParams,
@@ -22,6 +23,7 @@ export const App: FC = () => {
     const themeParams = useThemeParams();
     const viewport = useViewport();
     const [settingsButton] = initSettingsButton();
+    const [backButton] = initBackButton();
     useEffect(() => {
         return bindMiniAppCSSVars(miniApp, themeParams);
     }, [miniApp, themeParams]);
@@ -35,7 +37,8 @@ export const App: FC = () => {
 
     useEffect(() => {
         settingsButton.show();
-    }, [settingsButton]);
+        backButton.show();
+    }, [settingsButton, backButton]);
 
     // Create a new application navigator and attach it to the browser history, so it could modify
     // it and listen to its changes.

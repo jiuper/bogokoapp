@@ -1,17 +1,17 @@
 import type { FC } from "react";
 import cnBind from "classnames/bind";
 
+import { Calendar } from "@/Calendar";
 import { useInfoCompanyQuery } from "@/entities/company/api/getInfoCompanyApi";
 import DEF from "@/shared/assets/images/Cover.png";
 import AVATAR from "@/shared/assets/images/image 19.png";
+import { ROUTES } from "@/shared/const/Routes.ts";
 import { AddressCompany } from "@/view/IndexPage/components/AddressCompany";
 import { DescriptionCompany } from "@/view/IndexPage/components/DescriptionCompany";
 import { LinkGroup } from "@/view/IndexPage/components/LinkGroup";
 import { ReferralBlock } from "@/view/IndexPage/components/ReferralBlock";
 
 import styles from "./IndexPage.module.scss";
-import { ROUTES } from "@/shared/const/Routes.ts";
-
 
 const cx = cnBind.bind(styles);
 export const IndexPage: FC = () => {
@@ -35,6 +35,7 @@ export const IndexPage: FC = () => {
                     }
                 />
             </div>
+            <Calendar />
         </div>
     );
 };
