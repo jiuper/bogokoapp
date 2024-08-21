@@ -3,6 +3,8 @@ services:
     image: dikidi_frontend
     container_name: dikidi_frontend
     restart: always
+    env_file:
+      - .env
     volumes:
       - ./ssl:/etc/nginx/ssl
       - ./env-config.js:/usr/share/nginx/html/static/env-config.js
