@@ -35,8 +35,8 @@ jobs:
       run: |
         echo "DOCKER_IMAGE_NAME=dikidi_frontend" >> $GITHUB_ENV
         REPOSITORY_NAME_LOWER=$(echo "${{ github.repository }}" | tr '[:upper:]' '[:lower:]')
-        echo "DOCKER_IMAGE_LINK=ghcr.io/$REPOSITORY_NAME_LOWER/$DOCKER_IMAGE_NAME:${{ github.ref_name }}" >> $GITHUB_ENV
-        echo "::set-output name=docker_image_link::ghcr.io/$REPOSITORY_NAME_LOWER/$DOCKER_IMAGE_NAME:${{ github.ref_name }}"
+        echo "DOCKER_IMAGE_LINK=ghcr.io/$REPOSITORY_NAME_LOWER/dikidi_frontend:${{ github.ref_name }}" >> $GITHUB_ENV
+        echo "::set-output name=docker_image_link::ghcr.io/$REPOSITORY_NAME_LOWER/dikidi_frontend:${{ github.ref_name }}"
 
     - name: Checkout repository
       uses: actions/checkout@v2
