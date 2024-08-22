@@ -87,6 +87,7 @@ jobs:
         echo NGINX_SECURE=${{ vars.NGINX_SECURE }} >> .env
         echo NGINX_SSL_CERTIFICATE=${{ vars.NGINX_SSL_CERTIFICATE }} >> .env
         echo NGINX_SSL_CERTIFICATE_KEY=${{ vars.NGINX_SSL_CERTIFICATE_KEY }} >> .env
+        echo LETSENCRYPT_EMAIL=${{ vars.LETSENCRYPT_EMAIL }} >> .env
         docker compose pull
         docker compose up -d
 
