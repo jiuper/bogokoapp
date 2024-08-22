@@ -4,33 +4,33 @@ log() {
     echo "[$(date '+%Y-%m-%d %H:%M:%S')] $1"
 }
 
+if [ -z "${NGINX_SERVER_NAME}" ] || [ -z "${NGINX_INTERNAL_API_URL}" ]; then
+    log "Error: NGINX_SERVER_NAME and NGINX_INTERNAL_API_URL must be set."
+    exit 1
+fi
+
 if [ "${NGINX_SECURE}" = "true" ]; then
-    if [ -z "${NGINX_SSL_CERTIFICATE}" ] || [ -z "${NGINX_SSL_CERTIFICATE_KEY}" ]; then
-        NGINX_SSL_CERTIFICATE=/etc/nginx/ssl/${NGINX_SERVER_NAME}.crt
-        NGINX_SSL_CERTIFICATE_KEY=/etc/nginx/ssl/${NGINX_SERVER_NAME}.key
-        
-        if [ -f $NGINX_SSL_CERTIFICATE ] && [ -f $NGINX_SSL_CERTIFICATE_KEY ]; then
-            if openssl x509 -checkend 86400 -noout -in $NGINX_SSL_CERTIFICATE; then
-                log "SSL certificate and key already exist and are valid."
-            else
-                log "SSL certificate is expired or about to expire. Generating a new one."
-                rm -f $NGINX_SSL_CERTIFICATE $NGINX_SSL_CERTIFICATE_KEY
-                mkdir -p /etc/nginx/ssl
-                openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
-                    -keyout $NGINX_SSL_CERTIFICATE_KEY -out $NGINX_SSL_CERTIFICATE \
-                    -subj "/CN=${NGINX_SERVER_NAME}"
-                log "New SSL certificate and key generated."
-            fi
-        else
-            log "SSL certificate or key does not exist. Generating a new one."
+    if [ -z "${LETSENCRYPT_EMAIL}" ]; then
+        log "Error: LETSENCRYPT_EMAIL must be set for Let's Encrypt."
+        exit 1
+    fi
+
+    NGINX_SSL_CERTIFICATE=/etc/letsencrypt/live/${NGINX_SERVER_NAME}/fullchain.pem
+    NGINX_SSL_CERTIFICATE_KEY=/etc/letsencrypt/live/${NGINX_SERVER_NAME}/privkey.pem
+
+    if [ ! -f $NGINX_SSL_CERTIFICATE ] || [ ! -f $NGINX_SSL_CERTIFICATE_KEY ]; then
+        log "Obtaining Let's Encrypt certificate."
+        certbot certonly --webroot -w /usr/share/nginx/html -d ${NGINX_SERVER_NAME} --non-interactive --agree-tos --email ${LETSENCRYPT_EMAIL}
+
+        if [ $? -ne 0 ]; then
+            log "Failed to obtain Let's Encrypt certificate. Generating self-signed certificate."
+            NGINX_SSL_CERTIFICATE=/etc/nginx/ssl/self-signed/${NGINX_SERVER_NAME}.crt
+            NGINX_SSL_CERTIFICATE_KEY=/etc/nginx/ssl/self-signed/${NGINX_SERVER_NAME}.key
             mkdir -p /etc/nginx/ssl
             openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
                 -keyout $NGINX_SSL_CERTIFICATE_KEY -out $NGINX_SSL_CERTIFICATE \
                 -subj "/CN=${NGINX_SERVER_NAME}"
-            log "New SSL certificate and key generated."
         fi
-    else
-        log "Using provided SSL certificate and key."
     fi
 
     NGINX_REDIRECT_TO_HTTPS="if (\$scheme != \"https\") { return 302 https://\$host\$request_uri; }"
