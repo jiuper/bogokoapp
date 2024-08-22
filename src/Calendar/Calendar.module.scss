@@ -4,6 +4,20 @@
   gap: 12px;
   padding: 18px;
 }
+.header{
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+.title{
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 21px; /* 131.25% */
+  letter-spacing: -0.23px;
+  color: #3D5266;
+  text-transform: capitalize;
+}
 .buttons{
   display: flex;
   justify-content: flex-end;
@@ -15,21 +29,8 @@
 }
 .content{
   display: flex;
-  flex-direction: column;
-}
-
-.days-week{
-  display: flex;
   justify-content: space-between;
   align-items: center;
-
-  .item{
-    font-size: 12px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 16px;
-    color: #94A3B8;
-  }
 }
 .days{
   display: flex;
@@ -37,25 +38,95 @@
   align-items: center;
 
   .day{
-    font-size: 18px;
-    font-style: normal;
-    font-weight: 600;
-    line-height: 22px; /* 122.222% */
-    letter-spacing: -0.36px;
-    color: #1E293B;
-    &.active{
-      position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 11px 8px;
+    cursor: pointer;
+    position: relative;
+    border: 1px solid transparent;
+
+    .day-week{
+      font-size: 12px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 16px;
+      color: #94A3B8;
     }
-    &.active:before{
+
+    .day-number{
+      font-size: 18px;
+      font-style: normal;
+      text-align: center;
+      font-weight: 600;
+      line-height: 22px; /* 122.222% */
+      letter-spacing: -0.36px;
+    }
+
+    &.today:before{
       content: "";
       position: absolute;
-      bottom: -20%;
+      bottom: 10%;
       left: 50%;
       transform: translateX(-50%);
       width: 6px;
       height: 6px;
       background: #FF7648;
       border-radius: 50%;
+    }
+
+    &.work{
+      color: #1E293B;
+    }
+    &.weekend{
+      color: #E53935;
+      .day-week{
+        color: #E53935;
+      }
+    }
+
+    &.selectedDay{
+      background: #FF7648;
+      border-radius: 12px;
+      border: 1px solid #FF7648;
+
+      &.work{
+        color: #fff;
+        .day-week{
+          color: #fff;
+        }
+        &.today:before {
+          background: #fff;
+        }
+      }
+
+      &.weekend{
+        color: #5C1C1D;
+        .day-week{
+          color: #5C1C1D;
+        }
+      }
+
+    }
+
+    &.notWork{
+      color: #94A3B8;
+
+      &.weekend{
+        color: #E53935;
+        .day-week{
+          color: #E53935;
+        }
+      }
+
+      &.selectedDay{
+        background: transparent;
+      }
+
+      &.today:before {
+        background: #FF7648;
+      }
     }
   }
 }
