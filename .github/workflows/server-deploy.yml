@@ -76,7 +76,7 @@ jobs:
         SERVER_PATH=$HOME/dikidi/$REPOSITORY_BASE_NAME
 
         docker compose -f $SERVER_PATH/docker-compose.yml down && docker rmi ${{ needs.build-and-push.outputs.docker_image_link }}
-        rm -rf $SERVER_PATH && mkdir -p $SERVER_PATH && cd $SERVER_PATH
+        find $SERVER_PATH -mindepth 1 -maxdepth 1 ! -name 'ssl' -exec rm -rf {} + && mkdir -p $SERVER_PATH && cd $SERVER_PATH
         curl -O https://raw.githubusercontent.com/$REPOSITORY_NAME_LOWER/${{ github.ref_name }}/deploy/docker-compose.yml
         sed -i "s|image: .*|image: ${{ needs.build-and-push.outputs.docker_image_link }}|" docker-compose.yml
         if [ -n "${{ vars.VITE_BACKEND_URL }}" ]; then

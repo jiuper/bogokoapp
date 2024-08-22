@@ -6,7 +6,9 @@ services:
     env_file:
       - .env
     volumes:
-      - ./ssl:/etc/nginx/ssl
+      - ./ssl/letsencrypt:/etc/letsencrypt
+      - ./ssl/self-signed:/etc/nginx/ssl/self-signed
+      - ./ssl/mycerts:/etc/nginx/ssl/mycerts
       - ./env-config.js:/usr/share/nginx/html/static/env-config.js
     ports:
       - 80:80
@@ -14,13 +16,12 @@ services:
     networks:
       - dikidi
     # environment:
-    #   - NGINX_SERVER_NAME=your_domain.com
-    #   - NGINX_INTERNAL_API_URL=http://localhost:8080/api
+    #   - NGINX_SERVER_NAME=localhost
+    #   - NGINX_INTERNAL_API_URL=http://backend:3000
     #   - NGINX_SECURE=false
     #   - NGINX_SSL_CERTIFICATE=/etc/nginx/ssl/nginx.crt
     #   - NGINX_SSL_CERTIFICATE_KEY=/etc/nginx/ssl/nginx.key
-    # volumes:
-    #   - ./ssl:/etc/nginx/ssl
+    #   - LETSENCRYPT_EMAIL=your_email@your_domain.com
 
 networks:
   dikidi:
