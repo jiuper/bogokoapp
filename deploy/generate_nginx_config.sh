@@ -4,6 +4,7 @@ log() {
     echo "[$(date '+%Y-%m-%d %H:%M:%S')] $1"
 }
 
+# Проверка необходимых переменных окружения
 if [ -z "${NGINX_SERVER_NAME}" ] || [ -z "${NGINX_INTERNAL_API_URL}" ]; then
     log "Error: NGINX_SERVER_NAME and NGINX_INTERNAL_API_URL must be set."
     exit 1
@@ -19,6 +20,9 @@ if [ "${NGINX_SECURE}" = "true" ]; then
     NGINX_SSL_CERTIFICATE_KEY=/etc/letsencrypt/live/${NGINX_SERVER_NAME}/privkey.pem
 
     if [ ! -f $NGINX_SSL_CERTIFICATE ] || [ ! -f $NGINX_SSL_CERTIFICATE_KEY ]; then
+        log "Starting Nginx for Certbot verification."
+        nginx -g 'daemon off;' &
+
         log "Obtaining Let's Encrypt certificate."
         certbot certonly --webroot -w /usr/share/nginx/html -d ${NGINX_SERVER_NAME} --non-interactive --agree-tos --email ${LETSENCRYPT_EMAIL}
 
@@ -31,6 +35,9 @@ if [ "${NGINX_SECURE}" = "true" ]; then
                 -keyout $NGINX_SSL_CERTIFICATE_KEY -out $NGINX_SSL_CERTIFICATE \
                 -subj "/CN=${NGINX_SERVER_NAME}"
         fi
+
+        log "Stopping Nginx after Certbot verification."
+        pkill nginx
     fi
 
     NGINX_REDIRECT_TO_HTTPS="if (\$scheme != \"https\") { return 302 https://\$host\$request_uri; }"

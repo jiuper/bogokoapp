@@ -13,6 +13,10 @@ server {
         proxy_pass __NGINX_INTERNAL_API_URL__;
     }
 
+    location /.well-known/acme-challenge/ {
+        root /usr/share/nginx/html;
+    }
+
     # Перенаправление на HTTPS, если secure: true
     __NGINX_REDIRECT_TO_HTTPS__
 }
