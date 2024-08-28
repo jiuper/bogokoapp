@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import cnBind from "classnames/bind";
 import { eachDayOfInterval, endOfWeek, startOfWeek } from "date-fns";
 import { DateTime, Info } from "luxon";
@@ -8,14 +8,19 @@ import { SvgIcon } from "@/shared/ui/SvgIcon/SvgIcon.tsx";
 import styles from "./Calendar.module.scss";
 
 const cx = cnBind.bind(styles);
-
-export const Calendar = () => {
+type CalendarProps = {
+    dateTrue?: string[];
+    onChange?: (date: Date) => void;
+};
+export const Calendar = ({ dateTrue, onChange }: CalendarProps) => {
     const [dateTime, setDateTime] = useState<DateTime>(DateTime.now().startOf("day"));
     const [selectedDate, setSelectedDate] = useState<Date>(new Date());
     const getDays = () => [...Info.weekdays("short")];
 
-    const listDate = ["2024-08-22", "2024-08-23", "2024-08-26", "2024-08-27", "2024-08-30", "2024-08-31"];
-    const formatListDate = listDate.map((el) => new Date(el).toLocaleDateString());
+    const formatListDate = useMemo(
+        () => (dateTrue ? dateTrue.map((el) => new Date(el).toLocaleDateString()) : []),
+        [dateTrue],
+    );
     const trans = ["ПН", "ВТ", "СР", "ЧТ", "ПТ", "СБ", "ВС"];
     const [days] = useState(getDays());
     const startWeek = startOfWeek(dateTime.toISO() || new Date(), {
@@ -29,7 +34,10 @@ export const Calendar = () => {
 
     const onPlusHandler = (type = "week", value = 1) => setDateTime(dateTime.plus({ [type]: value }));
     const onMinusHandler = (type = "week", value = 1) => setDateTime(dateTime.minus({ [type]: value }));
-    const onSelectHandler = (date: Date) => setSelectedDate(date);
+    const onSelectHandler = (date: Date) => {
+        setSelectedDate(date);
+        onChange?.(date);
+    };
 
     return (
         <div className={cx("calendar")}>

@@ -6,7 +6,7 @@
     &:focus-within {
         .label {
             top: 4px;
-            @include text-Body3;
+            @include text-input;
             transform: translateY(-0%);
         }
     }
@@ -14,7 +14,7 @@
     &.with-value {
         .label {
             top: 4px;
-            @include text-Body3;
+            @include text-input;
             transform: translateY(-0%);
         }
     }
@@ -91,7 +91,7 @@
         }
     }
 
-    &.purple {
+    &.orange {
         &.disabled {
             svg {
                 @include svg-color($color-dark-light);
@@ -182,11 +182,11 @@
         }
     }
 
-    &.purple {
-        border: 1px solid $color-purple;
+    &.orange {
+        border: 1px solid rgba(0, 0, 0, 0.05);
         transition: $transition-fast;
         background: rgba($color-lightness, 0);
-        caret-color: #49454f;
+        caret-color: #A2ACB0;
         &:-webkit-autofill,
         &:-webkit-autofill:hover,
         &:-webkit-autofill:focus,
@@ -227,12 +227,13 @@
         color: $color-light;
     }
 
-    &.purple {
-        color: $color-purple;
+    &.orange {
+        color: #A2ACB0;
     }
 
     &.small {
         padding-left: 12px;
+        color: #A2ACB0;
         @include text-Body1;
     }
 
@@ -249,7 +250,7 @@
     left: 0;
     white-space: nowrap;
 
-    &.purple {
+    &.orange {
         color: $color-red-60;
     }
 

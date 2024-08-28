@@ -1,7 +1,5 @@
-import {IndexPage} from "@/view/IndexPage/IndexPage.tsx";
+import { IndexPage } from "@/view/IndexPage/IndexPage.tsx";
 
-export function Index()  {
-    return (
-        <IndexPage/>
-    );
+export function Index() {
+    return <IndexPage />;
 }

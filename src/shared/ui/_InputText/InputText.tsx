@@ -12,7 +12,7 @@ export interface UIInputProps extends InputTextProps {
     icon?: string | JSX.Element;
     size?: "small" | "medium";
     iconPos?: "start" | "end";
-    color?: "purple" | "white";
+    color?: "orange" | "white";
     isFullWidth?: boolean;
     iconClassName?: string;
     labelClassName?: string;

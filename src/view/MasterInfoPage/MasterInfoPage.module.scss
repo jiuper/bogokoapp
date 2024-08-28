@@ -5,7 +5,7 @@
   display: flex;
   align-items: center;
   gap: 12px;
-  padding: 20px;
+  padding: 12px 8px;
   .short-info{
     display: flex;
     flex-direction: column;
@@ -33,7 +33,7 @@
   gap: 20px;
   border-radius: 24px 24px 0 0;
   background: #EEF1FA;
-  padding: 20px;
+  padding: 12px 8px;
 }
 .avatar{
   position: relative;

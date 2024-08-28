@@ -1,0 +1,43 @@
+.time-booking > div > div:last-child > svg{
+  color: #FF7648;
+}
+.time-booking > div > div > h6 > span{
+
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 21px; /* 131.25% */
+  letter-spacing: -0.23px;
+  color: #3D5266;
+}
+.time-booking> .content{
+  background: rgba(255, 255, 255) ;
+}
+
+.time{
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
+  gap: 14px 8px;
+  padding: 8px 12px;
+}
+.item{
+  border-radius: 20px;
+  background: rgba(0, 0, 0, 0.04);
+  padding: 8px 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+
+  .title{
+    font-size: 15px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 20px; /* 133.333% */
+    letter-spacing: -0.23px;
+    color: #000000CC;
+  }
+}
+
+
+

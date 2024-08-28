@@ -1,10 +1,12 @@
 import { type FC, useEffect, useMemo } from "react";
+import { Provider } from "react-redux";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { SDKProvider, useLaunchParams } from "@telegram-apps/sdk-react";
 import { TonConnectUIProvider } from "@tonconnect/ui-react";
 
 import { App } from "@/components/App.tsx";
 import { ErrorBoundary } from "@/components/ErrorBoundary.tsx";
+import { initStore } from "@/shared/redux/store.ts";
 
 export const queryClient = new QueryClient({
     defaultOptions: {
@@ -40,11 +42,13 @@ const Inner: FC = () => {
 
     return (
         <QueryClientProvider client={queryClient}>
-            <TonConnectUIProvider manifestUrl={manifestUrl}>
-                <SDKProvider acceptCustomStyles debug={debug}>
-                    <App />
-                </SDKProvider>
-            </TonConnectUIProvider>
+            <Provider store={initStore()}>
+                <TonConnectUIProvider manifestUrl={manifestUrl}>
+                    <SDKProvider acceptCustomStyles debug={debug}>
+                        <App />
+                    </SDKProvider>
+                </TonConnectUIProvider>
+            </Provider>
         </QueryClientProvider>
     );
 };

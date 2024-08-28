@@ -16,6 +16,7 @@ import {
 import { AppRoot } from "@telegram-apps/telegram-ui";
 
 import { routes } from "@/navigation/routes.tsx";
+import { ROUTES } from "@/shared/const/Routes.ts";
 
 export const App: FC = () => {
     const lp = useLaunchParams();
@@ -37,7 +38,8 @@ export const App: FC = () => {
 
     useEffect(() => {
         settingsButton.show();
-        backButton.show();
+
+        if (!ROUTES.MAIN) backButton.show();
     }, [settingsButton, backButton]);
 
     // Create a new application navigator and attach it to the browser history, so it could modify

@@ -2,7 +2,6 @@
   display: flex;
   flex-direction: column;
   gap: 12px;
-  padding: 18px;
 }
 .header{
   display: flex;
@@ -36,6 +35,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  width: 100%;
 
   .day{
     display: flex;
@@ -46,6 +46,9 @@
     cursor: pointer;
     position: relative;
     border: 1px solid transparent;
+    max-width: 40px;
+    width: 100%;
+
 
     .day-week{
       font-size: 12px;

@@ -111,6 +111,8 @@ export const MasterInfoPage = ({ masterId, companyId }: MasterInfoPageProps) => 
                 time={time}
                 count={servicesId.length}
                 isOpen={isOpenModalBookingService}
+                masterId={masterId}
+                serviceId={servicesId}
             />
         </div>
     );

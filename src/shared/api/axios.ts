@@ -21,9 +21,9 @@ type CustomAxiosArgs =
 export const axiosInstance = axios.create({
     baseURL:
         // eslint-disable-next-line
-        !!(window as any).VITE_BACKEND_URL
+        !(window as any).VITE_BACKEND_URL
             ? `${(window as any).VITE_BACKEND_URL}/api/`
-            : "http://localhost:5173/api/",
+            : "https://dikidi-booking-api.onrender.com/api/",
 });
 
 export const createAxiosApi = () => {

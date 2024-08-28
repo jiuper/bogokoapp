@@ -142,7 +142,13 @@
     line-height: 16px;
     letter-spacing: -0.2px;
 }
-
+@mixin text-input {
+    font-size: 15px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 22px; /* 146.667% */
+    letter-spacing: 0.15px;
+}
 @mixin text-Button {
     --fs: 16;
     --lh: 24;

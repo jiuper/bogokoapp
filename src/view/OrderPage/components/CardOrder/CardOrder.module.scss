@@ -1,0 +1,72 @@
+.wrapper{
+  display: flex;
+  justify-content: center;
+  border-radius: 12px;
+  background: #fff;
+  max-height: 80px;
+  height: 100%;
+  width: 100%;
+}
+.avatar-container{
+  position: relative;
+
+  .avatar{
+    width: 80px;
+    height: 80px;
+    [data-pc-section="image"]{
+      object-fit: cover;
+      border-radius: 8px;
+    }
+  }
+  .badge{
+    position: absolute;
+    top: 0;
+    right: 0;
+    background: #FF7648;
+  }
+}
+.body{
+  padding: 12px;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  width: 100%;
+  .info{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .name{
+    font-size: 17px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 20px; /* 117.647% */
+    letter-spacing: -0.4px;
+    color: #3D5266;
+  }
+  .post-wrapper{
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    justify-content: space-between;
+
+    .post{
+      font-size: 13px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 16px; /* 123.077% */
+      letter-spacing: -0.08px;
+      color: #707579;
+    }
+  }
+  .button{
+
+    &[data-pc-name="button"]{
+      width: fit-content;
+    }
+    [data-pc-section="label"]{
+      display: none;
+    }
+  }
+}

@@ -1,6 +1,10 @@
+import { useNavigate } from "react-router";
 import { Modal } from "@telegram-apps/telegram-ui";
 import cnBind from "classnames/bind";
 
+import { ROUTES } from "@/shared/const/Routes.ts";
+import { useAppDispatch } from "@/shared/redux/configStore.ts";
+import { bookingSliceActions } from "@/shared/redux/reducers/booking.reducer.ts";
 import { Button } from "@/shared/ui/_Button";
 import { SvgIcon } from "@/shared/ui/SvgIcon/SvgIcon.tsx";
 
@@ -12,8 +16,18 @@ type ModalBookingServiceProps = {
     count?: number;
     price?: number;
     time?: number;
+    masterId?: string;
+    serviceId: string[];
 };
-export const ModalBookingService = ({ isOpen, count, time, price }: ModalBookingServiceProps) => {
+export const ModalBookingService = ({ isOpen, count, time, price, serviceId, masterId }: ModalBookingServiceProps) => {
+    const href = useNavigate();
+    const dispatch = useAppDispatch();
+
+    const onRecord = () => {
+        href(ROUTES.TIMESBOOKING);
+        dispatch(bookingSliceActions.setBookingMasters([{ masterId: masterId || "", serviceId }]));
+    };
+
     return (
         <Modal
             style={{
@@ -37,7 +51,7 @@ export const ModalBookingService = ({ isOpen, count, time, price }: ModalBooking
                         </span>
                     </div>
                 </div>
-                <Button className={cx("button")} label="К дате и времени" />
+                <Button onClick={onRecord} className={cx("button")} label="К дате и времени" />
                 <span className={cx("text")}>Услуги можно заказать находясь внутри категории</span>
             </div>
         </Modal>

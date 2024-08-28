@@ -1,7 +1,6 @@
 import type { FC } from "react";
 import cnBind from "classnames/bind";
 
-import { Calendar } from "@/Calendar";
 import { useInfoCompanyQuery } from "@/entities/company/api/getInfoCompanyApi";
 import DEF from "@/shared/assets/images/Cover.png";
 import AVATAR from "@/shared/assets/images/image 19.png";
@@ -35,7 +34,6 @@ export const IndexPage: FC = () => {
                     }
                 />
             </div>
-            <Calendar />
         </div>
     );
 };
