@@ -4,9 +4,6 @@ import { AccordionContent } from "@telegram-apps/telegram-ui/dist/components/Blo
 import { AccordionSummary } from "@telegram-apps/telegram-ui/dist/components/Blocks/Accordion/components/AccordionSummary/AccordionSummary";
 import cnBind from "classnames/bind";
 
-import { ROUTES } from "@/shared/const/Routes.ts";
-import { Link } from "@/shared/ui/Link/Link.tsx";
-
 import styles from "./TimeBooking.module.scss";
 
 const cx = cnBind.bind(styles);
@@ -14,8 +11,9 @@ type TimeBookingProps = {
     title: string;
     listTime: string[];
     time: string;
+    onClick?: (time: string) => void;
 };
-export const TimeBooking = ({ listTime, title, time }: TimeBookingProps) => {
+export const TimeBooking = ({ listTime, title, time, onClick }: TimeBookingProps) => {
     const [selectedDate, setSelectedDate] = useState<boolean>(false);
 
     const titleTrue = useMemo(
@@ -34,9 +32,9 @@ export const TimeBooking = ({ listTime, title, time }: TimeBookingProps) => {
                                 (title === "Утро" && el <= time) ||
                                 (title === "День" && el >= time && el <= "17:45") ||
                                 (title === "Вечер" && el >= time) ? (
-                                    <Link className={cx("item")} key={el} to={ROUTES.ORDER}>
+                                    <div onClick={() => onClick?.(el)} className={cx("item")} key={el}>
                                         <span className={cx("title")}>{el}</span>
-                                    </Link>
+                                    </div>
                                 ) : null,
                             )}
                         </div>

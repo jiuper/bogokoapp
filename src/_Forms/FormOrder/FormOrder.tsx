@@ -9,8 +9,9 @@ import styles from "./FormOrder.module.scss";
 const cx = cnBind.bind(styles);
 type FormOrderProps = {
     onSubmit?: (values: { name: string; phone: string; comment: string }) => void;
+    onFocus?: () => void;
 };
-export const FormOrder = ({ onSubmit }: FormOrderProps) => {
+export const FormOrder = ({ onSubmit, onFocus }: FormOrderProps) => {
     const formik = useFormik({
         initialValues: {
             name: "",
@@ -31,6 +32,7 @@ export const FormOrder = ({ onSubmit }: FormOrderProps) => {
                     value={formik.values.name}
                     onChange={formik.handleChange}
                     type="text"
+                    onClick={() => onFocus?.()}
                     name="name"
                     isFullWidth
                 />
@@ -40,6 +42,7 @@ export const FormOrder = ({ onSubmit }: FormOrderProps) => {
                     onChange={formik.handleChange}
                     type="text"
                     name="phone"
+                    onFocus={() => onFocus?.()}
                     isFullWidth
                 />
                 <UIInputTextarea
@@ -47,6 +50,7 @@ export const FormOrder = ({ onSubmit }: FormOrderProps) => {
                     value={formik.values.comment}
                     onChange={formik.handleChange}
                     name="comment"
+                    onFocus={() => onFocus?.()}
                     isFullWidth
                 />
             </div>

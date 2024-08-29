@@ -19,6 +19,7 @@
             top: 0px;
             padding-top: 4px;
             @include text-Body3;
+            color: #FF7648;
 
             &::before {
                 background: $color-light !important;
@@ -55,7 +56,7 @@
             top: 0px;
             padding-top: 4px;
             color: $color-dark-light;
-            @include text-Body3;
+            @include text-input();
 
             &::before {
                 background: $color-light !important;
@@ -72,13 +73,18 @@
     padding: 18px 12px 16px 12px;
     height: 100%;
     width: 100%;
-    border: 1px solid $color-purple;
+    border: 1px solid rgba(0, 0, 0, 0.05);
     transition: $transition-fast;
     background: rgba($color-lightness, 0);
     caret-color: #49454f;
     box-shadow: none;
     resize: none;
     display: block;
+    border-radius: 14px;
+
+    &[data-pc-name="inputtextarea"]:focus{
+        border: 1px solid #FF7648;
+    }
 
     @include text-Body1;
 
@@ -120,7 +126,7 @@
     top: 6px;
     padding-left: 12px;
     transition: $transition-fast;
-    color: $color-purple;
+    color: #A2ACB0;
     pointer-events: none;
 
     &::before {

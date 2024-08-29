@@ -23,7 +23,7 @@ export interface WorkData {
 }
 
 export interface GetMasterFullInfoDto {
-    id: string;
+    id?: string;
     name?: string;
     post?: string;
     description?: string;
@@ -49,6 +49,6 @@ export interface ServiceDateTimes {
     id: string;
     name: string;
     image: string;
-    time: number;
-    price: number;
+    time: string;
+    price: string;
 }

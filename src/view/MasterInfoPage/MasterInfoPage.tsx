@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
+import { useNavigate } from "react-router";
 import { Avatar, Badge } from "@telegram-apps/telegram-ui";
 import cnBind from "classnames/bind";
 
@@ -6,7 +7,10 @@ import { ModalBookingService } from "@/_Modals/ModalBookingService";
 import { ModalDetailedService } from "@/_Modals/ModalDetailedService";
 import { ModalSocialNetworks } from "@/_Modals/ModalSocialNetworks";
 import { useMasterQuery } from "@/entities/masters/api/getMasterApi";
+import { ROUTES } from "@/shared/const/Routes.ts";
 import { useBooleanState } from "@/shared/hooks/useBooleanState.ts";
+import { useAppDispatch } from "@/shared/redux/configStore.ts";
+import { bookingSliceActions } from "@/shared/redux/reducers/booking.reducer.ts";
 import { InputSearch } from "@/shared/ui/_InputSearch";
 import { LinkGroup } from "@/view/IndexPage/components/LinkGroup";
 import { ServiceCard } from "@/view/ServicePage/ServiceCard";
@@ -27,7 +31,20 @@ export const MasterInfoPage = ({ masterId, companyId }: MasterInfoPageProps) => 
     const [isOpenModalBookingService, onOpenModalBookingService, onCloseModalBookingService] = useBooleanState(false);
     const [serviceId, setServiceId] = useState<string>("");
     const [servicesId, setServicesId] = useState<string[]>([]);
+    const href = useNavigate();
+    const dispatch = useAppDispatch();
 
+    const onRecord = () => {
+        href(`${ROUTES.TIMESBOOKING}/${masterId}`);
+        dispatch(
+            bookingSliceActions.setBookingMasters({
+                masterInfo: {
+                    ...data,
+                    services: listData.filter((el) => servicesId.includes(el.id)),
+                },
+            }),
+        );
+    };
     const handleOpenModalService = (id?: string, flag?: boolean) => {
         if (flag && id) {
             setServiceId(id);
@@ -64,8 +81,8 @@ export const MasterInfoPage = ({ masterId, companyId }: MasterInfoPageProps) => 
 
     const price = filterListData
         .filter((el) => servicesId.includes(el.id || ""))
-        .reduce((acc, el) => acc + el.price, 0);
-    const time = filterListData.filter((el) => servicesId.includes(el.id || "")).reduce((acc, el) => acc + el.time, 0);
+        .reduce((acc, el) => acc + +el.price, 0);
+    const time = filterListData.filter((el) => servicesId.includes(el.id || "")).reduce((acc, el) => acc + +el.time, 0);
 
     return (
         <div className={cx("master-info")}>
@@ -111,8 +128,9 @@ export const MasterInfoPage = ({ masterId, companyId }: MasterInfoPageProps) => 
                 time={time}
                 count={servicesId.length}
                 isOpen={isOpenModalBookingService}
-                masterId={masterId}
-                serviceId={servicesId}
+                onClick={onRecord}
+                title="Услуги можно заказать находясь внутри категории"
+                label="К дате и времени"
             />
         </div>
     );

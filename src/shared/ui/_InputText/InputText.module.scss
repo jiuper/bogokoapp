@@ -8,6 +8,7 @@
             top: 4px;
             @include text-input;
             transform: translateY(-0%);
+            color: #FF7648;
         }
     }
 
@@ -126,6 +127,10 @@
 
 .text-field {
     background: transparent;
+    border-radius: 14px;
+    &[data-pc-name="inputtext"]:focus{
+        border-color: #FF7648;
+    }
 
     &.small {
         padding: 13px 12px;

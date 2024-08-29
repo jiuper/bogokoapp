@@ -37,5 +37,46 @@ export interface MasterInfo {
     id?: string;
     name?: string;
     image?: string;
-    serviceInfo?: ServiceInfo[];
+    serviceInfo: ServiceInfo[];
+}
+export interface RequestRecordDto {
+    firstName: string;
+    phone: string;
+    comment?: string;
+    time: string;
+    masters: RequestMasterServicesDateTimesDto[];
+}
+
+export interface ResponseNewRecordDto {
+    id?: string;
+    time?: string;
+    timeTo?: string;
+    price?: string;
+    duration?: string;
+    durationString?: string;
+    currency?: Currency;
+    master?: MasterRecordInfo;
+    services?: ServiceRecordInfo;
+}
+
+export interface MasterRecordInfo {
+    id?: string;
+    name?: string;
+    image?: string;
+}
+
+export interface ServiceRecordInfo {
+    id?: string;
+    name?: string;
+    price?: string;
+    duration?: string;
+    durationString?: string;
+    image?: string;
+}
+
+export interface Currency {
+    id?: number;
+    title?: string;
+    abbr?: string;
+    iso?: string;
 }

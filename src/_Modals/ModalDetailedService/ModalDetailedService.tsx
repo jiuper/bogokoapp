@@ -12,8 +12,8 @@ type ModalDetailedServiceProps = {
     id?: string;
     name?: string;
     image?: string;
-    time?: number;
-    price?: number;
+    time?: string;
+    price?: string;
     isOpen: boolean;
     onClose: () => void;
 };

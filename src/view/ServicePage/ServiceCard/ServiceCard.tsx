@@ -11,8 +11,8 @@ type ServiceCardProps = {
     id?: string;
     name?: string;
     image?: string;
-    time?: number;
-    price?: number;
+    time?: string;
+    price?: string;
     onClick?: (id?: string, flag?: boolean) => void;
     isChoose?: boolean;
 };

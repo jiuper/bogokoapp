@@ -22,6 +22,6 @@ export const routes: Route[] = [
     { path: ROUTES.SERVICES, Component: ServicesBooking },
     { path: `${ROUTES.SERVICE}/:id`, Component: Service },
     { path: `${ROUTES.MASTER}/:id`, Component: MasterInfo },
-    { path: `${ROUTES.TIMESBOOKING}`, Component: TimesBookingPage },
+    { path: `${ROUTES.TIMESBOOKING}/:id`, Component: TimesBookingPage },
     { path: `${ROUTES.ORDER}`, Component: IndexOrderPage },
 ];
