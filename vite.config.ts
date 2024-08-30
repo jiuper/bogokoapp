@@ -22,6 +22,18 @@ export default defineConfig({
     server: {
         // Exposes your dev server and makes it accessible for the devices in the same network.
         host: true,
+        proxy: {
+            "/api": {
+                target: "https://dikidi.ru",
+                secure: false,
+                headers: {
+                    "Access-Control-Allow-Origin": "*",
+                    "Access-Control-Allow-Headers": "Origin, X-Requested-With, Content-Type, Accept",
+                },
+                changeOrigin: true,
+                rewrite: (path) => path.replace(/^\/api/, ""),
+            },
+        },
     },
     resolve: {
         alias: {

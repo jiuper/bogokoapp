@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import cnBind from "classnames/bind";
 import { useFormik } from "formik";
 
@@ -8,13 +9,13 @@ import styles from "./FormOrder.module.scss";
 
 const cx = cnBind.bind(styles);
 type FormOrderProps = {
-    onSubmit?: (values: { name: string; phone: string; comment: string }) => void;
+    onSubmit?: (values: { firstName: string; phone: string; comment: string }) => void;
     onFocus?: () => void;
 };
 export const FormOrder = ({ onSubmit, onFocus }: FormOrderProps) => {
     const formik = useFormik({
         initialValues: {
-            name: "",
+            firstName: "",
             phone: "",
             comment: "",
         },
@@ -23,17 +24,20 @@ export const FormOrder = ({ onSubmit, onFocus }: FormOrderProps) => {
             formik.resetForm();
         },
     });
+    useEffect(() => {
+        onSubmit?.(formik.values);
+    }, [formik.values]);
 
     return (
         <form className={cx("form-wrapper")} onSubmit={formik.handleSubmit}>
             <div className={cx("form")}>
                 <UIInputText
                     label="Ваше имя*"
-                    value={formik.values.name}
+                    value={formik.values.firstName}
                     onChange={formik.handleChange}
                     type="text"
                     onClick={() => onFocus?.()}
-                    name="name"
+                    name="firstName"
                     isFullWidth
                 />
                 <UIInputText

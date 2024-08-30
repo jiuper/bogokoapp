@@ -1,6 +1,6 @@
 import { useMutation } from "@tanstack/react-query";
 
-import type { GetCreateOrderMasterApiResponse } from "@/entities/order/api/createOrderMaster/types.ts";
+import type { GetCreateOrderMasterApiResponse } from "@/entities/order/api/createOrderMasterApi/types.ts";
 import type { RequestRecordDto } from "@/entities/order/types.ts";
 import { createAxiosApi } from "@/shared/api";
 

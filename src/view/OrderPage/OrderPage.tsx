@@ -1,9 +1,12 @@
+import { useState } from "react";
 import { useNavigate } from "react-router";
 import cnBind from "classnames/bind";
 
 import { FormOrder } from "@/_Forms/FormOrder";
 import { ModalBookingService } from "@/_Modals/ModalBookingService";
 import type { ServiceDateTimes } from "@/entities/masters/types.ts";
+import { useOrderCreateMutation } from "@/entities/order/api/createOrderMasterApi";
+import type { RequestRecordDto } from "@/entities/order/types.ts";
 import { ROUTES } from "@/shared/const/Routes.ts";
 import { useBooleanState } from "@/shared/hooks";
 import { useAppDispatch, useAppSelector } from "@/shared/redux/configStore.ts";
@@ -17,7 +20,8 @@ const cx = cnBind.bind(styles);
 export const OrderPage = () => {
     const href = useNavigate();
     const dispatch = useAppDispatch();
-
+    const [value, setValue] = useState({ firstName: "", phone: "", comment: "" });
+    const { mutate: createOrder } = useOrderCreateMutation();
     const queryParams = useAppSelector((state) => state.booking.bookingMasters);
     const [isOpenModalBookingService, onOpenModalBookingService, onCloseModalBookingService] = useBooleanState(true);
     const listData = queryParams.reduce<ServiceDateTimes[]>((acc, el) => {
@@ -37,6 +41,29 @@ export const OrderPage = () => {
     const handleEditMaster = (id: string) => {
         href(ROUTES.BOOKING);
         dispatch(bookingSliceActions.setEditBookingMasters(id));
+    };
+    const onSubmit = () => {
+        const createOrderParams = queryParams.reduce<RequestRecordDto[]>((acc, el) => {
+            acc.push({
+                firstName: value.firstName,
+                phone: value.phone,
+                comment: value.comment,
+                time:
+                    `${el.workData?.date.replace(/[.]/g, "-").split("-").reverse().join("-")} ${
+                        el.workData?.time || ""
+                    }` || "",
+                masters: [
+                    {
+                        masterId: el?.masterInfo?.id || "",
+                        serviceId: el?.masterInfo?.services?.map((elem) => String(elem.id) || "") || [],
+                    },
+                ],
+            });
+
+            return acc;
+        }, []);
+        createOrder(createOrderParams[0], { onSuccess: () => onCloseModalBookingService() });
+        onCloseModalBookingService();
     };
 
     return (
@@ -87,13 +114,13 @@ export const OrderPage = () => {
                 </div>
             ))}
 
-            <FormOrder onFocus={handleBlur} />
+            <FormOrder onSubmit={setValue} onFocus={handleBlur} />
             <ModalBookingService
                 price={price}
                 time={time}
                 count={listData.length}
                 isOpen={isOpenModalBookingService}
-                onClick={onCloseModalBookingService}
+                onClick={onSubmit}
                 title="Даю согласие на обработку персональных данных"
                 label="Укажите телефон"
             />
