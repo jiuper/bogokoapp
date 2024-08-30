@@ -62,8 +62,11 @@ export const OrderPage = () => {
 
             return acc;
         }, []);
-        createOrder(createOrderParams[0], { onSuccess: () => onCloseModalBookingService() });
-        onCloseModalBookingService();
+        const onSuccess = () => {
+            href(ROUTES.MAIN);
+            onCloseModalBookingService();
+        };
+        createOrder(createOrderParams[0], { onSuccess });
     };
 
     return (
