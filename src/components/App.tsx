@@ -15,6 +15,7 @@ import {
 } from "@telegram-apps/sdk-react";
 import { AppRoot } from "@telegram-apps/telegram-ui";
 
+import { getAuthApi } from "@/entities/user/getAuth";
 import { routes } from "@/navigation/routes.tsx";
 import { ROUTES } from "@/shared/const/Routes.ts";
 
@@ -54,6 +55,13 @@ export const App: FC = () => {
 
         return () => navigator.detach();
     }, [navigator]);
+
+    useEffect(() => {
+        void getAuthApi({
+            initDataRaw: `${miniApp.state.state.initDataRaw}`,
+            user: miniApp.state.state.initData.user,
+        }).then((data) => localStorage.setItem("token", data.token));
+    }, []);
 
     return (
         <AppRoot

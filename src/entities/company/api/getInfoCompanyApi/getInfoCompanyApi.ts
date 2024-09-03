@@ -4,9 +4,10 @@ import type { GetInfoCompanyApiResponse } from "@/entities/company/api/getInfoCo
 import { createAxiosApi } from "@/shared/api";
 
 export const getInfoCompanyApi = async () => {
-    return createAxiosApi()<GetInfoCompanyApiResponse>({ type: "get", url: "booking/company?companyId=591511" }).then(
-        (data) => data.data,
-    );
+    return createAxiosApi()<GetInfoCompanyApiResponse>({
+        type: "get",
+        url: "booking/company",
+    }).then((data) => data.data);
 };
 
 export const useInfoCompanyQuery = () => {

@@ -5,7 +5,6 @@ import { createAxiosApi } from "@/shared/api";
 
 type getMasterApiParams = {
     masterId?: string;
-    companyId: string;
 };
 export const getMasterApi = async (params: getMasterApiParams) => {
     return createAxiosApi()<GetMasterApiResponse>({

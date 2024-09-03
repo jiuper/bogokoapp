@@ -17,6 +17,7 @@ import styles from "./IndexPage.module.scss";
 const cx = cnBind.bind(styles);
 export const IndexPage: FC = () => {
     const { data } = useInfoCompanyQuery();
+
     const listLink = [
         { name: "Выбрать услугу", href: ROUTES.SERVICES, icon: "notebook" },
         { name: "Выбрать мастера", href: ROUTES.BOOKING, icon: "add-master" },
@@ -26,7 +27,6 @@ export const IndexPage: FC = () => {
     return (
         <div className={cx("bg-wrapper")}>
             <Carousel value={products} />
-
             <div className={cx("wrapper", "container")}>
                 <AddressCompany city="Витебск" address="ул. Кирова 12 каб.20" avatar={AVATAR} map="" />
                 <LinkGroup listLink={listLink} />

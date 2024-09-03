@@ -17,7 +17,7 @@ type MasterInfoCard = {
     isServices?: boolean;
 };
 export const MasterInfoCard = ({ id, post, name, image, onClick, isServices }: MasterInfoCard) => {
-    const { data } = useMasterQuery({ masterId: isServices ? id : "", companyId: "591511" });
+    const { data } = useMasterQuery({ masterId: isServices ? id : "" });
 
     return (
         <div onClick={() => onClick?.(id, data)} className={cx("card")}>
