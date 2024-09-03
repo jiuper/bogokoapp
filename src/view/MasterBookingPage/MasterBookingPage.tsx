@@ -31,7 +31,7 @@ export const MasterBookingPage = ({ data, isPending, isServices, servicesId }: M
     const onRecord = (id?: string, data?: GetMasterFullInfoDto) => {
         if (!isServices && id) href(`${ROUTES.MASTER}/${id}`);
 
-        if (isServices && id) {
+        if (isServices && id && data) {
             dispatch(
                 bookingSliceActions.setBookingReset({
                     masterInfo: {
@@ -51,7 +51,9 @@ export const MasterBookingPage = ({ data, isPending, isServices, servicesId }: M
             <div className={cx("list")}>
                 {!isPending ? (
                     filterListData.length !== 0 ? (
-                        filterListData.map((el) => <MasterInfoCard onClick={onRecord} key={el.id} {...el} />)
+                        filterListData.map((el) => (
+                            <MasterInfoCard isServices={isServices} onClick={onRecord} key={el.id} {...el} />
+                        ))
                     ) : (
                         <div className={cx("not-found")}>Мастеров не найдено</div>
                     )
