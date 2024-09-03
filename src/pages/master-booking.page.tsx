@@ -13,14 +13,17 @@ export function MasterBooking() {
         [],
     );
     const { data: listMaster, isPending: isLoadingMasters } = useAllMastersQuery(servicesId.length === 0);
-    const { data: listMultiMaster, isPending: isLoadingMultiMasters } = useQueryMultiMasters(servicesId);
+    const { data: listMultiMaster, isPending: isLoadingMultiMasters } = useQueryMultiMasters({ serviceId: servicesId });
+
     const listMasterData = useMemo(() => listMaster || [], [listMaster]);
     const listMultiMasterData = useMemo(
         () =>
-            listMultiMaster?.masters?.reduce<GetMasterDto[]>((acc, cur) => {
-                acc.push({ id: cur.masterId, name: cur.masterName || "", image: cur.masterImage, post: cur.cost });
+            listMultiMaster?.reduce<GetMasterDto[]>((acc, cur) => {
+                cur?.masters?.map((el) =>
+                    acc.push({ id: el.masterId, name: el.masterName || "", image: el.masterImage, post: el.cost }),
+                );
 
-                return acc;
+                return acc.filter((el, i) => acc.findIndex((elem) => elem?.id === el.id) === i);
             }, []) || [],
         [listMultiMaster],
     );
@@ -29,5 +32,12 @@ export function MasterBooking() {
         [listMultiMasterData, listMasterData],
     );
 
-    return <MasterBookingPage data={data} isPending={data ? isLoadingMasters : isLoadingMultiMasters} />;
+    return (
+        <MasterBookingPage
+            data={data}
+            isPending={listMultiMasterData.length === 0 ? isLoadingMasters : isLoadingMultiMasters}
+            isServices={listMultiMasterData.length !== 0}
+            servicesId={servicesId}
+        />
+    );
 }

@@ -6,6 +6,7 @@ import { TimesBooking } from "@/view/TimesBooking";
 export const TimesBookingPage = () => {
     const queryParams = useAppSelector((state) => state.booking.bookingMasters);
     const { id } = useParams();
+    console.log(queryParams);
 
     return <TimesBooking masterId={id} queryParams={queryParams} />;
 };

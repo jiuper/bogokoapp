@@ -45,6 +45,9 @@ const bookingSlice = createSlice({
                 return el;
             });
         },
+        setBookingReset(state, action: PayloadAction<BookingData>) {
+            state.bookingMasters = [action.payload];
+        },
     },
 });
 
