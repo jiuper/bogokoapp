@@ -23,7 +23,7 @@ export const axiosInstance = axios.create({
         // eslint-disable-next-line
         !!(window as any).VITE_BACKEND_URL
             ? `${(window as any).VITE_BACKEND_URL}/api/`
-            : "http://dikidi-booking-api.onrender.com/api/",
+            : "http://localhost:5173/api/",
 });
 
 export const createAxiosApi = () => {
