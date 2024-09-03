@@ -9,9 +9,10 @@ export const getAllMastersApi = async () => {
     );
 };
 
-export const useAllMastersQuery = () => {
+export const useAllMastersQuery = (isFetched = false) => {
     return useQuery<GetAllMastersApiResponse>({
-        queryKey: ["list-masters"],
+        queryKey: ["list-masters", isFetched],
         queryFn: () => getAllMastersApi(),
+        enabled: isFetched,
     });
 };

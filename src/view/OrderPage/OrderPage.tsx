@@ -79,7 +79,7 @@ export const OrderPage = () => {
                 <div key={i} className={cx("cards")}>
                     <CardOrder
                         icon="edit"
-                        rating={4.0}
+                        rating={el.masterInfo?.rating || 4.1}
                         avatar={el.masterInfo?.image}
                         name={el.masterInfo?.name}
                         post={el.masterInfo?.post}

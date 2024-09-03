@@ -17,8 +17,10 @@ import { AppRoot } from "@telegram-apps/telegram-ui";
 
 import { routes } from "@/navigation/routes.tsx";
 import { ROUTES } from "@/shared/const/Routes.ts";
+import { useAppSelector } from "@/shared/redux/configStore.ts";
 
 export const App: FC = () => {
+    const queryParams = useAppSelector((state) => state.booking.bookingMasters);
     const lp = useLaunchParams();
     const miniApp = useMiniApp();
     const themeParams = useThemeParams();
@@ -54,6 +56,7 @@ export const App: FC = () => {
 
         return () => navigator.detach();
     }, [navigator]);
+    console.log(queryParams);
 
     return (
         <AppRoot

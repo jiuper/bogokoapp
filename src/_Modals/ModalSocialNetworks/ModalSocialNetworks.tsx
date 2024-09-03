@@ -4,7 +4,6 @@ import cnBind from "classnames/bind";
 import tg from "@/shared/assets/icon/Avatar.svg";
 import inst from "@/shared/assets/icon/Group 21.svg";
 import tiktok from "@/shared/assets/icon/tik.svg";
-import vk from "@/shared/assets/icon/vk icon.svg";
 import { ButtonIconArrow } from "@/shared/ui/ButtonIcon";
 
 import styles from "./ModalSocialNetworks.module.scss";
@@ -18,7 +17,6 @@ type ModalSocialNetworksProps = {
 };
 export const ModalSocialNetworks = ({ isOpen, onClose, listHrefNetworks }: ModalSocialNetworksProps) => {
     const listNetworks = [
-        { icon: vk, name: "Вконтакте", label: "Посетить" },
         { icon: tg, name: "Телеграм", label: "Написать" },
         { icon: inst, name: "Инстаграм", label: "Посетить" },
         { icon: tiktok, name: "Тикток", label: "Посетить" },

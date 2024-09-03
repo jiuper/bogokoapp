@@ -13,4 +13,13 @@
   grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
   grid-gap: 12px;
   padding-bottom: 30px;
+  transition: .2s ease-out;
+  &.active{
+    margin-bottom: 150px;
+  }
+}
+.section{
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }

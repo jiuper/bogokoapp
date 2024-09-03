@@ -16,12 +16,12 @@ $shadow-shadow: 0px 10px 24px 0px #7B68EE52;
   }
 
   &.solid {
-    border: 1px solid rgba($color-purple, 0);
-    background: $color-purple;
-    box-shadow: $solid-shadow;
+    border: 1px solid #FF7648;
+    background: #FF7648;
+    box-shadow: #FF7648;
 
     @include touch-hover(&) {
-      background: $color-purple-darkness;
+      background: #FF7648;
       box-shadow: $solid-shadow-hover;
     }
   
@@ -31,7 +31,7 @@ $shadow-shadow: 0px 10px 24px 0px #7B68EE52;
 
     &:focus-visible {
       border: 1px solid rgba($color-purple-lighter, 1);
-      background: $color-purple-darkness;
+      background: #FF7648;
     }
   
     &:disabled {

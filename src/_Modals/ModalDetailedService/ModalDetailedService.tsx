@@ -1,9 +1,10 @@
 import { Modal } from "@telegram-apps/telegram-ui";
 import cnBind from "classnames/bind";
-import { Image } from "primereact/image";
 
 import def from "@/shared/assets/images/photo_2023-08-17_18-11-08.jpg";
-import { Button } from "@/shared/ui/_Button";
+import { ButtonIcon } from "@/shared/ui/_ButtonIcon";
+import { Carousel } from "@/shared/ui/_Carousel";
+import { SvgIcon } from "@/shared/ui/SvgIcon/SvgIcon.tsx";
 
 import styles from "./ModalDetailedService.module.scss";
 
@@ -16,8 +17,18 @@ type ModalDetailedServiceProps = {
     price?: string | number;
     isOpen: boolean;
     onClose: () => void;
+    onClick?: (id?: string) => void;
 };
-export const ModalDetailedService = ({ price, time, image, name, isOpen, onClose }: ModalDetailedServiceProps) => {
+export const ModalDetailedService = ({
+    price,
+    time,
+    image,
+    name,
+    isOpen,
+    onClose,
+    onClick,
+    id,
+}: ModalDetailedServiceProps) => {
     const handleOpen = (open: boolean) => {
         if (!open) onClose();
     };
@@ -36,7 +47,7 @@ export const ModalDetailedService = ({ price, time, image, name, isOpen, onClose
         >
             <div className={cx("modal-detailed-service")}>
                 <div className={cx("header")}>
-                    <Image className={cx("image")} width="100%" height="375px" src={image || def} alt={name} />
+                    <Carousel classNameImage={cx("image")} value={[image || def, image || def]} />
                 </div>
                 <div className={cx("body")}>
                     <div className={cx("description")}>
@@ -50,7 +61,13 @@ export const ModalDetailedService = ({ price, time, image, name, isOpen, onClose
                         <span className={cx("time")}>{`${time} мин.`}</span>
                         <span className={cx("price")}>{`${price} руб.`}</span>
                     </div>
-                    <Button className={cx("button")} label={`${price} руб.`} onClick={() => {}} />
+                    <ButtonIcon
+                        onClick={() => onClick?.(id)}
+                        color="orange"
+                        className={cx("button")}
+                        icon={<SvgIcon name="add-service" />}
+                        label={`${price} BYN`}
+                    />
                 </div>
             </div>
         </Modal>

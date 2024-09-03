@@ -1,13 +1,13 @@
-export interface GetServiceDto {
-    id?: string;
-    name?: string;
-    image?: string;
-    time?: number;
-    price?: number;
+export interface ServiceDateTimes {
+    id: string;
+    name: string;
+    image: string;
+    time: string;
+    price: string;
 }
 
 export interface GetCategoryWithServiceDto {
     id?: string;
     name?: string;
-    services: GetServiceDto[];
+    services: ServiceDateTimes[];
 }

@@ -1,15 +1,20 @@
+.wrapper{
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
 .title{
   font-size: 16px;
   font-style: normal;
   font-weight: 600;
   line-height: 21px; /* 131.25% */
   letter-spacing: -0.23px;
-  padding: 0 16px;
+  text-align: center;
+  color: #3D5266;
 }
 .list{
   display: flex;
   flex-direction: column;
   background: #fff;
   border-radius: 12px;
-  margin: 20px 0;
 }

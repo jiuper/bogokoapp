@@ -5,7 +5,7 @@ export type GetMasterDto = {
     image?: string;
 };
 
-export interface GetMasterServiceDatetimes {
+export interface GetMasterServiceDateTimes {
     id?: string;
     name?: string;
     image?: string;
@@ -31,6 +31,7 @@ export interface GetMasterFullInfoDto {
     gallery?: Gallery[];
     services?: ServiceDateTimes[];
     currency?: Currency;
+    rating?: number;
 }
 
 export interface Currency {
@@ -51,4 +52,19 @@ export interface ServiceDateTimes {
     image: string;
     time: string;
     price: string;
+}
+export interface GetMastersMultiDto {
+    serviceId?: string;
+    masters?: MasterMultiInfo[];
+}
+
+export interface MasterMultiInfo {
+    masterId?: string;
+    masterName?: string;
+    masterImage?: string;
+    serviceName?: string;
+    serviceImage?: string;
+    cost?: string;
+    time?: string;
+    currency?: string;
 }

@@ -1,5 +1,11 @@
+import { useMemo } from "react";
+
+import { useAllServicesQuery } from "@/entities/services/api/getAllServicesApi";
 import { ServicesBookingPage } from "@/view";
 
 export function ServicesBooking() {
-    return <ServicesBookingPage />;
+    const { data, isPending } = useAllServicesQuery();
+    const listData = useMemo(() => data || [], [data]);
+
+    return <ServicesBookingPage data={listData} isPending={isPending} />;
 }

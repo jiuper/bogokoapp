@@ -1,0 +1,35 @@
+.image-company{
+  width: 100%;
+  height: 292px;
+  padding-bottom: 8px;
+}
+.carousel{
+  [data-pc-section="content"]{
+    position: relative;
+  }
+  [data-pc-section="indicators"]{
+    position: absolute;
+    bottom: 31px;
+    left: 40%;
+    border-radius: 28px;
+    background: rgba(0, 0, 0, 0.25);
+    backdrop-filter: blur(22px);
+    padding: 0.5rem;
+  }
+  [data-pc-section="indicator"]{
+    margin-bottom: 0;
+  }
+  [data-pc-section="indicatorbutton"]{
+    background-color: #FFFFFF;
+    width: 0.5rem;
+    height: 0.5rem;
+    transition: background-color 0.2s, color 0.2s, box-shadow 0.2s;
+    border-radius: 50%;
+    opacity: 0.25;
+
+  }
+  [data-p-highlight="true"]{
+    background-color: #FFF;
+    border-radius: 50%;
+  }
+}
