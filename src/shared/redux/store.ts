@@ -1,6 +1,5 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 
-import { accountSliceReducer } from "@/shared/redux/reducers/account.reducer.ts";
 import { bookingSliceReducer } from "@/shared/redux/reducers/booking.reducer.ts";
 
 export const createStore = () =>
@@ -10,7 +9,6 @@ export const createStore = () =>
 
 const rootReducer = combineReducers({
     booking: bookingSliceReducer,
-    account: accountSliceReducer,
 });
 
 const store = createStore();

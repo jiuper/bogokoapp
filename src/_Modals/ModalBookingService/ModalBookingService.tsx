@@ -15,6 +15,8 @@ type ModalBookingServiceProps = {
     title?: string;
     onClick?: () => void;
     label?: string;
+    isLoading?: boolean;
+    isDisabled?: boolean;
 };
 export const ModalBookingService = ({
     isOpen,
@@ -24,6 +26,8 @@ export const ModalBookingService = ({
     title,
     onClick,
     label,
+    isLoading,
+    isDisabled,
 }: ModalBookingServiceProps) => {
     return (
         <Modal
@@ -48,7 +52,13 @@ export const ModalBookingService = ({
                         </span>
                     </div>
                 </div>
-                <Button onClick={onClick} className={cx("button")} label={label} />
+                <Button
+                    loading={isLoading}
+                    disabled={isDisabled}
+                    onClick={onClick}
+                    className={cx("button")}
+                    label={label}
+                />
                 <span className={cx("text")}>{title}</span>
             </div>
         </Modal>

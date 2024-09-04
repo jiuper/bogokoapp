@@ -58,7 +58,7 @@ export const ServicePage = ({ id }: ServicePageProps) => {
         .reduce((acc, el) => (el.time ? acc + +el.time : 0), 0);
 
     const onRecord = () => {
-        href(`${ROUTES.BOOKING}`);
+        href(`${ROUTES.MASTERFILTER}`);
         dispatch(
             bookingSliceActions.setBookingMasters({
                 masterInfo: {

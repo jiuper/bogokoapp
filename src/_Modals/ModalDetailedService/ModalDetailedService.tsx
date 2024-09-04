@@ -13,6 +13,7 @@ type ModalDetailedServiceProps = {
     id?: string;
     name?: string;
     image?: string;
+    description?: string;
     time?: string | number;
     price?: string | number;
     isOpen: boolean;
@@ -25,6 +26,7 @@ export const ModalDetailedService = ({
     image,
     name,
     isOpen,
+    description,
     onClose,
     onClick,
     id,
@@ -47,15 +49,14 @@ export const ModalDetailedService = ({
         >
             <div className={cx("modal-detailed-service")}>
                 <div className={cx("header")}>
-                    <Carousel classNameImage={cx("image")} value={[image || def, image || def]} />
+                    <Carousel classNameImage={cx("image")} value={[image || def]} />
+                    <SvgIcon onClick={onClose} className={cx("close")} name="close-bg" />
+                    <SvgIcon className={cx("closed-plank")} name="closed-plank" />
                 </div>
                 <div className={cx("body")}>
                     <div className={cx("description")}>
                         <span className={cx("title")}>{name}</span>
-                        <span className={cx("text")}>
-                            A classic manicure is the application of regular nail polish. During the treatment, your
-                            nails will be filed,buffed and shaped, with proper cuticle care as well.{" "}
-                        </span>
+                        {description && <span className={cx("text")}>{description}</span>}
                     </div>
                     <div className={cx("info")}>
                         <span className={cx("time")}>{`${time} мин.`}</span>

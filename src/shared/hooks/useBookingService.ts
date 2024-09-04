@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
 
 import { useBooleanState } from "@/shared/hooks/useBooleanState.ts";
+import { useAppSelector } from "@/shared/redux/configStore.ts";
 
 export const useBookingService = () => {
+    const state = useAppSelector((state) => state.booking.bookingMasters);
     const [serviceId, setServiceId] = useState<string>("");
     const [servicesId, setServicesId] = useState<string[]>([]);
     const [isOpenModalService, onOpenModalService, onCloseModalService] = useBooleanState(false);
@@ -22,6 +24,17 @@ export const useBookingService = () => {
             }
         }
     };
+
+    useEffect(() => {
+        if (state) {
+            const arr = state.reduce<string[]>(
+                (acc, cur) => [...acc, ...(cur.masterInfo?.services?.map((elem) => elem.id) || [])],
+                [],
+            );
+            setServicesId(arr);
+        }
+    }, [state]);
+
     const handleOpenModalDetailsService = (id?: string) => {
         if (id)
             if (servicesId.includes(id)) {

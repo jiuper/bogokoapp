@@ -2,6 +2,7 @@ import type { ComponentType, JSX } from "react";
 
 import { Index } from "@/pages/index.page.tsx";
 import { MasterBooking } from "@/pages/master-booking.page.tsx";
+import { MasterFilter } from "@/pages/master-filter.page.tsx";
 import { MasterInfo } from "@/pages/master-info.page.tsx";
 import { IndexOrderPage } from "@/pages/order.page.tsx";
 import { Service } from "@/pages/service.page.tsx";
@@ -24,4 +25,5 @@ export const routes: Route[] = [
     { path: `${ROUTES.MASTER}/:id`, Component: MasterInfo },
     { path: `${ROUTES.TIMESBOOKING}/:id`, Component: TimesBookingPage },
     { path: `${ROUTES.ORDER}`, Component: IndexOrderPage },
+    { path: `${ROUTES.MASTERFILTER}`, Component: MasterFilter },
 ];

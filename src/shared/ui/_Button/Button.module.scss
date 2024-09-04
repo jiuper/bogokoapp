@@ -37,6 +37,7 @@ $shadow-shadow: 0px 10px 24px 0px #7B68EE52;
     &:disabled {
       background: $color-purple-lighter;
       box-shadow: none;
+      color: #FF7648;
     }
   }
 

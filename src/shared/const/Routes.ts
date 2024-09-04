@@ -6,4 +6,5 @@ export const ROUTES = {
     MASTER: "/master-info",
     TIMESBOOKING: "/times-booking",
     ORDER: "/order",
+    MASTERFILTER: "/master-filter",
 };

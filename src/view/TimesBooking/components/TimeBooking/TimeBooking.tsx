@@ -14,7 +14,7 @@ type TimeBookingProps = {
     onClick?: (time: string) => void;
 };
 export const TimeBooking = ({ listTime, title, time, onClick }: TimeBookingProps) => {
-    const [selectedDate, setSelectedDate] = useState<boolean>(false);
+    const [selectedDate, setSelectedDate] = useState<boolean>(true);
 
     const titleTrue = useMemo(
         () => (listTime.some((el) => (title === "Утро" ? el <= time : el >= time)) ? title : null),

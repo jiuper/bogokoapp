@@ -23,6 +23,7 @@ export const App: FC = () => {
     const lp = useLaunchParams();
     const miniApp = useMiniApp();
     const themeParams = useThemeParams();
+
     const viewport = useViewport();
     const [settingsButton] = initSettingsButton();
     const [backButton] = initBackButton();
@@ -58,7 +59,9 @@ export const App: FC = () => {
 
     useEffect(() => {
         void getAuthApi({
-            initDataRaw: `${miniApp.state.state.initDataRaw}`,
+            // @ts-ignore
+            initDataRaw: miniApp.state.state.initDataRaw,
+            // @ts-ignore
             user: miniApp.state.state.initData.user,
         }).then((data) => localStorage.setItem("token", data.token));
     }, []);

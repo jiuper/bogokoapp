@@ -48,6 +48,9 @@ const bookingSlice = createSlice({
         setBookingReset(state, action: PayloadAction<BookingData>) {
             state.bookingMasters = [action.payload];
         },
+        setBookingMastersReset(state) {
+            state.bookingMasters = [];
+        },
     },
 });
 

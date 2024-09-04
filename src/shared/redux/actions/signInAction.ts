@@ -5,7 +5,7 @@ export const signInAction = createAsyncThunk(
     "ACCOUNT/SIGN_IN",
     async (params : RequestAuthDto) => {
         try {
-            return  await getAuthApi(params)
+              await getAuthApi(params)
         } catch (e) {
             throw new Error("Unauthorized");
         }
