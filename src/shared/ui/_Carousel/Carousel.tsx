@@ -31,7 +31,6 @@ export const Carousel = ({ value, className, classNameImage }: UICarouselProps) 
             value={value}
             numVisible={1}
             numScroll={1}
-            circular
             showIndicators={listImage.length > 1}
             showNavigators={false}
             responsiveOptions={responsiveOptions}

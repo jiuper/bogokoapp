@@ -19,7 +19,7 @@ export const ServiceInfoCard = ({ id, post, name }: ServiceInfoCardProps) => {
                 <span className={cx("name")}>{name}</span>
                 <span className={cx("post")}>{post}</span>
             </div>
-            <SvgIcon name="ArrowDown" className={cx("arrow")} />
+            <SvgIcon name="ArrowRight" className={cx("arrow")} />
         </Link>
     );
 };

@@ -2,6 +2,7 @@ import { useMemo } from "react";
 
 import { useQueryMultiMasters } from "@/entities/masters/api/getMultiMasterApi";
 import type { GetMasterDto } from "@/entities/masters/types.ts";
+import { PageLayout } from "@/layouts/PageLayout.tsx";
 import { useAppSelector } from "@/shared/redux/configStore.ts";
 import { MasterBookingPage } from "@/view";
 
@@ -27,11 +28,13 @@ export function MasterFilter() {
     );
 
     return (
-        <MasterBookingPage
-            data={listMultiMasterData}
-            isPending={isLoadingMultiMasters}
-            isServices
-            servicesId={servicesId}
-        />
+        <PageLayout>
+            <MasterBookingPage
+                data={listMultiMasterData}
+                isPending={isLoadingMultiMasters}
+                isServices
+                servicesId={servicesId}
+            />
+        </PageLayout>
     );
 }

@@ -13,7 +13,7 @@ export const ServiceCardSkeleton = () => {
             <div className={cx("info")}>
                 <Skeleton width="10rem" height="2rem" />
             </div>
-            <SvgIcon name="ArrowDown" className={cx("arrow")} />
+            <SvgIcon name="ArrowRight" className={cx("arrow")} />
         </div>
     );
 };

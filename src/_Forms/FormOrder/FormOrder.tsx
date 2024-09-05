@@ -48,7 +48,7 @@ export const FormOrder = ({ queryParams }: FormOrderProps) => {
         }, []);
 
         const onSuccess = () => {
-            href(ROUTES.MAIN);
+            href(ROUTES.RECORD);
             dispatch(bookingSliceActions.setBookingMastersReset());
             void formik.setValues({ firstName: "", phone: "", comment: "" });
         };

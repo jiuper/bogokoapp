@@ -7,4 +7,7 @@ export const ROUTES = {
     TIMESBOOKING: "/times-booking",
     ORDER: "/order",
     MASTERFILTER: "/master-filter",
+    RECORD: "/record",
+    PROFILE: "/profile",
+    CALENDAR: "/calendar",
 };

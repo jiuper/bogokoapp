@@ -1,10 +1,9 @@
 import { PageLayout } from "@/layouts/PageLayout.tsx";
-import { OrderPage } from "@/view";
 
-export const IndexOrderPage = () => {
+export const Profile = () => {
     return (
         <PageLayout>
-            <OrderPage />
+            <div>Профиль</div>
         </PageLayout>
     );
 };

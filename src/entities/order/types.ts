@@ -1,3 +1,10 @@
+export interface Currency {
+    id?: number;
+    title?: string;
+    abbr?: string;
+    iso?: string;
+}
+
 export type RequestMasterServicesDateTimesDto = {
     masterId: string;
     serviceId: string[];
@@ -55,8 +62,9 @@ export interface ResponseNewRecordDto {
     duration?: string;
     durationString?: string;
     currency?: Currency;
+    client?: ClientRecordInfo;
     master?: MasterRecordInfo;
-    services?: ServiceRecordInfo;
+    services?: ServiceRecordInfo[];
 }
 
 export interface MasterRecordInfo {
@@ -74,9 +82,8 @@ export interface ServiceRecordInfo {
     image?: string;
 }
 
-export interface Currency {
-    id?: number;
-    title?: string;
-    abbr?: string;
-    iso?: string;
+export interface ClientRecordInfo {
+    name?: string;
+    phone?: string;
+    comment?: string;
 }

@@ -1,0 +1,24 @@
+.tab-icon{
+    fill: #787579;
+}
+.tab-icon-active{
+    fill: #FF7648;
+}
+.tab{
+    div{
+        background: none;
+    }
+    span{
+        font-size: 10px;
+        font-style: normal;
+        font-weight: 600;
+        line-height: 13px; /* 130% */
+        letter-spacing: 0.06px;
+        color: #787579;
+    }
+&.tab-active{
+    span{
+        color: #FF7648;
+    }
+}
+}

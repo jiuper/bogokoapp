@@ -5,7 +5,6 @@ import cnBind from "classnames/bind";
 
 import { useInfoCompanyQuery } from "@/entities/company/api/getInfoCompanyApi";
 import DEF from "@/shared/assets/images/Cover.png";
-import AVATAR from "@/shared/assets/images/image 19.png";
 import { ROUTES } from "@/shared/const/Routes.ts";
 import { useAppDispatch } from "@/shared/redux/configStore.ts";
 import { bookingSliceActions } from "@/shared/redux/reducers/booking.reducer.ts";
@@ -37,7 +36,7 @@ export const IndexPage: FC = () => {
         <div className={cx("bg-wrapper")}>
             <Carousel value={products} />
             <div className={cx("wrapper", "container")}>
-                <AddressCompany city="Витебск" address="ул. Кирова 12 каб.20" avatar={AVATAR} map="" />
+                <AddressCompany city={data?.address} map="" />
                 <LinkGroup listLink={listLink} />
                 <ReferralBlock countCredits={10} />
                 <DescriptionCompany

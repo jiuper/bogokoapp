@@ -6,25 +6,29 @@ import styles from "./AdressCompany.module.scss";
 
 const cx = cnBind.bind(styles);
 type AddressCompanyProps = {
-    city: string;
-    address: string;
-    avatar: string;
+    city?: string;
     map: string;
     className?: string;
+    dateTime?: { date: string; time: string };
 };
-export const AddressCompany = ({ address, avatar, city, className }: AddressCompanyProps) => {
+export const AddressCompany = ({ city, className, dateTime }: AddressCompanyProps) => {
     return (
         <div className={cx(className, "address-company")}>
-            <div className={cx("avatar-company")}>
-                <img className={cx("avatar")} src={avatar} alt="avatar" />
-            </div>
-            <div className={cx("info")}>
-                <div className={cx("map")}>
-                    <SvgIcon name="place" />
-                    <span className={cx("city")}>{city}</span>
+            <div className={cx("top")}>
+                <div className={cx("info")}>
+                    <div className={cx("map")}>
+                        <SvgIcon name="place" />
+                        <span className={cx("city")}>{city}</span>
+                    </div>
                 </div>
-                <span className={cx("address")}>{address}</span>
             </div>
+
+            {dateTime ? (
+                <div className={cx("date")}>
+                    <span className={cx("date-text")}>{dateTime.date}</span>
+                    <span className={cx("time-text")}>{dateTime.time}</span>
+                </div>
+            ) : null}
         </div>
     );
 };

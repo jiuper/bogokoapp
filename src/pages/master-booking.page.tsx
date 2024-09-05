@@ -1,6 +1,7 @@
 import { useMemo } from "react";
 
 import { useAllMastersQuery } from "@/entities/masters/api/getAllMastersApi";
+import { PageLayout } from "@/layouts/PageLayout.tsx";
 import { MasterBookingPage } from "@/view";
 
 export function MasterBooking() {
@@ -8,5 +9,9 @@ export function MasterBooking() {
 
     const listMasterData = useMemo(() => listMaster || [], [listMaster]);
 
-    return <MasterBookingPage data={listMasterData} isPending={isLoadingMasters} isServices={false} servicesId={[]} />;
+    return (
+        <PageLayout>
+            <MasterBookingPage data={listMasterData} isPending={isLoadingMasters} isServices={false} servicesId={[]} />
+        </PageLayout>
+    );
 }

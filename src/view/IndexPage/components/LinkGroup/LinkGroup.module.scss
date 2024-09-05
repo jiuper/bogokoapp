@@ -1,14 +1,14 @@
 .links{
-  display: flex;
-  gap: 15px;
-  justify-content: space-between;
+  display: grid;
+  gap: 8px;
   width: 100%;
+  grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
 
 }
 
 .link{
   border-radius: 10px;
-  padding: 8px 30px;
+  padding: 8px;
   background: #fff;
   width: 100%;
   color:#3D5266;

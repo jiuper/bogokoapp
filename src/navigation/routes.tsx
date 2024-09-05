@@ -5,6 +5,8 @@ import { MasterBooking } from "@/pages/master-booking.page.tsx";
 import { MasterFilter } from "@/pages/master-filter.page.tsx";
 import { MasterInfo } from "@/pages/master-info.page.tsx";
 import { IndexOrderPage } from "@/pages/order.page.tsx";
+import { Profile } from "@/pages/profile.page.tsx";
+import { Record } from "@/pages/record.page.tsx";
 import { Service } from "@/pages/service.page.tsx";
 import { ServicesBooking } from "@/pages/services-booking.page.tsx";
 import { TimesBookingPage } from "@/pages/times-booking.page.tsx";
@@ -26,4 +28,6 @@ export const routes: Route[] = [
     { path: `${ROUTES.TIMESBOOKING}/:id`, Component: TimesBookingPage },
     { path: `${ROUTES.ORDER}`, Component: IndexOrderPage },
     { path: `${ROUTES.MASTERFILTER}`, Component: MasterFilter },
+    { path: `${ROUTES.RECORD}`, Component: Record },
+    { path: `${ROUTES.PROFILE}`, Component: Profile },
 ];
