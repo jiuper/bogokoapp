@@ -4,7 +4,7 @@ import { ROUTES } from "@/shared/const/Routes.ts";
 export const permissionsPage = [ROUTES.SERVICES, ROUTES.BOOKING, ROUTES.CALENDAR, ROUTES.PROFILE, ROUTES.MAIN];
 
 export const ROUTING = {
-    PROFILE: () => ROUTES.PROFILE,
+    PROFILE: () => ROUTES.MAIN,
     SERVICES: () => ROUTES.SERVICES,
     MASTERS: () => ROUTES.BOOKING,
     CALENDAR: () => ROUTES.CALENDAR,
@@ -21,7 +21,7 @@ export const ROUTING_MAP: {
         id: "1",
         label: "Кабинет",
         link: ROUTING.PROFILE(),
-        accessRoles: [0],
+        accessRoles: [UserRole.User, UserRole.Master, 0],
         Icon: "personal-account",
     },
     {
@@ -42,7 +42,7 @@ export const ROUTING_MAP: {
         id: "4",
         label: "Календарь",
         link: ROUTING.CALENDAR(),
-        accessRoles: [UserRole.User, UserRole.Master],
+        accessRoles: [UserRole.User, UserRole.Master, 0],
         Icon: "personal-calendar",
     },
 ];

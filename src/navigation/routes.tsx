@@ -1,5 +1,6 @@
 import type { ComponentType, JSX } from "react";
 
+import { СalendarPageIndex } from "@/pages/calendar.page.tsx";
 import { Index } from "@/pages/index.page.tsx";
 import { MasterBooking } from "@/pages/master-booking.page.tsx";
 import { MasterFilter } from "@/pages/master-filter.page.tsx";
@@ -30,4 +31,5 @@ export const routes: Route[] = [
     { path: `${ROUTES.MASTERFILTER}`, Component: MasterFilter },
     { path: `${ROUTES.RECORD}`, Component: Record },
     { path: `${ROUTES.PROFILE}`, Component: Profile },
+    { path: `${ROUTES.CALENDAR}`, Component: СalendarPageIndex },
 ];

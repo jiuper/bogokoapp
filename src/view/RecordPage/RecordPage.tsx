@@ -15,10 +15,10 @@ import styles from "./RecordPage.module.scss";
 const cx = cnBind.bind(styles);
 export const RecordPage = () => {
     const listLink = [
-        { name: "Перенести", href: ROUTES.SERVICES, icon: "notebook" },
-        { name: "Отменить", icon: "add-master", href: ROUTES.SERVICES },
-        { name: "Еще запись", icon: "add-master", href: ROUTES.SERVICES },
-        { name: "Календарь", icon: "add-master", href: ROUTES.SERVICES },
+        { name: "Перенести", href: ROUTES.TIMESBOOKING, icon: "more_time" },
+        { name: "Отменить", icon: "highlight_off", href: ROUTES.MAIN },
+        { name: "Еще запись", icon: "add-record", href: ROUTES.BOOKING },
+        { name: "Календарь", icon: "Calendar", href: ROUTES.CALENDAR },
     ];
     const mb = useMainButton();
     const href = useNavigate();
