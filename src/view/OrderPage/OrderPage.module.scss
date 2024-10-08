@@ -1,19 +1,12 @@
 .wrapper{
-  display: flex;
-  flex-direction: column;
+  @include flex-column();
   gap: 8px;
 }
 .title{
-  text-align: center;
-  font-size: 16px;
-  font-style: normal;
-  font-weight: 600;
-  line-height: 21px; /* 131.25% */
-  letter-spacing: -0.23px;
-  color: #3D5266;
+  @include text-Title();
 }
 .cards{
-  display: flex;
-  flex-direction: column;
+  @include flex-column();
   gap: 12px;
 }
+

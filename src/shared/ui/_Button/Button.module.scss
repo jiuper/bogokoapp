@@ -6,7 +6,7 @@ $shadow-shadow: 0px 10px 24px 0px #7B68EE52;
 
 .ui-button {
   height: fit-content;
-  transition: $transition-default;
+  transition: $transition-fast;
   padding: 16px;
   border-radius: 9px;
   @include text-Button;
@@ -16,13 +16,14 @@ $shadow-shadow: 0px 10px 24px 0px #7B68EE52;
   }
 
   &.solid {
-    border: 1px solid #FF7648;
-    background: #FF7648;
-    box-shadow: #FF7648;
+    border: 1px solid $color-orange-60;
+    background: $color-orange-60;
+    color: $color-light;
 
     @include touch-hover(&) {
-      background: #FF7648;
-      box-shadow: $solid-shadow-hover;
+      border: 1px solid transparent;
+      background: rgba($color-dark, 0.04);
+      color: rgba($color-dark, 0.80);
     }
   
     &:active {
@@ -35,22 +36,22 @@ $shadow-shadow: 0px 10px 24px 0px #7B68EE52;
     }
   
     &:disabled {
-      background: $color-purple-lighter;
+      background: $color-orange-60;
       box-shadow: none;
-      color: #FF7648;
+      opacity: 0.3;
+      color: $color-light;
     }
   }
 
   &.outlined {
-    background: rgba($color-purple-lighter, 0);
-    border: 1px solid $color-lighter;
-    color: $color-purple;
+    background: rgba($color-dark, 0.10);
+    backdrop-filter: blur(20px);
+    border: none;
+    color: rgba($color-dark, 0.80);
     box-shadow: none;
 
     @include touch-hover(&) {
-      background: $color-lightness;
-      box-shadow: $outlined-shadow-hover;
-      color: $color-purple-darkness;
+      background: rgba($color-dark, 0.10);
     }
 
     &:focus-visible {

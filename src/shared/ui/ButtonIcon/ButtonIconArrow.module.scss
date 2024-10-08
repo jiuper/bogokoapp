@@ -18,15 +18,16 @@
   display: flex;
   align-items: center;
   gap: 8px;
+
+  span{
+    @include text-Subtitle2();
+    color: $color-dark;
+  }
 }
 .button{
   border-radius: 20px;
-  background: #FF7648;
-  font-size: 15px;
-  font-style: normal;
-  font-weight: 600;
-  line-height: 20px; /* 133.333% */
-  letter-spacing: -0.23px;
-  color: #fff;
+  background: $color-orange-60;
+  @include text-Body1();
+  color: $color-light;
   border: none;
 }

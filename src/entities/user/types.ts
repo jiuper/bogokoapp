@@ -1,11 +1,13 @@
-export interface ResponseAuthDto {
-    role: string;
+export interface UserData {
+    role: number;
     token: string;
 }
 export enum UserRole {
-    SuperAdministrator = 1,
-    Administrator = 10,
-    Master = 20,
-    User = 30,
-    Broker = 40,
+    DIRECTOR = 20,
+    ADMINISTRATOR = 30,
+    MASTER = 40,
+    CLIENT = 50,
+    ADMIN = 10,
+    SUPERADMIN = 1,
+    USER = 60,
 }

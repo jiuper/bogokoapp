@@ -12,16 +12,31 @@ type ServiceCardProps = {
     name?: string;
     image?: string;
     time?: string | number;
-    price?: string | number;
+    priceMin?: number;
+    priceMax?: number;
     onClick?: (id?: string, flag?: boolean) => void;
     isChoose?: boolean;
+    currencyShortTitle?: string;
+    percent?: number;
 };
-export const ServiceCard = ({ name, price, time, image, onClick, id, isChoose }: ServiceCardProps) => {
+export const ServiceCard = ({
+    name,
+    priceMin,
+    priceMax,
+    time,
+    image,
+    onClick,
+    id,
+    isChoose,
+    currencyShortTitle,
+    percent,
+}: ServiceCardProps) => {
     return (
         <div className={cx("card")}>
             <div className={cx("header")} onClick={() => onClick?.(id, true)}>
+                {percent && <span className={cx("subtitle-sale")}>{`${percent} %.`}</span>}
                 <img className={cx("image")} alt="Card" src={image || notFound} />
-                <span className={cx("subtitle")}>{`${time} мин.`}</span>
+                {time && <span className={cx("subtitle")}>{`${time} мин.`}</span>}
             </div>
             <div className={cx("body")}>
                 <div className={cx("info")}>
@@ -29,10 +44,12 @@ export const ServiceCard = ({ name, price, time, image, onClick, id, isChoose }:
                 </div>
                 <ButtonIcon
                     onClick={() => onClick?.(id)}
-                    color={isChoose ? "orange" : "purple"}
+                    color={isChoose ? "orange" : "empty"}
                     className={cx("button", { isChoose })}
                     icon={<SvgIcon name={isChoose ? "Checked" : "star-rate"} />}
-                    label={`${price} BYN`}
+                    label={`${percent ? (priceMin || 0) - ((priceMin || 0) / 100) * percent : priceMin}  ${
+                        priceMin === priceMax ? "" : `- ${priceMax}`
+                    } ${currencyShortTitle}`}
                 />
             </div>
         </div>

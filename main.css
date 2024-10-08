@@ -1,0 +1,22 @@
+.text {
+    font-size: clamp(28px, calc(28px + (8 * (100vw - 1440px) / 480 )), 36px);
+}
+
+@media (max-width: 1440px) {
+    .text {
+        font-size: clamp(20px, calc(20px + (8 * (100vw - 768px) / 642 )), 28px);
+    }
+   
+}
+
+@media (max-width: 768px) {
+     .text {
+        font-size: clamp(16px, calc(16px + (4 * (100vw - 480px) / 1440 )), 20px);
+    }
+}
+
+.padding {
+    max-width: 400px;
+    border: 1px solid red;
+    padding: clamp(28px, calc(28px + (8 * (100vw - 1440px) / 480 )), 36px);
+}

@@ -1,13 +1,7 @@
-export interface ServiceDateTimes {
-    id: string;
-    name: string;
-    image: string;
-    time: string;
-    price: string;
-}
+import type { MasterServiceInfo } from "@/entities/masters/types.ts";
 
 export interface GetCategoryWithServiceDto {
     id?: string;
     name?: string;
-    services: ServiceDateTimes[];
+    services: MasterServiceInfo[];
 }

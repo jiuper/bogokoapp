@@ -2,7 +2,7 @@
   display: flex;
   justify-content: center;
   border-radius: 12px;
-  background: #fff;
+  background: $color-light;
   max-height: 80px;
   height: 100%;
   width: 100%;
@@ -16,13 +16,14 @@
     [data-pc-section="image"]{
       object-fit: cover;
       border-radius: 8px;
+      box-shadow: 0px 2px 4px 0px rgba(255, 118, 72, 0.12), 0px 2px 4px 0px rgba(0, 0, 0, 0.12);
     }
   }
   .badge{
     position: absolute;
     top: 0;
     right: -10px;
-    background: #FF7648;
+    background: $color-orange-60;
   }
 }
 .body{
@@ -32,18 +33,16 @@
   align-items: center;
   width: 100%;
   .info{
-    display: flex;
-    flex-direction: column;
+    @include flex-column();
     width: 100%;
   }
 
   .name{
-    font-size: 17px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 20px; /* 117.647% */
-    letter-spacing: -0.4px;
-    color: #3D5266;
+    @include flex-column();
+    gap: 4px;
+    @include text-Subtitle2();
+    color:$color-shading-60;
+    
   }
   .post-wrapper{
     display: flex;
@@ -52,12 +51,8 @@
     justify-content: space-between;
 
     .post{
-      font-size: 13px;
-      font-style: normal;
-      font-weight: 400;
-      line-height: 16px; /* 123.077% */
-      letter-spacing: -0.08px;
-      color: #707579;
+      @include text-Body2();
+      color: $color-silver-30
     }
   }
   .button{

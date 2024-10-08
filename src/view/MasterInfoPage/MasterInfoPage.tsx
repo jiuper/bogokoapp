@@ -8,10 +8,9 @@ import { ModalDetailedService } from "@/_Modals/ModalDetailedService";
 import { ModalSocialNetworks } from "@/_Modals/ModalSocialNetworks";
 import type { GetMasterFullInfoDto } from "@/entities/masters/types.ts";
 import { ROUTES } from "@/shared/const/Routes.ts";
+import { useClientContext, useClientContextMutate } from "@/shared/context/ClientProvider.tsx";
 import { useBookingService } from "@/shared/hooks/useBookingService.ts";
 import { useBooleanState } from "@/shared/hooks/useBooleanState.ts";
-import { useAppDispatch } from "@/shared/redux/configStore.ts";
-import { bookingSliceActions } from "@/shared/redux/reducers/booking.reducer.ts";
 import { InputSearch } from "@/shared/ui/_InputSearch";
 import { LinkGroup } from "@/view/IndexPage/components/LinkGroup";
 import { ServiceCard } from "@/view/ServicePage/ServiceCard";
@@ -20,52 +19,45 @@ import styles from "./MasterInfoPage.module.scss";
 
 const cx = cnBind.bind(styles);
 type MasterInfoPageProps = {
-    data?: GetMasterFullInfoDto;
+    data: GetMasterFullInfoDto;
     masterId?: string;
 };
 export const MasterInfoPage = ({ data, masterId }: MasterInfoPageProps) => {
+    const { companyInfo } = useClientContext();
+    const { handleAddMasterBooking } = useClientContextMutate();
     const href = useNavigate();
-    const dispatch = useAppDispatch();
+
     const listData = useMemo(() => data?.services || [], [data?.services]);
     const [searchValue, setSearchValue] = useState<string | undefined>("");
     const [isOpenModalNetWork, onOpenModalNetWork, onCloseModalNetWork] = useBooleanState(false);
-    const {
-        servicesId,
-        serviceId,
-        isOpenModalBookingService,
-        handleOpenModalService,
-        isOpenModalService,
-        onCloseModalService,
-        handleOpenModalDetailsService,
-    } = useBookingService();
 
-    const onRecord = () => {
-        href(`${ROUTES.TIMESBOOKING}/${masterId}`);
-        dispatch(
-            bookingSliceActions.setBookingMasters({
-                masterInfo: {
-                    ...data,
-                    services: data?.services?.filter((el) => servicesId.includes(el.id)),
-                },
-            }),
-        );
-    };
-
-    const service = useMemo(() => listData.find((service) => service.id === serviceId), [listData, serviceId]);
     const filterListData = useMemo(
         () => listData.filter((el) => el.name.toLowerCase().includes(searchValue?.toLowerCase() || "")),
         [listData, searchValue],
     );
 
-    const listLink = [
-        { name: "Отзывы", onClick: () => onOpenModalNetWork(), icon: "star-rate" },
+    const {
+        servicesId,
+        price,
+        time,
+        service,
+        isOpenModalBookingService,
+        handleOpenModalService,
+        isOpenModalService,
+        onCloseModalService,
+        handleOpenModalDetailsService,
+    } = useBookingService(filterListData);
+
+    const onRecord = () => {
+        handleAddMasterBooking(masterId || "");
+        href(`${ROUTES.TIMESBOOKING}/${masterId}`);
+    };
+
+    const listLinkTop = [
+        { name: "Отзывы", onClick: () => href(ROUTES.FEEDBACK), icon: "star-rate" },
         { name: "Связаться", onClick: () => onOpenModalNetWork(), icon: "message" },
     ];
-
-    const price = filterListData
-        .filter((el) => servicesId.includes(el.id || ""))
-        .reduce((acc, el) => acc + +el.price, 0);
-    const time = filterListData.filter((el) => servicesId.includes(el.id || "")).reduce((acc, el) => acc + +el.time, 0);
+    const listLinkBottom = [{ name: "Выполненные работы", onClick: () => onOpenModalNetWork(), icon: "image" }];
 
     return (
         <div className={cx("master-info")}>
@@ -83,7 +75,11 @@ export const MasterInfoPage = ({ data, masterId }: MasterInfoPageProps) => {
                     </div>
                 </div>
                 <div className={cx("body")}>
-                    <LinkGroup listLink={listLink} />
+                    <div className={cx("links")}>
+                        <LinkGroup listLink={listLinkTop} />
+                        <LinkGroup listLink={listLinkBottom} />
+                    </div>
+
                     <div className={cx("list-services")}>
                         <h2>Услуги</h2>
                         <InputSearch value={searchValue} onChange={setSearchValue} />
@@ -94,7 +90,10 @@ export const MasterInfoPage = ({ data, masterId }: MasterInfoPageProps) => {
                                         isChoose={servicesId.includes(card.id || "")}
                                         onClick={handleOpenModalService}
                                         key={card.id}
+                                        currencyShortTitle={companyInfo?.currencyShortTitle}
                                         {...card}
+                                        priceMax={card.priceMax}
+                                        priceMin={card.priceMax}
                                     />
                                 ))}
                             </div>
@@ -108,6 +107,7 @@ export const MasterInfoPage = ({ data, masterId }: MasterInfoPageProps) => {
             <ModalDetailedService
                 {...service}
                 isOpen={isOpenModalService}
+                currencyShortTitle={companyInfo?.currencyShortTitle}
                 onClick={handleOpenModalDetailsService}
                 onClose={onCloseModalService}
             />
@@ -116,6 +116,7 @@ export const MasterInfoPage = ({ data, masterId }: MasterInfoPageProps) => {
                 time={time}
                 count={servicesId.length}
                 isOpen={isOpenModalBookingService}
+                currencyShortTitle={companyInfo?.currencyShortTitle}
                 onClick={onRecord}
                 title="Услуги можно заказать находясь внутри категории"
                 label="К дате и времени"

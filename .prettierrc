@@ -21,6 +21,12 @@
             }
         },
         {
+            "files": ["**/*.js", ".*js"],
+            "options": {
+                "parser": "js"
+            }
+        },
+        {
             "files": ["**/*.css"],
             "options": {
                 "parser": "css"

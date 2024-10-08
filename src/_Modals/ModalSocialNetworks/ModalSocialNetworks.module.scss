@@ -1,20 +1,12 @@
 .modal-social-networks{
   padding: 16px 8px;
-  display: flex;
-  flex-direction: column;
+  @include flex-column();
   gap: 8px;
 }
 .title{
-  font-size: 16px;
-  font-style: normal;
-  font-weight: 600;
-  line-height: 21px; /* 131.25% */
-  letter-spacing: -0.23px;
-  color: #000000;
-  text-align: center;
+ @include text-Title();
 }
 .networks-list{
-  display: flex;
-  flex-direction: column;
+  @include flex-column();
   gap: 8px;
 }

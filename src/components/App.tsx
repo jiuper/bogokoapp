@@ -15,18 +15,21 @@ import {
 } from "@telegram-apps/sdk-react";
 import { AppRoot } from "@telegram-apps/telegram-ui";
 
-import { getAuthApi } from "@/entities/user/getAuth";
 import { routes } from "@/navigation/routes.tsx";
 import { ROUTES } from "@/shared/const/Routes.ts";
+import { signInAction } from "@/shared/redux/actions/signInAction.ts";
+import { useAppDispatch } from "@/shared/redux/configStore.ts";
 
 export const App: FC = () => {
     const lp = useLaunchParams();
+    const dispatch = useAppDispatch();
     const miniApp = useMiniApp();
     const themeParams = useThemeParams();
-
     const viewport = useViewport();
     const [settingsButton] = initSettingsButton();
     const [backButton] = initBackButton();
+    const navigator = useMemo(() => initNavigator("app-navigation-state"), []);
+    const [location, reactNavigator] = useIntegration(navigator);
     useEffect(() => {
         return bindMiniAppCSSVars(miniApp, themeParams);
     }, [miniApp, themeParams]);
@@ -41,13 +44,16 @@ export const App: FC = () => {
     useEffect(() => {
         settingsButton.show();
 
-        if (!ROUTES.MAIN) backButton.show();
-    }, [settingsButton, backButton]);
+        if (ROUTES.MAIN === location.pathname) backButton.hide();
+        else {
+            backButton.show();
+        }
+
+        // if (!ROUTES.MAIN || !ROUTES.BONUS) backButton.show();
+    }, [settingsButton, backButton, location]);
 
     // Create a new application navigator and attach it to the browser history, so it could modify
     // it and listen to its changes.
-    const navigator = useMemo(() => initNavigator("app-navigation-state"), []);
-    const [location, reactNavigator] = useIntegration(navigator);
 
     // Don't forget to attach the navigator to allow it to control the BackButton state as well
     // as browser history.
@@ -57,19 +63,28 @@ export const App: FC = () => {
         return () => navigator.detach();
     }, [navigator]);
 
+    // @ts-ignore
+    // @ts-ignore
     useEffect(() => {
-        void getAuthApi({
-            // @ts-ignore
-            initDataRaw: miniApp.state.state.initDataRaw,
-            // @ts-ignore
-            user: miniApp.state.state.initData.user,
-        }).then((data) => localStorage.setItem("token", data.token));
-    }, []);
+        void dispatch(
+            signInAction({
+                // @ts-ignore
+                // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment,@typescript-eslint/no-unsafe-member-access
+                initDataRaw: miniApp.state.state.initDataRaw,
+                // @ts-ignore
+                // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment,@typescript-eslint/no-unsafe-member-access
+                user: miniApp.state.state.initData.user,
+            }),
+        );
+        // @ts-ignore
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+    }, [dispatch, miniApp.state.state.initData.user, miniApp.state.state.initDataRaw]);
 
     return (
         <AppRoot
             appearance={miniApp.isDark ? "dark" : "light"}
             platform={["macos", "ios"].includes(lp.platform) ? "ios" : "base"}
+            style={{ height: "100%" }}
         >
             <Router location={location} navigator={reactNavigator}>
                 <Routes>

@@ -3,13 +3,14 @@ import { useMemo } from "react";
 import { useQueryMultiMasters } from "@/entities/masters/api/getMultiMasterApi";
 import type { GetMasterDto } from "@/entities/masters/types.ts";
 import { PageLayout } from "@/layouts/PageLayout.tsx";
-import { useAppSelector } from "@/shared/redux/configStore.ts";
+import { useClientContext, useClientContextMutate } from "@/shared/context/ClientProvider.tsx";
 import { MasterBookingPage } from "@/view";
 
 export function MasterFilter() {
-    const queryParams = useAppSelector((state) => state.booking.bookingMasters);
-    const servicesId = queryParams.reduce<string[]>(
-        (acc, el) => [...acc, ...(el.masterInfo?.services?.map((elem) => elem.id.toString()) || [])],
+    const { booking } = useClientContext();
+    const { handleAddMasterBooking } = useClientContextMutate();
+    const servicesId = booking.reduce<string[]>(
+        (acc, el) => [...acc, ...(el.masterInfo?.services?.map((elem) => elem?.id?.toString() || "") || [])],
         [],
     );
 
@@ -17,13 +18,13 @@ export function MasterFilter() {
 
     const listMultiMasterData = useMemo(
         () =>
-            listMultiMaster?.reduce<GetMasterDto[]>((acc, cur) => {
-                cur?.masters?.map((el) =>
-                    acc.push({ id: el.masterId, name: el.masterName || "", image: el.masterImage, post: el.cost }),
-                );
+            listMultiMaster
+                ? listMultiMaster.reduce<GetMasterDto[]>((acc, cur) => {
+                      acc.push({ ...cur, id: cur.id || "", name: cur.name || "" });
 
-                return acc.filter((el, i) => acc.findIndex((elem) => elem?.id === el.id) === i);
-            }, []) || [],
+                      return acc.filter((el, i) => acc.findIndex((elem) => elem?.id === el.id) === i);
+                  }, [])
+                : [],
         [listMultiMaster],
     );
 
@@ -34,6 +35,7 @@ export function MasterFilter() {
                 isPending={isLoadingMultiMasters}
                 isServices
                 servicesId={servicesId}
+                addMasterBooking={handleAddMasterBooking}
             />
         </PageLayout>
     );

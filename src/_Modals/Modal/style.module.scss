@@ -11,7 +11,7 @@
         border-top-right-radius: 24px;
         border-top-left-radius: 24px;
         [data-pc-section="headertitle"] {
-            @include text-Headline5();
+            @include text-Subtitle3();
         }
     }
 }

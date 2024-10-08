@@ -4,11 +4,10 @@ import cnBind from "classnames/bind";
 
 import { ModalBookingService } from "@/_Modals/ModalBookingService";
 import { ModalDetailedService } from "@/_Modals/ModalDetailedService";
-import { useAllServicesQuery } from "@/entities/services/api/getAllServicesApi/getAllServicesApi.ts";
+import type { GetCategoryWithServiceDto } from "@/entities/services/types.ts";
 import { ROUTES } from "@/shared/const/Routes.ts";
+import { useClientContext } from "@/shared/context/ClientProvider.tsx";
 import { useBookingService } from "@/shared/hooks/useBookingService.ts";
-import { useAppDispatch } from "@/shared/redux/configStore.ts";
-import { bookingSliceActions } from "@/shared/redux/reducers/booking.reducer.ts";
 import { InputSearch } from "@/shared/ui/_InputSearch";
 import { ServiceCard } from "@/view/ServicePage/ServiceCard";
 
@@ -16,61 +15,38 @@ import styles from "./ServicePage.module.scss";
 
 const cx = cnBind.bind(styles);
 type ServicePageProps = {
-    id: string;
+    data: GetCategoryWithServiceDto[];
 };
-export const ServicePage = ({ id }: ServicePageProps) => {
+export const ServicePage = ({ data }: ServicePageProps) => {
+    const { companyInfo } = useClientContext();
     const href = useNavigate();
-    const dispatch = useAppDispatch();
-    const { data } = useAllServicesQuery();
-    const listData = useMemo(() => data || [], [data]);
-    const filterListData = useMemo(() => listData.filter((el) => el.id === id), [listData, id]);
+
     const [searchValue, setSearchValue] = useState<string | undefined>("");
+    const filterSearchListData = useMemo(
+        () =>
+            data.length !== 0
+                ? data[0].services.filter((el) => el.name?.toLowerCase().includes(searchValue?.toLowerCase() || ""))
+                : [],
+        [data, searchValue],
+    );
+
     const {
         servicesId,
-        serviceId,
+        price,
+        time,
+        service,
         isOpenModalBookingService,
         handleOpenModalService,
         isOpenModalService,
         onCloseModalService,
         handleOpenModalDetailsService,
-    } = useBookingService();
+    } = useBookingService(filterSearchListData);
 
-    const filterSearchListData = useMemo(
-        () =>
-            filterListData.length !== 0
-                ? filterListData[0].services.filter((el) =>
-                      el.name?.toLowerCase().includes(searchValue?.toLowerCase() || ""),
-                  )
-                : [],
-        [filterListData, searchValue],
-    );
-
-    const service = useMemo(
-        () => filterSearchListData.find((elem) => elem.id === serviceId),
-        [filterSearchListData, serviceId],
-    );
-
-    const price = filterSearchListData
-        .filter((el) => servicesId.includes(el.id || ""))
-        .reduce((acc, el) => (el.price ? acc + +el.price : 0), 0);
-    const time = filterSearchListData
-        .filter((el) => servicesId.includes(el.id || ""))
-        .reduce((acc, el) => (el.time ? acc + +el.time : 0), 0);
-
-    const onRecord = () => {
-        href(`${ROUTES.MASTERFILTER}`);
-        dispatch(
-            bookingSliceActions.setBookingMasters({
-                masterInfo: {
-                    services: filterSearchListData.filter((el) => servicesId.includes(el.id || "")),
-                },
-            }),
-        );
-    };
+    const onRecord = () => href(`${ROUTES.MASTERFILTER}`);
 
     return (
         <div className={cx("wrapper", "container")}>
-            {filterListData.map((el) => (
+            {data.map((el) => (
                 <div key={el.id} className={cx("section")}>
                     <h2 className={cx("title")}>{el.name}</h2>
                     <InputSearch value={searchValue} onChange={setSearchValue} />
@@ -81,6 +57,7 @@ export const ServicePage = ({ id }: ServicePageProps) => {
                                     isChoose={servicesId.includes(card.id || "")}
                                     onClick={handleOpenModalService}
                                     key={card.id}
+                                    currencyShortTitle={companyInfo?.currencyShortTitle}
                                     {...card}
                                 />
                             ))
@@ -95,6 +72,7 @@ export const ServicePage = ({ id }: ServicePageProps) => {
                 isOpen={isOpenModalService}
                 onClick={handleOpenModalDetailsService}
                 onClose={onCloseModalService}
+                currencyShortTitle={companyInfo?.currencyShortTitle}
             />
             <ModalBookingService
                 price={price}
@@ -103,6 +81,7 @@ export const ServicePage = ({ id }: ServicePageProps) => {
                 isOpen={isOpenModalBookingService}
                 onClick={onRecord}
                 title="Услуги можно заказать находясь внутри категории"
+                currencyShortTitle={companyInfo?.currencyShortTitle}
                 label="К выбору мастера"
             />
         </div>

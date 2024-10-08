@@ -1,0 +1,31 @@
+.master-info{
+  background: #fff;
+}
+.header{
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 8px;
+  .short-info{
+    @include flex-column();
+
+    .name{
+      @include text-Subtitle2();
+      color: $color-dark;
+    }
+    .post{
+      @include text-Body1();
+      color: $color-silver-30;
+    }
+  }
+
+  .avatar{
+    position: relative;
+    .badge{
+      position: absolute;
+      top: 0;
+      right: 0;
+      background: $color-orange-60;
+    }
+  }
+}

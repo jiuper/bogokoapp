@@ -17,7 +17,12 @@ export const TimeBooking = ({ listTime, title, time, onClick }: TimeBookingProps
     const [selectedDate, setSelectedDate] = useState<boolean>(true);
 
     const titleTrue = useMemo(
-        () => (listTime.some((el) => (title === "Утро" ? el <= time : el >= time)) ? title : null),
+        () =>
+            listTime.some((el) =>
+                title === "Утро" ? el <= time : title === "День" ? el >= time && el <= "17:45" : el >= time,
+            )
+                ? title
+                : null,
         [listTime, time, title],
     );
 

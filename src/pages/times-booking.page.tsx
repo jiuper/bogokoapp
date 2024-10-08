@@ -1,16 +1,22 @@
+import { useMemo } from "react";
 import { useParams } from "react-router";
 
 import { PageLayout } from "@/layouts/PageLayout.tsx";
-import { useAppSelector } from "@/shared/redux/configStore.ts";
+import { useClientContext, useClientContextMutate } from "@/shared/context/ClientProvider.tsx";
 import { TimesBooking } from "@/view/TimesBooking";
 
 export const TimesBookingPage = () => {
-    const queryParams = useAppSelector((state) => state.booking.bookingMasters);
     const { id } = useParams();
+    const { booking } = useClientContext();
+    const { handleAddWorkDateBooking } = useClientContextMutate();
+    const filterListData = useMemo(
+        () => booking.find((el) => el?.masterInfo?.id?.toString() === id?.toString()),
+        [booking, id],
+    );
 
     return (
         <PageLayout>
-            <TimesBooking masterId={id} queryParams={queryParams} />
+            <TimesBooking data={filterListData} handleAddWorkDateBooking={handleAddWorkDateBooking} />
         </PageLayout>
     );
 };

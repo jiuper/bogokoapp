@@ -3,14 +3,11 @@ export interface GetCompanyDto {
     name?: string;
     description?: string;
     image?: string;
-    schedule?: CompanySchedule[];
+    schedule?: string;
     phones?: string[];
+    city?: string;
     address?: string;
-    currencyAbbr?: string;
-}
-
-export interface CompanySchedule {
-    day?: string;
-    workFrom?: string;
-    workTo?: string;
+    coordinateLat?: number;
+    coordinateLon?: number;
+    currencyShortTitle?: string;
 }

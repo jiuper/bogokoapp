@@ -1,16 +1,9 @@
 .wrapper{
-  display: flex;
-  flex-direction: column;
+  @include flex-column();
   gap: 8px;
 }
 .title{
-  text-align: center;
-  font-size: 16px;
-  font-style: normal;
-  font-weight: 600;
-  line-height: 21px; /* 131.25% */
-  letter-spacing: -0.23px;
-  color: #3D5266;
+  @include text-Title();
 }
 
 .cards{
@@ -25,14 +18,11 @@
   justify-content: space-between;
   align-items: center;
   padding: 8px 12px;
-  background: #FFFFFF;
+  background: $color-light;
   border-radius: 12px;
-  font-size: 15px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: 20px; /* 133.333% */
-  letter-spacing: -0.23px;
-  color: #3D5266;
+ @include text-Body1();
+  color: $color-shading-60;
+  height: 100%;
 }
 
 .phone{
@@ -40,7 +30,33 @@
   align-items: center;
 }
 .list{
-  background: #fff;
+  background: $color-light;
   padding: 8px;
   border-radius: 12px;
+  @include flex-column();
+  gap: 8px;
+}
+
+.date{
+  @include text-Subtitle2();
+  color: #000000;
+}
+
+.time{
+  @include text-Body3();
+  color: $color-silver-30;
+}
+.main{
+  width: 100%;
+  background: $color-light;
+  border-radius: 44px;
+  padding: 16px;
+  box-shadow: 0px -1px 12px 0px rgba(255, 118, 72, 0.12);
+  backdrop-filter: blur(20px);
+  margin: 15px 0;
+
+  button{
+    width: 100%;
+    border-radius: 44px;
+  }
 }

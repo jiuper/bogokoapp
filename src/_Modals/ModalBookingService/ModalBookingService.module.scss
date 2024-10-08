@@ -1,15 +1,14 @@
-
 .modal-booking-service{
+  @include flex-column();
   padding: 16px;
-  display: flex;
-  flex-direction: column;
   gap: 16px;
+
   .description-order{
     display: flex;
     justify-content: space-between;
     align-items: center;
     border-radius: 28px;
-    border: 1px solid #FF7648;
+    border: 1px solid $color-orange-60;
     background: rgba(255, 255, 255, 0.50);
     padding: 10px 16px;
     .count-service{
@@ -17,16 +16,12 @@
       align-items: center;
       gap: 8px;
       span{
-        color: #FF7648;
-        font-size: 24px;
-        font-style: normal;
-        font-weight: 600;
-        line-height: 20px; /* 83.333% */
-        letter-spacing: -0.23px;
+        color: $color-orange-60;
+        @include text-Headline1();
         text-transform: uppercase;
       }
       .icon{
-        fill: #FF7648;
+        fill: $color-orange-60;
       }
     }
     .time-price{
@@ -34,26 +29,18 @@
       align-items: center;
       gap: 8px;
       span{
-        color: #FF7648;
-        font-size: 15px;
-        font-style: normal;
-        font-weight: 500;
-        line-height: 20px; /* 133.333% */
-        letter-spacing: -0.23px;
+        color: $color-orange-60;
+        @include text-Body1();
       }
     }
   }
   .button{
-    background: #FF7648;
+    background: $color-orange-60;
     border-radius: 28px;
   }
   .text{
-    font-size: 11px;
-    font-style: normal;
-    font-weight: 500;
-    line-height: 16px; /* 145.455% */
-    letter-spacing: 0.1px;
-    color: #000;
+    @include text-Body4();
+    color: $color-dark;
     text-align: center;
   }
 }

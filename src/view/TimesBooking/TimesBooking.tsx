@@ -6,28 +6,25 @@ import { Calendar } from "@/Calendar";
 import { useAllTimesMasterInfoQuery } from "@/entities/order/api/getAllTimesMasterInfo";
 import { useTimesMasterInfoQuery } from "@/entities/order/api/getTimesMasterInfo";
 import { ROUTES } from "@/shared/const/Routes.ts";
-import { useAppDispatch } from "@/shared/redux/configStore.ts";
-import type { BookingData } from "@/shared/redux/reducers/booking.reducer.ts";
-import { bookingSliceActions } from "@/shared/redux/reducers/booking.reducer.ts";
+import type { BookingData } from "@/shared/context/ClientProvider.tsx";
+import { SvgIcon } from "@/shared/ui/SvgIcon/SvgIcon.tsx";
 import { TimeBooking } from "@/view/TimesBooking/components/TimeBooking";
 
 import styles from "./TimesBooking.module.scss";
 
 const cx = cnBind.bind(styles);
 type TimesBookingProps = {
-    queryParams: BookingData[] | null;
-    masterId?: string;
+    data?: BookingData;
+    handleAddWorkDateBooking?: (date: string, time: string) => void;
 };
-export const TimesBooking = ({ queryParams, masterId }: TimesBookingProps) => {
-    const dispatch = useAppDispatch();
+export const TimesBooking = ({ data, handleAddWorkDateBooking }: TimesBookingProps) => {
     const href = useNavigate();
     const [selectedDate, setSelectedDate] = useState<Date>(new Date());
     const [dateTo, setDateTo] = useState<Date>(new Date(new Date().setDate(new Date().getDate() + 30)));
-    const filterListData = queryParams?.find((el) => el?.masterInfo?.id === masterId);
     const masters = [
         {
-            masterId: filterListData?.masterInfo?.id || "",
-            serviceId: filterListData?.masterInfo?.services?.map((elem) => String(elem.id) || "") || [],
+            masterId: data?.masterInfo?.id || "",
+            serviceId: data?.masterInfo?.services?.map((elem) => String(elem.id) || "") || [],
         },
     ];
 
@@ -37,8 +34,8 @@ export const TimesBooking = ({ queryParams, masterId }: TimesBookingProps) => {
     });
     const { data: allTimes } = useAllTimesMasterInfoQuery({
         masters,
-        dateFrom: selectedDate.toLocaleDateString().replace(/[.]/g, "-").split("-").reverse().join("-"),
-        dateTo: dateTo.toLocaleDateString().replace(/[.]/g, "-").split("-").reverse().join("-"),
+        dateFrom: selectedDate.toLocaleDateString().replace(/[.]/g, "-").split("-").join("-"),
+        dateTo: dateTo.toLocaleDateString().replace(/[.]/g, "-").split("-").join("-"),
     });
     useEffect(() => {
         if (selectedDate.toLocaleDateString() === dateTo.toLocaleDateString())
@@ -48,33 +45,40 @@ export const TimesBooking = ({ queryParams, masterId }: TimesBookingProps) => {
     const dateTrue = useMemo(() => allTimes || [], [allTimes]);
     const listDateTimes = useMemo(() => singleTimeDay?.workData?.times || [], [singleTimeDay]);
     const onBooking = (time: string) => {
-        dispatch(
-            bookingSliceActions.setBookingMasters({
-                workData: { time, date: selectedDate.toLocaleDateString() },
-                masterInfo: filterListData?.masterInfo,
-            }),
-        );
         href(ROUTES.ORDER);
+        handleAddWorkDateBooking?.(
+            selectedDate.toLocaleDateString().replace(/[.]/g, "-").split("-").reverse().join("-"),
+            time,
+        );
     };
 
     return (
-        <div className={cx("wrapper", "container")}>
+        <div className={cx("wrapper")}>
             <div className={cx("header")}>
                 <span className={cx("title")}>Выберите дату и время</span>
                 <div className={cx("master-name")}>
-                    <span className={cx("name")}>{queryParams?.[0].masterInfo?.name}</span>
+                    <span className={cx("name")}>{data?.masterInfo?.name}</span>
                 </div>
             </div>
-            <Calendar onChange={onSelectHandler} dateTrue={dateTrue} />
-            {loadingSingleTimeDay ? null : listDateTimes.length === 0 ? (
-                <span>Выходной или нет свободного времени</span>
-            ) : (
-                <div className={cx("times")}>
-                    <TimeBooking onClick={onBooking} time="11:45" listTime={listDateTimes} title="Утро" />
-                    <TimeBooking onClick={onBooking} time="12:00" listTime={listDateTimes} title="День" />
-                    <TimeBooking onClick={onBooking} time="18:00" listTime={listDateTimes} title="Вечер" />
-                </div>
-            )}
+            <div className={cx("content")}>
+                <Calendar onChange={onSelectHandler} dateTrue={dateTrue} />
+                {loadingSingleTimeDay ? null : listDateTimes.length === 0 ? (
+                    <div className={cx("times-not")}>
+                        <span className={cx("caption")}>На {selectedDate.toLocaleDateString()} не записаться</span>
+                        <span className={cx("title")}>Выберите другую дату или услугу</span>
+                        <div onClick={() => href(-1)} className={cx("back")}>
+                            <SvgIcon name="back" />
+                            <span>Вернуться к услугам</span>
+                        </div>
+                    </div>
+                ) : (
+                    <div className={cx("times")}>
+                        <TimeBooking onClick={onBooking} time="11:45" listTime={listDateTimes} title="Утро" />
+                        <TimeBooking onClick={onBooking} time="12:00" listTime={listDateTimes} title="День" />
+                        <TimeBooking onClick={onBooking} time="18:00" listTime={listDateTimes} title="Вечер" />
+                    </div>
+                )}
+            </div>
         </div>
     );
 };

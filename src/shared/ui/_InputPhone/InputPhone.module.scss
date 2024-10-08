@@ -20,12 +20,13 @@
     width: 68px;
     @include flex-center;
     height: 47.5px;
+    border-right: 1px solid $color-purple;
 
     @include touch-hover(&) {
         background: transparent;
     }
 
-    border-right: 1px solid $color-purple;
+
 
     :global {
         .p-dropdown-trigger {

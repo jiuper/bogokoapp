@@ -2,13 +2,13 @@ import { useNavigate } from "react-router";
 import cnBind from "classnames/bind";
 import { useFormik } from "formik";
 
-import type { ServiceDateTimes } from "@/entities/masters/types.ts";
+import type { GetMasterFullInfoDto, MasterServiceInfo } from "@/entities/masters/types.ts";
 import { useOrderCreateMutation } from "@/entities/order/api/createOrderMasterApi";
 import type { RequestRecordDto } from "@/entities/order/types.ts";
+import type { ResponseNewRecordDto } from "@/entities/record/types.ts";
 import { ROUTES } from "@/shared/const/Routes.ts";
-import { useAppDispatch } from "@/shared/redux/configStore.ts";
-import type { BookingData } from "@/shared/redux/reducers/booking.reducer.ts";
-import { bookingSliceActions } from "@/shared/redux/reducers/booking.reducer.ts";
+import type { BookingData } from "@/shared/context/ClientProvider.tsx";
+import { useClientContextMutate } from "@/shared/context/ClientProvider.tsx";
 import { Button } from "@/shared/ui/_Button";
 import { InputPhone } from "@/shared/ui/_InputPhone";
 import { UIInputText } from "@/shared/ui/_InputText/InputText.tsx";
@@ -20,22 +20,31 @@ import styles from "./FormOrder.module.scss";
 
 const cx = cnBind.bind(styles);
 type FormOrderProps = {
-    queryParams: BookingData[];
+    booking: BookingData[];
+    masterInfo?: GetMasterFullInfoDto;
+    handleResetBooking: () => void;
 };
-export const FormOrder = ({ queryParams }: FormOrderProps) => {
+export const FormOrder = ({ booking, handleResetBooking, masterInfo }: FormOrderProps) => {
     const href = useNavigate();
-    const dispatch = useAppDispatch();
+    const { handleGetNewRecord } = useClientContextMutate();
     const { mutate: createOrder, isPending } = useOrderCreateMutation();
     const onSubmit = () => {
-        const createOrderParams = queryParams.reduce<RequestRecordDto[]>((acc, el) => {
+        const createOrderParams = booking.reduce<RequestRecordDto[]>((acc, el) => {
             acc.push({
                 firstName: formik.values.firstName,
                 phone: formik.values.phone.replace("+", " "),
                 comment: formik.values.comment,
-                time:
-                    `${el.workData?.date.replace(/[.]/g, "-").split("-").reverse().join("-")} ${
-                        el.workData?.time || ""
-                    }` || "",
+                recordInfo:
+                    {
+                        ...masterInfo,
+                        services: el.masterInfo?.services,
+                        totalTimePriceInfo: {
+                            totalDuration: el.masterInfo?.services?.reduce((acc, cur) => acc + (cur.time || 0), 0),
+                            totalPriceMin: el.masterInfo?.services?.reduce((acc, cur) => acc + (cur.priceMin || 0), 0),
+                            totalPriceMax: el.masterInfo?.services?.reduce((acc, cur) => acc + (cur.priceMax || 0), 0),
+                        },
+                    } || {},
+                time: `${el.workData?.date} ${el.workData?.time || ""}` || "",
                 masters: [
                     {
                         masterId: el?.masterInfo?.id || "",
@@ -47,12 +56,13 @@ export const FormOrder = ({ queryParams }: FormOrderProps) => {
             return acc;
         }, []);
 
-        const onSuccess = () => {
+        const onSuccess = (data: ResponseNewRecordDto) => {
             href(ROUTES.RECORD);
-            dispatch(bookingSliceActions.setBookingMastersReset());
+            handleResetBooking();
+            handleGetNewRecord(data);
             void formik.setValues({ firstName: "", phone: "", comment: "" });
         };
-        createOrder(createOrderParams[0], { onSuccess });
+        createOrder(createOrderParams[0], { onSuccess: (data) => onSuccess(data) });
     };
 
     const formik = useFormik({
@@ -67,13 +77,13 @@ export const FormOrder = ({ queryParams }: FormOrderProps) => {
             formik.resetForm();
         },
     });
-    const listData = queryParams.reduce<ServiceDateTimes[]>((acc, el) => {
+    const listData = booking.reduce<MasterServiceInfo[]>((acc, el) => {
         acc.push(...(el.masterInfo?.services || []));
 
         return acc;
     }, []);
-    const price = listData.reduce((acc, el) => acc + +el.price, 0);
-    const time = listData.reduce((acc, el) => acc + +el.time, 0);
+    const price = listData.reduce((acc, el) => acc + (el.priceMax || 0), 0);
+    const time = listData.reduce((acc, el) => acc + (el.time || 0), 0);
 
     return (
         <form onSubmit={formik.handleSubmit}>

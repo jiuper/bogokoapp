@@ -17,6 +17,7 @@ type ModalBookingServiceProps = {
     label?: string;
     isLoading?: boolean;
     isDisabled?: boolean;
+    currencyShortTitle?: string;
 };
 export const ModalBookingService = ({
     isOpen,
@@ -28,6 +29,7 @@ export const ModalBookingService = ({
     label,
     isLoading,
     isDisabled,
+    currencyShortTitle,
 }: ModalBookingServiceProps) => {
     return (
         <Modal
@@ -48,7 +50,7 @@ export const ModalBookingService = ({
                     </div>
                     <div className={cx("time-price")}>
                         <span>
-                            {`${time} мин`} / {`${price} руб`}
+                            {time !== 0 && `${time} мин /`} {`${price} ${currencyShortTitle}`}
                         </span>
                     </div>
                 </div>

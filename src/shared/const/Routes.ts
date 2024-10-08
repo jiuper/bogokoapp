@@ -10,4 +10,6 @@ export const ROUTES = {
     RECORD: "/record",
     PROFILE: "/profile",
     CALENDAR: "/calendar",
+    BONUS: "/bonus",
+    FEEDBACK: "/feedback",
 };

@@ -1,4 +1,6 @@
 import { type FC, useEffect, useMemo } from "react";
+import { DndProvider } from "react-dnd";
+import { HTML5Backend } from "react-dnd-html5-backend";
 import { Provider } from "react-redux";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { SDKProvider, useLaunchParams } from "@telegram-apps/sdk-react";
@@ -6,6 +8,7 @@ import { TonConnectUIProvider } from "@tonconnect/ui-react";
 
 import { App } from "@/components/App.tsx";
 import { ErrorBoundary } from "@/components/ErrorBoundary.tsx";
+import { ClientProvider } from "@/shared/context/ClientProvider.tsx";
 import { initStore } from "@/shared/redux/store.ts";
 
 export const queryClient = new QueryClient({
@@ -42,13 +45,17 @@ const Inner: FC = () => {
 
     return (
         <QueryClientProvider client={queryClient}>
-            <Provider store={initStore()}>
-                <TonConnectUIProvider manifestUrl={manifestUrl}>
-                    <SDKProvider acceptCustomStyles debug={debug}>
-                        <App />
-                    </SDKProvider>
-                </TonConnectUIProvider>
-            </Provider>
+            <DndProvider backend={HTML5Backend}>
+                <Provider store={initStore()}>
+                    <ClientProvider>
+                        <TonConnectUIProvider manifestUrl={manifestUrl}>
+                            <SDKProvider acceptCustomStyles debug={debug}>
+                                <App />
+                            </SDKProvider>
+                        </TonConnectUIProvider>
+                    </ClientProvider>
+                </Provider>
+            </DndProvider>
         </QueryClientProvider>
     );
 };

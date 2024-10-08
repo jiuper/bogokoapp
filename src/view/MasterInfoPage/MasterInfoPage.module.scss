@@ -7,33 +7,28 @@
   gap: 12px;
   padding: 12px 8px;
   .short-info{
-    display: flex;
-    flex-direction: column;
+    @include flex-column();
 
     .name{
-      font-size: 20px;
-      font-style: normal;
-      font-weight: 500;
-      line-height: 28px; /* 140% */
-      letter-spacing: -0.26px;
-      color: #261A59
+      @include text-Subtitle2();
+      color: $color-dark;
     }
     .post{
-      font-size: 12px;
-      font-style: normal;
-      font-weight: 600;
-      line-height: 16px;
-      color: #8E8EAD
+      @include text-Body1();
+      color: $color-silver-30;
     }
   }
 }
 .body{
-  display: flex;
-  flex-direction: column;
+  @include flex-column();
   gap: 20px;
-  border-radius: 24px 24px 0 0;
-  background: #EEF1FA;
+  background: #F7F7F7;
   padding: 12px 8px;
+
+  .links{
+    @include flex-column();
+    gap: 8px;
+  }
 }
 .avatar{
   position: relative;
@@ -41,21 +36,14 @@
     position: absolute;
     top: 0;
     right: 0;
-    background: #FF7648;
+    background: $color-orange-60;
   }
 }
 .list-services{
-  display: flex;
-  flex-direction: column;
+  @include flex-column();
   gap: 10px;
   h2{
-    font-size: 16px;
-    font-style: normal;
-    font-weight: 600;
-    line-height: 21px; /* 131.25% */
-    letter-spacing: -0.23px;
-    color: #000000;
-    text-align: center;
+    @include text-Title();
   }
 }
 .list{
@@ -73,10 +61,8 @@
   width: 100%;
   margin: 0 auto;
   height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: black;
+  @include flex-center();
+  color: $color-dark;
 }
 .button{
   width: 100%;

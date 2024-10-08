@@ -2,10 +2,8 @@ import { useMemo, useState } from "react";
 import { useNavigate } from "react-router";
 import cnBind from "classnames/bind";
 
-import type { GetMasterDto, GetMasterFullInfoDto } from "@/entities/masters/types.ts";
+import type { GetMasterDto } from "@/entities/masters/types.ts";
 import { ROUTES } from "@/shared/const/Routes.ts";
-import { useAppDispatch } from "@/shared/redux/configStore.ts";
-import { bookingSliceActions } from "@/shared/redux/reducers/booking.reducer.ts";
 import { InputSearch } from "@/shared/ui/_InputSearch";
 import { MasterInfoCard } from "@/view/MasterBookingPage/components/MasterInfoCard";
 import { MasterInfoCardSkeleton } from "@/view/MasterBookingPage/components/MasterInfoCard/MasterInfoCardSkeleton.tsx";
@@ -15,31 +13,24 @@ import styles from "./MasterBookingPage.module.scss";
 const cx = cnBind.bind(styles);
 type MasterInfoCardProps = {
     data: GetMasterDto[];
-    isPending: boolean;
+    isPending?: boolean;
     isServices?: boolean;
     servicesId: string[];
+    addMasterBooking?: (masterId: string) => void;
 };
-export const MasterBookingPage = ({ data, isPending, isServices, servicesId }: MasterInfoCardProps) => {
+export const MasterBookingPage = ({ data, isPending, isServices, addMasterBooking }: MasterInfoCardProps) => {
     const href = useNavigate();
-    const dispatch = useAppDispatch();
     const [searchValue, setSearchValue] = useState<string | undefined>("");
     const filterListData = useMemo(
         () => data.filter((el) => el.name.toLowerCase().includes(searchValue?.toLowerCase() || "")),
         [data, searchValue],
     );
 
-    const onRecord = (id?: string, data?: GetMasterFullInfoDto) => {
+    const onRecord = (id?: string) => {
         if (!isServices && id) href(`${ROUTES.MASTER}/${id}`);
 
-        if (isServices && id && data) {
-            dispatch(
-                bookingSliceActions.setBookingReset({
-                    masterInfo: {
-                        ...data,
-                        services: data?.services?.filter((el) => servicesId.includes(el.id.toString())),
-                    },
-                }),
-            );
+        if (isServices && id) {
+            addMasterBooking?.(id);
             href(`${ROUTES.TIMESBOOKING}/${id}`);
         }
     };
@@ -51,9 +42,7 @@ export const MasterBookingPage = ({ data, isPending, isServices, servicesId }: M
             <div className={cx("list")}>
                 {!isPending ? (
                     filterListData.length !== 0 ? (
-                        filterListData.map((el) => (
-                            <MasterInfoCard isServices={isServices} onClick={onRecord} key={el.id} {...el} />
-                        ))
+                        filterListData.map((el) => <MasterInfoCard onClick={onRecord} key={el.id} {...el} />)
                     ) : (
                         <div className={cx("not-found")}>Мастеров не найдено</div>
                     )

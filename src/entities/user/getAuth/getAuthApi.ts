@@ -16,7 +16,9 @@ export type UserInitData = {
 };
 
 export const getAuthApi = async (params: RequestAuthDto) => {
-    return createAxiosApi()<GetAuthApiResponse>({ type: "post", url: "/auth/login", body: params }).then(
-        (data) => data.data,
-    );
+    return createAxiosApi()<GetAuthApiResponse>({
+        type: "post",
+        url: "/auth/login",
+        body: params,
+    }).then((data) => data.data);
 };

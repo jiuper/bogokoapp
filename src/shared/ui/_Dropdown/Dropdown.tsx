@@ -48,7 +48,12 @@ export const UIDropdown = ({
             {icon && <span className={cx("icon", { disabled, error })}>{iconElem}</span>}
             <span className={cx("label", { isShowMenu, error })}>{label}</span>
             <Dropdown
-                className={cx("dropdown-field", className, { isShowMenu, isFullWidth, error, "with-label": label })}
+                className={cx("dropdown-field", className, {
+                    isShowMenu,
+                    isFullWidth,
+                    error,
+                    "with-label": label,
+                })}
                 value={value}
                 onShow={handleDropdownShow}
                 onHide={handleDropdownHide}

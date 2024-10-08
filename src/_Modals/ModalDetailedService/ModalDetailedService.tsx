@@ -1,7 +1,7 @@
 import { Modal } from "@telegram-apps/telegram-ui";
 import cnBind from "classnames/bind";
 
-import def from "@/shared/assets/images/photo_2023-08-17_18-11-08.jpg";
+import notFoundMaster from "@/shared/assets/images/Empty-image-icon.png";
 import { ButtonIcon } from "@/shared/ui/_ButtonIcon";
 import { Carousel } from "@/shared/ui/_Carousel";
 import { SvgIcon } from "@/shared/ui/SvgIcon/SvgIcon.tsx";
@@ -14,17 +14,21 @@ type ModalDetailedServiceProps = {
     name?: string;
     image?: string;
     description?: string;
+    currencyShortTitle?: string;
     time?: string | number;
-    price?: string | number;
+    priceMin?: number;
+    priceMax?: number;
     isOpen: boolean;
     onClose: () => void;
-    onClick?: (id?: string) => void;
+    onClick?: (masterId?: string, serviceId?: string) => void;
 };
 export const ModalDetailedService = ({
-    price,
+    priceMin,
+    priceMax,
     time,
     image,
     name,
+    currencyShortTitle,
     isOpen,
     description,
     onClose,
@@ -49,7 +53,7 @@ export const ModalDetailedService = ({
         >
             <div className={cx("modal-detailed-service")}>
                 <div className={cx("header")}>
-                    <Carousel classNameImage={cx("image")} value={[image || def]} />
+                    <Carousel classNameImage={cx("image")} value={[image || notFoundMaster]} />
                     <SvgIcon onClick={onClose} className={cx("close")} name="close-bg" />
                     <SvgIcon className={cx("closed-plank")} name="closed-plank" />
                 </div>
@@ -59,15 +63,19 @@ export const ModalDetailedService = ({
                         {description && <span className={cx("text")}>{description}</span>}
                     </div>
                     <div className={cx("info")}>
-                        <span className={cx("time")}>{`${time} мин.`}</span>
-                        <span className={cx("price")}>{`${price} руб.`}</span>
+                        <span className={cx("time")}>
+                            {time === 0 || time === null ? "индивидуально" : `${time} мин`}
+                        </span>
+                        <span className={cx("price")}>{`${priceMin}  ${
+                            priceMin === priceMax ? "" : `- ${priceMax}`
+                        } ${currencyShortTitle}`}</span>
                     </div>
                     <ButtonIcon
                         onClick={() => onClick?.(id)}
                         color="orange"
                         className={cx("button")}
                         icon={<SvgIcon name="add-service" />}
-                        label={`${price} BYN`}
+                        label={`${priceMin}  ${priceMin === priceMax ? "" : `- ${priceMax}`} ${currencyShortTitle}`}
                     />
                 </div>
             </div>

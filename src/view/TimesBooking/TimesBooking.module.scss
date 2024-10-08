@@ -1,41 +1,69 @@
 .wrapper{
-  display: flex;
-  flex-direction: column;
+ @include flex-column();
   gap: 8px;
+  height: 100%;
 }
 .header{
-  display: flex;
+  @include flex-column();
   gap:8px;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  padding: 8px;
+  @include flex-center();
 
   .title{
-    font-size: 16px;
-    font-style: normal;
-    font-weight: 600;
-    line-height: 21px; /* 131.25% */
-    letter-spacing: -0.23px;
-    color: #3D5266;
+    @include text-Title();
   }
   .master-name{
     width: 100%;
-    display: flex;
+    @include flex-center();
     padding: 6px 24px;
-    justify-content: center;
-    align-items: center;
     flex: 1 0 0;
     border-radius: 7px;
     border: 0.5px solid rgba(0, 0, 0, 0.04);
-    background:  #FFF;
+    background:  $color-light;
     box-shadow: 0px 3px 8px 0px rgba(0, 0, 0, 0.12), 0px 3px 1px 0px rgba(0, 0, 0, 0.04);
   }
   .name{
-    font-size: 13px;
-    font-style: normal;
+    @include text-Body2();
+    color: $color-dark;
     font-weight: 600;
-    line-height: 16px; /* 123.077% */
-    letter-spacing: -0.08px;
-    color: #000000;
+  }
+}
+.content{
+  background: $color-light;
+  height: 100%;
+  padding: 8px;
+  border-radius: 16px 16px 0 0;
+  border-bottom:1px solid #F4EFF4;
+}
+.times-not{
+  @include flex-column();
+  @include flex-center();
+  gap: 4px;
+  margin-top: 48px;
+
+  .caption{
+    @include text-Subtitle2();
+    font-weight: 600;
+    color: $color-shading-60;
+  }
+  .title{
+    @include text-Body2();
+    color: $color-silver-30;
+    font-weight: 500;
+  }
+
+  .back{
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    border-radius: 20px;
+    background: rgba(0, 0, 0, 0.04);
+    padding: 12px;
+    margin-top: 24px;
+
+    span{
+      @include text-Body1();
+      color: $color-dark;
+    }
   }
 }

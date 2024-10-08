@@ -1,43 +1,54 @@
+import type { JSX } from "react";
 import { useNavigate } from "react-router";
-import { useMainButton } from "@telegram-apps/sdk-react";
 import cnBind from "classnames/bind";
+import dayjs from "dayjs";
 
-import notFound from "@/shared/assets/icon/Avatar.svg";
+import type { GetCompanyDto } from "@/entities/company/types.ts";
+import { useRemoveRecord } from "@/entities/record/api/removeRecord/removeRecordApi.ts";
+import type { ResponseNewRecordDto } from "@/entities/record/types.ts";
+import notFound from "@/shared/assets/images/Empty-image-icon.png";
 import { ROUTES } from "@/shared/const/Routes.ts";
+import { Button } from "@/shared/ui/_Button";
 import { Link } from "@/shared/ui/Link/Link.tsx";
 import { SvgIcon } from "@/shared/ui/SvgIcon/SvgIcon.tsx";
 import { AddressCompany } from "@/view/IndexPage/components/AddressCompany";
 import { LinkGroup } from "@/view/IndexPage/components/LinkGroup";
 import { CardOrder } from "@/view/OrderPage/components/CardOrder";
 
+import "dayjs/locale/ru";
+
 import styles from "./RecordPage.module.scss";
 
 const cx = cnBind.bind(styles);
-export const RecordPage = () => {
+type RecordPageProps = {
+    companyInfo: GetCompanyDto | null;
+    data?: ResponseNewRecordDto | null;
+};
+export const dateFormat = (time: string, duration: number): JSX.Element => {
+    const start = dayjs(time).locale("ru");
+    const end = dayjs(time).add(duration, "minutes").locale("ru");
+
+    return (
+        <>
+            <span className={cx("date")}>{start.format("DD MMMM, dddd")}</span>
+            <span className={cx("time")}>{`${start.format("HH:mm")} - ${end.format("HH:mm")}`}</span>
+        </>
+    );
+};
+export const RecordPage = ({ companyInfo, data }: RecordPageProps) => {
+    const href = useNavigate();
+    const { mutate: removeRecord } = useRemoveRecord();
     const listLink = [
         { name: "Перенести", href: ROUTES.TIMESBOOKING, icon: "more_time" },
-        { name: "Отменить", icon: "highlight_off", href: ROUTES.MAIN },
+        {
+            name: "Отменить",
+            icon: "highlight_off",
+            href: ROUTES.MAIN,
+            onClick: () => removeRecord(data?.recordId || ""),
+        },
         { name: "Еще запись", icon: "add-record", href: ROUTES.BOOKING },
         { name: "Календарь", icon: "Calendar", href: ROUTES.CALENDAR },
     ];
-    const mb = useMainButton();
-    const href = useNavigate();
-    mb.show();
-    mb.setParams({
-        text: "На главную",
-        bgColor: "#FF7648",
-        textColor: "#fff",
-        isEnabled: true,
-        isVisible: true,
-    });
-    mb.on("click", () => {
-        href(ROUTES.MAIN);
-        mb.hide();
-        mb.setParams({
-            isEnabled: false,
-            isVisible: false,
-        });
-    });
 
     return (
         <div className={cx("wrapper", "container")}>
@@ -46,30 +57,47 @@ export const RecordPage = () => {
             </div>
             <div className={cx("cards")}>
                 <AddressCompany
-                    dateTime={{ date: "24 августа, суббота", time: "13:00-15:00" }}
-                    city="Витебск, Чкалова, 11к1"
-                    map=""
+                    city={companyInfo?.city}
+                    address={companyInfo?.address}
+                    map={{
+                        lat: companyInfo?.coordinateLat,
+                        lon: companyInfo?.coordinateLon,
+                    }}
+                    dateTime={dateFormat(data?.datetime || "", 30)}
                 />
                 <div className={cx("list")}>
                     <CardOrder
                         icon="ArrowRight"
-                        rating={4.1}
-                        avatar={notFound}
-                        name="Иван Иванов"
-                        post="Мастер"
-                        onClick={() => href(`${ROUTES.MASTER}/${1}`)}
+                        rating={data?.master?.rating}
+                        avatar={data?.master?.image || notFound}
+                        name={data?.master?.name}
+                        post={data?.master?.post}
+                        onClick={() => href(`${ROUTES.MASTER}/${data?.master?.id}`)}
                     />
-                    <CardOrder avatar={notFound} name="Мастер" post="40 мин" price="60" />
-                    <CardOrder avatar={notFound} name="Мастер" post="40 мин" price="60" />
+                    {data?.master?.services?.length
+                        ? data?.master?.services?.map((el) => (
+                              <div key={el.id}>
+                                  <CardOrder
+                                      avatar={el.image || notFound}
+                                      name={el.name}
+                                      post={`${el.time} мин`}
+                                      price={`${el.priceMax} ${companyInfo?.currencyShortTitle}`}
+                                  />
+                              </div>
+                          ))
+                        : null}
                 </div>
                 <Link to={ROUTES.PROFILE} className={cx("card")}>
-                    <span>Сергей</span>
+                    <span>{data?.clientName}</span>
                     <div className={cx("phone")}>
-                        <span>+375 29 777 77 77</span>
+                        <span>{`+${data?.clientPhone}`}</span>
                         <SvgIcon name="ArrowRight" className={cx("arrow")} />
                     </div>
                 </Link>
                 <LinkGroup listLink={listLink} />
+            </div>
+            <div className={cx("main")}>
+                <Button label="Главная" className={cx("btn")} onClick={() => href(ROUTES.MAIN)} />
             </div>
         </div>
     );

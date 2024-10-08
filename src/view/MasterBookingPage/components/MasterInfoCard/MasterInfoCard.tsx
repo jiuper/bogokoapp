@@ -1,8 +1,6 @@
 import cnBind from "classnames/bind";
 import { Image } from "primereact/image";
 
-import { useMasterQuery } from "@/entities/masters/api/getMasterApi";
-import type { GetMasterFullInfoDto } from "@/entities/masters/types.ts";
 import { SvgIcon } from "@/shared/ui/SvgIcon/SvgIcon.tsx";
 
 import styles from "./MasterInfoCard.module.scss";
@@ -13,14 +11,11 @@ type MasterInfoCard = {
     image?: string;
     name?: string;
     post?: string;
-    onClick?: (id?: string, data?: GetMasterFullInfoDto) => void;
-    isServices?: boolean;
+    onClick?: (id?: string) => void;
 };
-export const MasterInfoCard = ({ id, post, name, image, onClick, isServices }: MasterInfoCard) => {
-    const { data } = useMasterQuery({ masterId: isServices ? id : "" });
-
+export const MasterInfoCard = ({ id, post, name, image, onClick }: MasterInfoCard) => {
     return (
-        <div onClick={() => onClick?.(id, data)} className={cx("card")}>
+        <div onClick={() => onClick?.(id)} className={cx("card")}>
             <Image width="64px" height="64px" className={cx("avatar")} src={image} alt="avatar" />
             <div className={cx("info")}>
                 <span className={cx("name")}>{name}</span>

@@ -1,3 +1,3 @@
-import type { ResponseAuthDto } from "@/entities/user/types.ts";
+import type { UserData } from "@/entities/user/types.ts";
 
-export type GetAuthApiResponse = ResponseAuthDto;
+export type GetAuthApiResponse = UserData;

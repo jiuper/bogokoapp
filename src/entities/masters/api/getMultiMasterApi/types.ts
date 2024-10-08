@@ -1,3 +1,3 @@
-import type { GetMastersMultiDto } from "@/entities/masters/types.ts";
+import type { GetMasterFullInfoDto } from "@/entities/masters/types.ts";
 
-export type GetMultiMasterApiResponse = GetMastersMultiDto[];
+export type GetMultiMasterApiResponse = GetMasterFullInfoDto[];

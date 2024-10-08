@@ -1,0 +1,53 @@
+.card-calendar{
+  padding: 12px;
+  border-radius: 12px;
+  background:  #FF7648;
+
+  .wrapper{
+    @include flex-column();
+    gap: 12px;
+  }
+}
+
+.header{
+  @include flex-column();
+  color: $color-light;
+
+  .caption{
+    @include text-Body1();
+    color: $color-light;
+  }
+}
+
+.body{
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: $color-light;
+  .count-services {
+    display: flex;
+    align-items: center;
+
+
+    span {
+      @include text-Subtitle3();
+      color: $color-light;
+    }
+  }
+
+}
+.icon{
+  fill: $color-light;
+}
+.footer{
+  @include flex-column();
+  gap: 4px;
+
+  .avatar, .address{
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: $color-light;
+
+  }
+}

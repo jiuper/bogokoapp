@@ -4,7 +4,7 @@ import styles from "./DescriptionCompany.module.scss";
 
 const cx = cnBind.bind(styles);
 type DescriptionCompanyProps = {
-    description: string;
+    description?: string;
 };
 export const DescriptionCompany = ({ description }: DescriptionCompanyProps) => {
     return (

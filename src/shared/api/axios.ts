@@ -3,14 +3,27 @@ import axios from "axios";
 
 export type CustomAxiosConfig = InternalAxiosRequestConfig & {
     _retry: boolean;
-    _accessToken: string | null;
-    _refreshToken: string | null;
 };
-
 export type CustomAxiosResponse<T = unknown> = Omit<AxiosResponse<T>, "config"> & {
     config: CustomAxiosConfig;
 };
+export const axiosInstance = axios.create({
+    baseURL:
+        // eslint-disable-next-line
+        !(window as any).VITE_BACKEND_URL
+            ? `${(window as any).VITE_BACKEND_URL}/api/`
+            : "https://dikidi-booking-api.onrender.com/api/",
+});
+const requestInterceptor = (configRaw: AxiosRequestConfig): CustomAxiosConfig => {
+    const config: CustomAxiosConfig = configRaw as CustomAxiosConfig;
+    const ss = sessionStorage.getItem("token");
 
+    if (ss) {
+        config.headers.Authorization = `Bearer ${ss}`;
+    }
+
+    return config;
+};
 type CustomAxiosArgs =
     | { type: "get"; url: string; config?: AxiosRequestConfig }
     | { type: "delete"; url: string; config?: AxiosRequestConfig }
@@ -18,13 +31,7 @@ type CustomAxiosArgs =
     | { type: "put"; url: string; body: object; config?: AxiosRequestConfig }
     | { type: "postForm"; url: string; body: object; config?: AxiosRequestConfig };
 
-export const axiosInstance = axios.create({
-    baseURL:
-        // eslint-disable-next-line
-        !!(window as any).VITE_BACKEND_URL
-            ? `${(window as any).VITE_BACKEND_URL}/api/`
-            : "http://localhost:5173/api/",
-});
+axiosInstance.interceptors.request.use(requestInterceptor);
 
 export const createAxiosApi = () => {
     return <T>(args: CustomAxiosArgs) => {
@@ -33,7 +40,7 @@ export const createAxiosApi = () => {
         config._retry = false;
 
         const handleResponse = <T>(resp: AxiosResponse<T>): AxiosResponse<T> => {
-            const { config } = resp as CustomAxiosResponse<T>;
+            const { ...config } = resp as CustomAxiosResponse<T>;
 
             if (!config) return resp;
 

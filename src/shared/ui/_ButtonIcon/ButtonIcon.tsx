@@ -8,9 +8,9 @@ const cx = cnBind.bind(styles);
 
 export interface ButtonIconProps extends Omit<ButtonProps, "size"> {
     size?: "small";
-    color?: "red" | "purple" | "empty" | "orange";
+    color?: "empty" | "orange";
 }
 
-export const ButtonIcon = ({ className, size = "small", color = "purple", ...props }: ButtonIconProps) => {
+export const ButtonIcon = ({ className, size = "small", color = "orange", ...props }: ButtonIconProps) => {
     return <Button className={cx("button-icon", className, size, color)} text {...props} />;
 };

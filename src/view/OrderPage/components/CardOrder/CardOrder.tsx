@@ -10,16 +10,16 @@ import styles from "./CardOrder.module.scss";
 const cx = cnBind.bind(styles);
 type CardOrderProps = {
     avatar?: string;
-    name?: string;
+    name?: string | JSX.Element;
     post?: string;
     onClick?: () => void;
     icon?: string;
-    rating?: number;
+    rating?: string;
     price?: string;
 };
 export const CardOrder = ({ post, avatar, name, icon, onClick, rating, price }: CardOrderProps) => {
     return (
-        <div className={cx("wrapper")}>
+        <div className={cx("wrapper")} onClick={onClick}>
             {avatar && (
                 <div className={cx("header")}>
                     <div className={cx("avatar-container")}>
@@ -34,7 +34,7 @@ export const CardOrder = ({ post, avatar, name, icon, onClick, rating, price }: 
             )}
             <div className={cx("body")}>
                 <div className={cx("info")}>
-                    <span className={cx("name")}>{name}</span>
+                    <div className={cx("name")}>{name}</div>
                     <div className={cx("post-wrapper")}>
                         <span className={cx("post")}>{post}</span>
                         {price && <span className={cx("post")}>{price}</span>}
