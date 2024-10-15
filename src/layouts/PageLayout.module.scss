@@ -1,5 +1,6 @@
 .main-container, main{
     height: 100%;
+
     &.main-container{
         position: relative;
 
@@ -10,14 +11,19 @@
             right: 16px;
             border-radius: 29px;
             padding: 12px;
-            background: var(--SURFACE-APP-BG, #FFF);
-            box-shadow: 0px 0px 12px 1px rgba(0, 0, 0, 0.20);
+            background: $color-light;
+            box-shadow: 0px 0px 12px 1px rgba($color-dark, 0.20);
         }
     }
 }
-.main-with-tabbar{
-    margin-bottom: 80px;
+main{
+    overflow: auto;
+    .main-with-tabbar{
+        margin-bottom: 80px;
+
+    }
 }
+
 .tab-icon{
     fill: #787579;
 }
@@ -25,15 +31,13 @@
     fill: #FF7648;
 }
 .tab{
+    justify-content: flex-start !important;
+
     div{
         background: none;
     }
     span{
-        font-size: 10px;
-        font-style: normal;
-        font-weight: 600;
-        line-height: 13px; /* 130% */
-        letter-spacing: 0.06px;
+        @include text-Overline();
         color: #787579;
     }
 &.tab-active{

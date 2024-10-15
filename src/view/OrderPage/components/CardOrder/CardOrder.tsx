@@ -23,7 +23,13 @@ export const CardOrder = ({ post, avatar, name, icon, onClick, rating, price }: 
             {avatar && (
                 <div className={cx("header")}>
                     <div className={cx("avatar-container")}>
-                        <Image width="80px" height="80px" className={cx("avatar")} src={avatar} alt="avatar" />
+                        <Image
+                            width="80px"
+                            height="80px"
+                            className={cx("avatar")}
+                            src={avatar}
+                            alt="avatar"
+                        />
                         {rating && (
                             <Badge className={cx("badge")} type="number">
                                 {rating}
@@ -43,7 +49,7 @@ export const CardOrder = ({ post, avatar, name, icon, onClick, rating, price }: 
 
                 <ButtonIcon
                     onClick={onClick}
-                    color="orange"
+                    color="empty"
                     className={cx("button")}
                     icon={<SvgIcon className="icon" name={icon || ""} />}
                 />

@@ -2,6 +2,7 @@ import type { ComponentType, JSX } from "react";
 
 import { BonusesSystemPage } from "@/pages/bonuses-system.page.tsx";
 import { СalendarPageIndex } from "@/pages/calendar.page.tsx";
+import { ChoosePageIndex } from "@/pages/choose-page.page.tsx";
 import { Feedback } from "@/pages/feedback.page.tsx";
 import { Index } from "@/pages/index.page.tsx";
 import { MasterBooking } from "@/pages/master-booking.page.tsx";
@@ -37,4 +38,5 @@ export const routes: Route[] = [
     { path: `${ROUTES.CALENDAR}`, Component: СalendarPageIndex },
     { path: `${ROUTES.BONUS}`, Component: BonusesSystemPage },
     { path: `${ROUTES.FEEDBACK}`, Component: Feedback },
+    { path: `${ROUTES.CHOOSEPAGE}`, Component: ChoosePageIndex },
 ];

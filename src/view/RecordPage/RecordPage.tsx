@@ -9,8 +9,6 @@ import type { ResponseNewRecordDto } from "@/entities/record/types.ts";
 import notFound from "@/shared/assets/images/Empty-image-icon.png";
 import { ROUTES } from "@/shared/const/Routes.ts";
 import { Button } from "@/shared/ui/_Button";
-import { Link } from "@/shared/ui/Link/Link.tsx";
-import { SvgIcon } from "@/shared/ui/SvgIcon/SvgIcon.tsx";
 import { AddressCompany } from "@/view/IndexPage/components/AddressCompany";
 import { LinkGroup } from "@/view/IndexPage/components/LinkGroup";
 import { CardOrder } from "@/view/OrderPage/components/CardOrder";
@@ -31,7 +29,9 @@ export const dateFormat = (time: string, duration: number): JSX.Element => {
     return (
         <>
             <span className={cx("date")}>{start.format("DD MMMM, dddd")}</span>
-            <span className={cx("time")}>{`${start.format("HH:mm")} - ${end.format("HH:mm")}`}</span>
+            <span
+                className={cx("time")}
+            >{`${start.format("HH:mm")} - ${end.format("HH:mm")}`}</span>
         </>
     );
 };
@@ -87,13 +87,12 @@ export const RecordPage = ({ companyInfo, data }: RecordPageProps) => {
                           ))
                         : null}
                 </div>
-                <Link to={ROUTES.PROFILE} className={cx("card")}>
+                <div className={cx("card")}>
                     <span>{data?.clientName}</span>
                     <div className={cx("phone")}>
                         <span>{`+${data?.clientPhone}`}</span>
-                        <SvgIcon name="ArrowRight" className={cx("arrow")} />
                     </div>
-                </Link>
+                </div>
                 <LinkGroup listLink={listLink} />
             </div>
             <div className={cx("main")}>

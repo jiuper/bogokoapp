@@ -67,8 +67,8 @@ export const PageLayout = ({ children }: PageLayoutProps) => {
                     )}
 
                     {permissionsPage.includes(location) && (
-                        <FixedLayout>
-                            <Tabbar>
+                        <FixedLayout vertical="top">
+                            <Tabbar style={{ height: "80px" }}>
                                 {tabs.map(({ id, label, Icon, link }) => (
                                     <Tabbar.Item
                                         className={cx("tab", location === link && "tab-active")}

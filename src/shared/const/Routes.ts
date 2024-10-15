@@ -12,4 +12,5 @@ export const ROUTES = {
     CALENDAR: "/calendar",
     BONUS: "/bonus",
     FEEDBACK: "/feedback",
+    CHOOSEPAGE: "/choose-page",
 };

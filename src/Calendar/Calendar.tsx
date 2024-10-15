@@ -1,4 +1,5 @@
 import { useMemo, useState } from "react";
+import { useSwipeable } from "react-swipeable";
 import cnBind from "classnames/bind";
 import { eachDayOfInterval, endOfWeek, startOfWeek } from "date-fns";
 import { DateTime, Info } from "luxon";
@@ -22,7 +23,7 @@ export const Calendar = ({ dateTrue, onChange }: CalendarProps) => {
         [dateTrue],
     );
     const trans = ["ПН", "ВТ", "СР", "ЧТ", "ПТ", "СБ", "ВС"];
-    const [days] = useState(getDays());
+    const days = useMemo(() => getDays(), []);
     const startWeek = startOfWeek(dateTime.toISO() || new Date(), {
         weekStartsOn: 1,
     });
@@ -32,24 +33,45 @@ export const Calendar = ({ dateTrue, onChange }: CalendarProps) => {
         end: endWeek,
     });
 
-    const onPlusHandler = (type = "week", value = 1) => setDateTime(dateTime.plus({ [type]: value }));
-    const onMinusHandler = (type = "week", value = 1) => setDateTime(dateTime.minus({ [type]: value }));
+    const onPlusHandler = (type = "week", value = 1) =>
+        setDateTime(dateTime.plus({ [type]: value }));
+    const onMinusHandler = (type = "week", value = 1) =>
+        setDateTime(dateTime.minus({ [type]: value }));
     const onSelectHandler = (date: Date) => {
         setSelectedDate(date);
         onChange?.(date);
     };
 
+    const [position, setPosition] = useState(0);
+
+    const handlers = useSwipeable({
+        onSwiping: (eventData) => {
+            setPosition(eventData.deltaX);
+        },
+        onSwiped: () => {},
+    });
+
     return (
-        <div className={cx("calendar")}>
+        <div className={cx("calendar")} {...handlers}>
             <div className={cx("header")}>
-                <span className={cx("title")}>{dateTime.setLocale("ru").toFormat("LLLL yyyy")}</span>
+                <span className={cx("title")}>
+                    {dateTime.setLocale("ru").toFormat("LLLL yyyy")}
+                </span>
                 <div className={cx("buttons")}>
-                    <SvgIcon className={cx("prev")} name="ArrowRight" onClick={() => onMinusHandler()} />
-                    <SvgIcon className={cx("next")} name="ArrowRight" onClick={() => onPlusHandler()} />
+                    <SvgIcon
+                        className={cx("prev")}
+                        name="ArrowRight"
+                        onClick={() => onMinusHandler()}
+                    />
+                    <SvgIcon
+                        className={cx("next")}
+                        name="ArrowRight"
+                        onClick={() => onPlusHandler()}
+                    />
                 </div>
             </div>
 
-            <div className={cx("content")}>
+            <div className={cx("content")} style={{ transform: `translateX(${position}px)` }}>
                 {date.map((day, index) => {
                     const initDay = day.toLocaleDateString();
                     const today = new Date().toLocaleDateString();
@@ -58,15 +80,22 @@ export const Calendar = ({ dateTrue, onChange }: CalendarProps) => {
 
                     return (
                         <div className={cx("days")} key={initDay}>
-                            {days.map((_, i) =>
-                                i === index ? (
+                            {days.map((_, i) => {
+                                if (i !== index) return null;
+
+                                const isWeekend =
+                                    new Date(day).getDay() === 0 || new Date(day).getDay() === 6;
+                                const isWorkDay = formatListDate.includes(initDay);
+                                const isToday = initDay === today;
+
+                                return (
                                     <div
-                                        key={day.toLocaleDateString()}
+                                        key={initDay}
                                         className={cx("day", {
-                                            work: formatListDate.includes(initDay),
-                                            notWork: !formatListDate.includes(initDay),
-                                            today: initDay === today,
-                                            weekend: new Date(day).getDay() === 0 || new Date(day).getDay() === 6,
+                                            work: isWorkDay,
+                                            notWork: !isWorkDay,
+                                            today: isToday,
+                                            weekend: isWeekend,
                                             selectedDay,
                                         })}
                                         onClick={() => onSelectHandler(day)}
@@ -74,8 +103,8 @@ export const Calendar = ({ dateTrue, onChange }: CalendarProps) => {
                                         <span className={cx("day-week")}>{trans[i]}</span>
                                         <span className={cx("day-number")}>{numberDay}</span>
                                     </div>
-                                ) : null,
-                            )}
+                                );
+                            })}
                         </div>
                     );
                 })}

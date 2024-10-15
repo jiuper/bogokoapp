@@ -1,11 +1,18 @@
 import { UserRole } from "@/entities/user/types.ts";
 import { ROUTES } from "@/shared/const/Routes.ts";
 
-export const permissionsPage = [ROUTES.SERVICES, ROUTES.BOOKING, ROUTES.CALENDAR, ROUTES.PROFILE, ROUTES.MAIN];
+export const permissionsPage = [
+    ROUTES.SERVICES,
+    ROUTES.BOOKING,
+    ROUTES.CALENDAR,
+    ROUTES.PROFILE,
+    ROUTES.MAIN,
+    ROUTES.CHOOSEPAGE,
+];
 
 export const ROUTING = {
     PROFILE: () => ROUTES.MAIN,
-    SERVICES: () => ROUTES.SERVICES,
+    SERVICES: () => ROUTES.CHOOSEPAGE,
     MASTERS: () => ROUTES.BOOKING,
     CALENDAR: () => ROUTES.CALENDAR,
 };
@@ -19,30 +26,30 @@ export const ROUTING_MAP: {
 }[] = [
     {
         id: "1",
-        label: "Кабинет",
+        label: "Главная",
         link: ROUTING.PROFILE(),
         accessRoles: [UserRole.USER, UserRole.MASTER, UserRole.CLIENT, 0],
-        Icon: "personal-account",
+        Icon: "home",
     },
     {
         id: "2",
-        label: "Услуги",
+        label: "Записаться",
         link: ROUTING.SERVICES(),
         accessRoles: [UserRole.USER, UserRole.MASTER, UserRole.CLIENT, 0],
-        Icon: "personal-notebook",
+        Icon: "add-circle",
     },
     {
         id: "3",
-        label: "Мастера",
+        label: "Товары",
         link: ROUTING.MASTERS(),
         accessRoles: [UserRole.USER, UserRole.MASTER, UserRole.CLIENT, 0],
-        Icon: "personal-add",
+        Icon: "bag-handle",
     },
     {
         id: "4",
-        label: "Календарь",
+        label: "Корзина",
         link: ROUTING.CALENDAR(),
         accessRoles: [UserRole.USER, UserRole.MASTER, UserRole.CLIENT, 0],
-        Icon: "personal-calendar",
+        Icon: "basket",
     },
 ];

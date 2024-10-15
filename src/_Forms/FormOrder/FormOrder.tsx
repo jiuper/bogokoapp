@@ -39,16 +39,26 @@ export const FormOrder = ({ booking, handleResetBooking, masterInfo }: FormOrder
                         ...masterInfo,
                         services: el.masterInfo?.services,
                         totalTimePriceInfo: {
-                            totalDuration: el.masterInfo?.services?.reduce((acc, cur) => acc + (cur.time || 0), 0),
-                            totalPriceMin: el.masterInfo?.services?.reduce((acc, cur) => acc + (cur.priceMin || 0), 0),
-                            totalPriceMax: el.masterInfo?.services?.reduce((acc, cur) => acc + (cur.priceMax || 0), 0),
+                            totalDuration: el.masterInfo?.services?.reduce(
+                                (acc, cur) => acc + (cur.time || 0),
+                                0,
+                            ),
+                            totalPriceMin: el.masterInfo?.services?.reduce(
+                                (acc, cur) => acc + (cur.priceMin || 0),
+                                0,
+                            ),
+                            totalPriceMax: el.masterInfo?.services?.reduce(
+                                (acc, cur) => acc + (cur.priceMax || 0),
+                                0,
+                            ),
                         },
                     } || {},
                 time: `${el.workData?.date} ${el.workData?.time || ""}` || "",
                 masters: [
                     {
                         masterId: el?.masterInfo?.id || "",
-                        serviceId: el?.masterInfo?.services?.map((elem) => String(elem.id) || "") || [],
+                        serviceId:
+                            el?.masterInfo?.services?.map((elem) => String(elem.id) || "") || [],
                     },
                 ],
             });
@@ -98,7 +108,9 @@ export const FormOrder = ({ booking, handleResetBooking, masterInfo }: FormOrder
                         onBlur={formik.handleBlur}
                         isFullWidth
                         error={
-                            formik.errors.firstName && formik.touched.firstName ? formik.errors.firstName : undefined
+                            formik.errors.firstName && formik.touched.firstName
+                                ? formik.errors.firstName
+                                : undefined
                         }
                     />
                 </div>
@@ -111,7 +123,11 @@ export const FormOrder = ({ booking, handleResetBooking, masterInfo }: FormOrder
                         onBlur={formik.handleBlur}
                         name="phone"
                         isFullWidth
-                        error={formik.errors.phone && formik.touched.phone ? formik.errors.phone : undefined}
+                        error={
+                            formik.errors.phone && formik.touched.phone
+                                ? formik.errors.phone
+                                : undefined
+                        }
                     />
                 </div>
                 <div className={cx("item")}>

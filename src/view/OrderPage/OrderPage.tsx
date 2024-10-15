@@ -32,7 +32,10 @@ export const OrderPage = ({
 }: OrderPageProps) => {
     const href = useNavigate();
     const time = useMemo(
-        () => booking.map((el) => el.masterInfo?.services?.reduce((acc, el) => acc + (el.time || 0), 0))[0],
+        () =>
+            booking.map((el) =>
+                el.masterInfo?.services?.reduce((acc, el) => acc + (el.time || 0), 0),
+            )[0],
         [booking],
     );
     const handleEditMaster = (id: string) => {
@@ -61,7 +64,10 @@ export const OrderPage = ({
                         <CardOrder
                             icon="edit"
                             onClick={() => href(`${ROUTES.TIMESBOOKING}/${el.masterInfo?.id}`)}
-                            name={dateFormat(`${`${el.workData?.date}${el.workData?.time}` || ""}`, time || 0)}
+                            name={dateFormat(
+                                `${`${el.workData?.date}${el.workData?.time}` || ""}`,
+                                time || 0,
+                            )}
                         />
                         {el.masterInfo?.services?.map((elem) => (
                             <CardOrder
@@ -81,7 +87,11 @@ export const OrderPage = ({
             )}
 
             {booking.length ? (
-                <FormOrder masterInfo={masterInfo} handleResetBooking={handleResetBooking} booking={booking} />
+                <FormOrder
+                    masterInfo={masterInfo}
+                    handleResetBooking={handleResetBooking}
+                    booking={booking}
+                />
             ) : null}
         </div>
     );

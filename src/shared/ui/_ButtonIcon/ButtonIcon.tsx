@@ -11,6 +11,11 @@ export interface ButtonIconProps extends Omit<ButtonProps, "size"> {
     color?: "empty" | "orange";
 }
 
-export const ButtonIcon = ({ className, size = "small", color = "orange", ...props }: ButtonIconProps) => {
+export const ButtonIcon = ({
+    className,
+    size = "small",
+    color = "orange",
+    ...props
+}: ButtonIconProps) => {
     return <Button className={cx("button-icon", className, size, color)} text {...props} />;
 };

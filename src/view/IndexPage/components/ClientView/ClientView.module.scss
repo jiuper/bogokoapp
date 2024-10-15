@@ -4,4 +4,50 @@
     gap: 8px;
     padding: 8px;
 }
+.main-banner{
+    position: relative;
+    .notifications{
+        position: absolute;
+        bottom: 20px;
+        left: 0;
+        border-radius: var(--0, 0px) 50px 50px var(--0, 0px);
+        background: $color-orange-60;
+        //box-shadow: 0px 4px 4px 0px rgba(0,0,0, 0.25);
+        fill: $color-light;
+        display: none;
+        width: 30px;
+        height: 50px;
+        min-width: 50px;
+        padding: 15px var(--Space-300, 12px) 15px var(--8, 8px);
+        justify-content: flex-end;
+        align-items: center;
+        gap: var(--10, 10px);
+        transition: $transition-default;
 
+        &.active{
+            display: flex;
+        }
+    }
+}
+.modal-rating{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 8px;
+
+    .text{
+        @include flex-column();
+        gap: 4px;
+
+        .title{
+            @include text-Title();
+        }
+        .subtitle{
+            @include text-Body2();
+            color: #9f9f9f;
+            font-weight: 400;
+        }
+    }
+
+}
