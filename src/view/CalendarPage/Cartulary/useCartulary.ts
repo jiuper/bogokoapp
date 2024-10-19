@@ -57,10 +57,14 @@ export const useCartulary = (records: ResponseGetRecordShortInfoDto[] | undefine
         const interval = endHours.find(({ start, end }) => hour >= start && hour <= end);
 
         return interval
-            ? { start: formatTime(interval.start), end: formatTime(interval.end), index: interval.index }
+            ? {
+                  start: formatTime(interval.start),
+                  end: formatTime(interval.end),
+                  index: interval.index,
+              }
             : hour;
     });
-
+    console.log(result);
     const uniqueIntervals = new Set();
 
     return result.filter((item) => {

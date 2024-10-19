@@ -52,7 +52,9 @@ export const Cartulary = ({ records, companyInfo }: CartularyProps) => {
                                     {typeof el !== "number" ? (
                                         <>
                                             <span className={cx("item")}>{el?.start}</span>
-                                            <span className={cx("item")}>{el?.end}</span>
+                                            <span className={cx("item")}>
+                                                {el?.end.toString().slice(0, 5)}
+                                            </span>
                                         </>
                                     ) : (
                                         <span className={cx("item")}>{`${el}:00`}</span>
@@ -72,6 +74,7 @@ export const Cartulary = ({ records, companyInfo }: CartularyProps) => {
                             );
                         }
                         const filteredRecords = records?.filter((_, i) => i === el.index);
+                        console.log(filteredRecords);
 
                         return filteredRecords?.map((record, index) => (
                             <CardCalendar
