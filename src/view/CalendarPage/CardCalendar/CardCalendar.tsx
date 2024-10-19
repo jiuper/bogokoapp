@@ -65,9 +65,16 @@ export const CardCalendar = ({
                         <span>{address}</span>
                     </div>
                 </div>
-                <Button label="Оставить отзыв" className={cx("button")} onClick={onOpen} />
+                {isFeedback && (
+                    <Button label="Оставить отзыв" className={cx("button")} onClick={onOpen} />
+                )}
             </div>
-            <ModalFeedBack isOpen={isOpen} onClose={onClose} />
+            <ModalFeedBack
+                currencyShortTitle={currencyShortTitle}
+                isOpen={isOpen}
+                onClose={onClose}
+                service={{ name: caption || "", priceMin: genPrice || 0, id: id || "" }}
+            />
         </div>
     );
 };

@@ -31,7 +31,7 @@ export const ModalFeedBack = ({
     const formik = useFormik({
         initialValues: {
             rating: 0,
-            file: null,
+            file: "",
             comment: "",
         },
         validationSchema: SignupSchema,
@@ -54,12 +54,20 @@ export const ModalFeedBack = ({
                                 post={`${service?.time} мин`}
                                 price={`${service?.priceMax} ${currencyShortTitle}`}
                             />
-                            <Rating />
+                            <Rating
+                                value={formik.values.rating}
+                                onChange={(e) => formik.setFieldValue("rating", e)}
+                                precision={0.5}
+                            />
                         </div>
                         <div className={cx("body")}>
                             <div className={cx("file")}>
                                 <span className={cx("title")}>Фото и видео</span>
-                                <FileInput />
+                                <FileInput
+                                    name="file"
+                                    value={formik.values.file}
+                                    onChange={formik.handleChange}
+                                />
                             </div>
                             <div className={cx("comment")}>
                                 <span className={cx("title")}>Что вы хотите улучшить?</span>

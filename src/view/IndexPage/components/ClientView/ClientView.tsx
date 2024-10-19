@@ -3,6 +3,9 @@ import cnBind from "classnames/bind";
 
 import { ModalSwiper } from "@/_Modals/ModalSwiper";
 import type { GetCompanyDto } from "@/entities/company/types.ts";
+import slider3 from "@/shared/assets/Slide01 (2).png";
+import slider2 from "@/shared/assets/Slide02 (2).png";
+import slider1 from "@/shared/assets/Slide03.png";
 import { ROUTES } from "@/shared/const/Routes.ts";
 import { useBooleanState } from "@/shared/hooks";
 import { Carousel } from "@/shared/ui/_Carousel";
@@ -32,7 +35,7 @@ export const ClientView = ({ companyInfo, listLink }: IndexPageProps) => {
     return (
         <div className={cx("bg-wrapper")}>
             <div className={cx("main-banner")}>
-                <Carousel value={[companyInfo?.image]} />
+                <Carousel value={[slider1, slider2, slider3]} />
                 <Link to={ROUTES.CALENDAR}>
                     <SvgIcon
                         className={cx("notifications", { active: !isOpen })}
