@@ -2,13 +2,14 @@ import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router";
 import cnBind from "classnames/bind";
 
-import { Calendar } from "@/Calendar";
 import { useAllTimesMasterInfoQuery } from "@/entities/order/api/getAllTimesMasterInfo";
 import { useTimesMasterInfoQuery } from "@/entities/order/api/getTimesMasterInfo";
 import { ROUTES } from "@/shared/const/Routes.ts";
 import type { BookingData } from "@/shared/context/ClientProvider.tsx";
 import { SvgIcon } from "@/shared/ui/SvgIcon/SvgIcon.tsx";
 import { TimeBooking } from "@/view/TimesBooking/components/TimeBooking";
+
+import { Calendar } from "../../components/Calendar";
 
 import styles from "./TimesBooking.module.scss";
 
@@ -20,7 +21,9 @@ type TimesBookingProps = {
 export const TimesBooking = ({ data, handleAddWorkDateBooking }: TimesBookingProps) => {
     const href = useNavigate();
     const [selectedDate, setSelectedDate] = useState<Date>(new Date());
-    const [dateTo, setDateTo] = useState<Date>(new Date(new Date().setDate(new Date().getDate() + 30)));
+    const [dateTo, setDateTo] = useState<Date>(
+        new Date(new Date().setDate(new Date().getDate() + 30)),
+    );
     const masters = [
         {
             masterId: data?.masterInfo?.id || "",
@@ -64,7 +67,9 @@ export const TimesBooking = ({ data, handleAddWorkDateBooking }: TimesBookingPro
                 <Calendar onChange={onSelectHandler} dateTrue={dateTrue} />
                 {loadingSingleTimeDay ? null : listDateTimes.length === 0 ? (
                     <div className={cx("times-not")}>
-                        <span className={cx("caption")}>На {selectedDate.toLocaleDateString()} не записаться</span>
+                        <span className={cx("caption")}>
+                            На {selectedDate.toLocaleDateString()} не записаться
+                        </span>
                         <span className={cx("title")}>Выберите другую дату или услугу</span>
                         <div onClick={() => href(-1)} className={cx("back")}>
                             <SvgIcon name="back" />
@@ -73,9 +78,24 @@ export const TimesBooking = ({ data, handleAddWorkDateBooking }: TimesBookingPro
                     </div>
                 ) : (
                     <div className={cx("times")}>
-                        <TimeBooking onClick={onBooking} time="11:45" listTime={listDateTimes} title="Утро" />
-                        <TimeBooking onClick={onBooking} time="12:00" listTime={listDateTimes} title="День" />
-                        <TimeBooking onClick={onBooking} time="18:00" listTime={listDateTimes} title="Вечер" />
+                        <TimeBooking
+                            onClick={onBooking}
+                            time="11:45"
+                            listTime={listDateTimes}
+                            title="Утро"
+                        />
+                        <TimeBooking
+                            onClick={onBooking}
+                            time="12:00"
+                            listTime={listDateTimes}
+                            title="День"
+                        />
+                        <TimeBooking
+                            onClick={onBooking}
+                            time="18:00"
+                            listTime={listDateTimes}
+                            title="Вечер"
+                        />
                     </div>
                 )}
             </div>

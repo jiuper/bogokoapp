@@ -2,6 +2,8 @@
   padding: 12px;
   border-radius: 12px;
   background: $color-orange-60;
+  height: fit-content;
+  overflow: hidden;
 
   &.isFeedback{
     background: $color-orange-30;

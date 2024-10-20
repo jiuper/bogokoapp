@@ -48,7 +48,7 @@ export const useCartulary = (records: ResponseGetRecordShortInfoDto[] | undefine
 
     const formatTime = (time: number) => {
         const hours = Math.floor(time);
-        const minutes = (time % 1) * 60;
+        const minutes = Math.floor((time % 1) * 60);
 
         return `${String(hours).padStart(2, "0")}:${String(minutes).padStart(2, "0")}`;
     };
@@ -64,21 +64,16 @@ export const useCartulary = (records: ResponseGetRecordShortInfoDto[] | undefine
               }
             : hour;
     });
-    console.log(result);
     const uniqueIntervals = new Set();
 
     return result.filter((item) => {
-        if (typeof item === "object") {
-            const key = `${item.start}-${item.end}`;
+        if (typeof item !== "object") return true;
 
-            if (!uniqueIntervals.has(key)) {
-                uniqueIntervals.add(key);
+        const key = `${item.start}-${item.end}`;
 
-                return true;
-            }
+        if (uniqueIntervals.has(key)) return false;
 
-            return false;
-        }
+        uniqueIntervals.add(key);
 
         return true;
     });

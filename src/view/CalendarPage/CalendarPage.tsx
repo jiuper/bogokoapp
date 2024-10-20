@@ -1,10 +1,11 @@
 import { useState } from "react";
 import cnBind from "classnames/bind";
 
-import { Calendar } from "@/Calendar";
 import type { GetCompanyDto } from "@/entities/company/types.ts";
 import { useGetAllRecordQuery } from "@/entities/record/api/getAllRecord";
 import { Cartulary } from "@/view/CalendarPage/Cartulary";
+
+import { Calendar } from "../../components/Calendar";
 
 import styles from "./CalendarPage.module.scss";
 

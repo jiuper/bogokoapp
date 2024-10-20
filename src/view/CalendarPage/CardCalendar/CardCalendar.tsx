@@ -29,7 +29,7 @@ export const CardCalendar = ({
     masterInfo,
     currencyShortTitle,
     id,
-    isFeedback = true,
+    isFeedback = false,
 }: CardCalendarProps) => {
     const href = useNavigate();
     const [isOpen, onOpen, onClose] = useBooleanState(false);
