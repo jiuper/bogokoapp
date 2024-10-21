@@ -4,7 +4,7 @@ import { eachDayOfInterval, endOfWeek, startOfWeek } from "date-fns";
 import { DateTime, Info } from "luxon";
 
 import { SwipeableWrapper } from "@/components/SwipeableWrapper";
-import { SvgIcon } from "@/shared/ui/SvgIcon/SvgIcon.tsx";
+import { Select } from "@/shared/ui/_Select";
 
 import styles from "./Calendar.module.scss";
 
@@ -41,6 +41,12 @@ export const Calendar = ({ dateTrue, onChange }: CalendarProps) => {
         setSelectedDate(date);
         onChange?.(date);
     };
+    const call = [
+        { value: "День", title: "День" },
+        { value: "3 Дня", title: "3 Дня" },
+        { value: "Неделя", title: "Неделя" },
+    ];
+    const [cal, setCal] = useState(call[0].value);
 
     return (
         <div className={cx("calendar")}>
@@ -48,18 +54,12 @@ export const Calendar = ({ dateTrue, onChange }: CalendarProps) => {
                 <span className={cx("title")}>
                     {dateTime.setLocale("ru").toFormat("LLLL yyyy")}
                 </span>
-                <div className={cx("buttons")}>
-                    <SvgIcon
-                        className={cx("prev")}
-                        name="ArrowRight"
-                        onClick={() => onMinusHandler()}
-                    />
-                    <SvgIcon
-                        className={cx("next")}
-                        name="ArrowRight"
-                        onClick={() => onPlusHandler()}
-                    />
-                </div>
+                <Select
+                    className={cx("select")}
+                    options={call}
+                    onChange={(e) => setCal(e)}
+                    value={cal}
+                />
             </div>
 
             <SwipeableWrapper

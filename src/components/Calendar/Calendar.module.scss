@@ -1,6 +1,5 @@
 .calendar{
-  display: flex;
-  flex-direction: column;
+  @include flex-column();
   gap: 12px;
 }
 .header{
@@ -9,13 +8,18 @@
   width: 100%;
 }
 .title{
-  font-size: 16px;
-  font-style: normal;
-  font-weight: 600;
-  line-height: 21px; /* 131.25% */
-  letter-spacing: -0.23px;
-  color: #3D5266;
+  @include text-Subtitle3();
+  color: $color-shading-60;
   text-transform: capitalize;
+  flex: 1 0 70%;
+}
+.select{
+  flex: 1 0 20%;
+  border: none;
+
+  &>div{
+    padding: 0;
+  }
 }
 .buttons{
   display: flex;
@@ -38,10 +42,8 @@
   width: 100%;
 
   .day{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+    @include flex-column();
+    @include flex-center();
     padding: 11px 8px;
     cursor: pointer;
     position: relative;
@@ -51,20 +53,13 @@
 
 
     .day-week{
-      font-size: 12px;
-      font-style: normal;
-      font-weight: 400;
-      line-height: 16px;
+      @include text-Body3();
       color: #94A3B8;
     }
 
     .day-number{
-      font-size: 18px;
-      font-style: normal;
-      text-align: center;
+      @include text-Subtitle4();
       font-weight: 600;
-      line-height: 22px; /* 122.222% */
-      letter-spacing: -0.36px;
     }
 
     &.today:before{
@@ -75,32 +70,32 @@
       transform: translateX(-50%);
       width: 6px;
       height: 6px;
-      background: #FF7648;
+      background: $color-orange-60;
       border-radius: 50%;
     }
 
     &.work{
-      color: #1E293B;
+      color: $color-dark-70;
     }
     &.weekend{
-      color: #E53935;
+      color: $color-red-60;
       .day-week{
-        color: #E53935;
+        color: $color-red-60;
       }
     }
 
     &.selectedDay{
-      background: #FF7648;
+      background: $color-orange-60;
       border-radius: 12px;
-      border: 1px solid #FF7648;
+      border: 1px solid $color-orange-60;
 
       &.work{
-        color: #fff;
+        color: $color-light;
         .day-week{
-          color: #fff;
+          color: $color-light;
         }
         &.today:before {
-          background: #fff;
+          background: $color-light;
         }
       }
 
@@ -117,9 +112,9 @@
       color: #94A3B8;
 
       &.weekend{
-        color: #E53935;
+        color: $color-red-60;
         .day-week{
-          color: #E53935;
+          color: $color-red-60;
         }
       }
 
@@ -128,7 +123,7 @@
       }
 
       &.today:before {
-        background: #FF7648;
+        background: $color-orange-60;
       }
     }
   }

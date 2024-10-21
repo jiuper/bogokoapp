@@ -26,19 +26,27 @@ export const Select = ({
     icon = true,
     isFullWidth,
     onChange,
+    className,
 }: UISelectProps) => {
     const [isShowMenu, show] = useState(false);
 
     const handleDropdownShow = () => show(!isShowMenu);
 
     return (
-        <div onClick={handleDropdownShow} className={cx("dropdown", { rootClassName, isFullWidth, error, isShowMenu })}>
-            <span className={cx("label", { isShowMenu, error })}>{label}</span>
+        <div
+            onClick={handleDropdownShow}
+            className={cx("dropdown", { rootClassName, isFullWidth, error, isShowMenu }, className)}
+        >
+            {label && <span className={cx("label", { isShowMenu, error })}>{label}</span>}
             <div className={cx("select")}>
                 <span className={cx("title", { isShowMenu, error })}>{value}</span>
                 <div className={cx("options", { isShowMenu })}>
                     {options.map(({ value, title }, index) => (
-                        <span onClick={() => onChange?.(value as string)} className={cx("option")} key={index}>
+                        <span
+                            onClick={() => onChange?.(value as string)}
+                            className={cx("option")}
+                            key={index}
+                        >
                             {title}
                         </span>
                     ))}

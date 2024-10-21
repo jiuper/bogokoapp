@@ -26,4 +26,5 @@ export interface ResponseGetRecordShortInfoDto {
     currency?: string;
     totalPriceMin?: number;
     totalPriceMax?: number;
+    isFeedback?: boolean;
 }

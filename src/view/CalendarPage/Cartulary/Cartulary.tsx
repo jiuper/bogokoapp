@@ -27,7 +27,15 @@ export const Cartulary = ({ records, companyInfo }: CartularyProps) => {
     // const timeInterval: number[] = useMemo(() => Array.from(Array(cur)), [cur]);
 
     const filteredResult = useCartulary(records);
-    const [a, setA] = useState(false);
+    const [open, setOpen] = useState(false);
+    const [feedBack, setFeedBack] = useState(false);
+    const [indexRecord, setIndexRecord] = useState(0);
+
+    const handleIsFeed = (index: number, isFeed: boolean = false) => {
+        setOpen((prevOpen) => (indexRecord === index ? !prevOpen : prevOpen));
+        setIndexRecord(index);
+        setFeedBack(isFeed);
+    };
 
     return (
         <div className={cx("wrapper")}>
@@ -36,8 +44,6 @@ export const Cartulary = ({ records, companyInfo }: CartularyProps) => {
                     <div className={cx("actualTime")} />
                     <div className={cx("timeline")}>
                         {filteredResult.map((el, index) => {
-                            const isFeed = false;
-
                             return (
                                 <div
                                     key={index}
@@ -47,9 +53,9 @@ export const Cartulary = ({ records, companyInfo }: CartularyProps) => {
                                     {typeof el !== "number" ? (
                                         <div
                                             className={cx(
-                                                a && isFeed
+                                                open && !feedBack
                                                     ? "isFeed"
-                                                    : a && !isFeed
+                                                    : open && feedBack
                                                       ? "isNotFeed"
                                                       : "",
                                             )}
@@ -71,16 +77,19 @@ export const Cartulary = ({ records, companyInfo }: CartularyProps) => {
                             return <div className={cx("cell")} key={i} />;
                         }
                         const filteredRecords = records?.filter((_, i) => i === el.index);
-                        const isFeed = false;
 
                         return filteredRecords?.map((record, index) => (
                             <div
                                 className={cx(
                                     "cell",
-                                    a && isFeed ? "isFeed" : a && !isFeed ? "isNotFeed" : "",
+                                    open && !feedBack
+                                        ? "isFeed"
+                                        : open && feedBack
+                                          ? "isNotFeed"
+                                          : "",
                                 )}
                                 key={index}
-                                onClick={() => setA(!a)}
+                                onClick={() => handleIsFeed(index, true)}
                             >
                                 <CardCalendar
                                     id={record.id}
@@ -93,7 +102,7 @@ export const Cartulary = ({ records, companyInfo }: CartularyProps) => {
                                         image: record.masterImage,
                                     }}
                                     countServices={record.servicesName.length}
-                                    isFeedback={!isFeed}
+                                    isFeedback
                                 />
                             </div>
                         ));

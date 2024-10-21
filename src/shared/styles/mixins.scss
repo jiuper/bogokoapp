@@ -175,15 +175,15 @@
 //    letter-spacing: 0.1px;
 //}
 
-//@mixin text-Caption {
-//    --fs: 12;
-//    --lh: 16;
-//    @include font-SegoeUI();
-//    font-weight: 600;
-//    font-size: 12px;
-//    line-height: 16px;
-//    letter-spacing: 0.4px;
-//}
+@mixin text-Caption {
+    --fs: 12;
+    --lh: 22;
+    @include font-SegoeUI();
+    font-weight: 600;
+    font-size: 12px;
+    line-height: 22px;
+    letter-spacing: -0.36px;
+}
 
 @mixin text-Overline {
     --fs: 10;
