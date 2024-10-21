@@ -13,7 +13,7 @@ type CalendarProps = {
     onChange?: (date: Date) => void;
     filterViewWeek?: filterDate[];
     filterViewDate?: filterDate;
-    onChaneFilter: (date: filterDate) => void;
+    onChaneFilter?: (date: filterDate) => void;
 };
 
 export const Calendar = ({
@@ -35,7 +35,7 @@ export const Calendar = ({
                 <Select
                     className={cx("select")}
                     options={filterViewWeek || []}
-                    onChange={(e: filterDate) => onChaneFilter(e)}
+                    onChange={(e: filterDate) => onChaneFilter?.(e)}
                     value={filterViewDate?.title}
                 />
             </div>

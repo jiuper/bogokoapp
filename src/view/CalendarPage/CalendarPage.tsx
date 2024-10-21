@@ -40,7 +40,11 @@ export const CalendarPage = ({ companyInfo }: CalendarPageProps) => {
                     dateTrue={[]}
                 />
                 <div className={cx("times")}>
-                    <Cartulary records={records} companyInfo={companyInfo} />
+                    <Cartulary
+                        viewShedule={filterViewDate.value}
+                        records={records}
+                        companyInfo={companyInfo}
+                    />
                 </div>
             </div>
         </div>

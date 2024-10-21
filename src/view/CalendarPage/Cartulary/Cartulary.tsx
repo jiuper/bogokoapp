@@ -21,6 +21,7 @@ type CartularyProps = {
     cur?: number;
     records?: ResponseGetRecordShortInfoDto[];
     companyInfo?: GetCompanyDto | null;
+    viewShedule?: number;
 };
 
 export const Cartulary = ({ records, companyInfo }: CartularyProps) => {
