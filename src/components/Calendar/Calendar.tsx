@@ -1,9 +1,9 @@
 import { useMemo, useState } from "react";
-import { useSwipeable } from "react-swipeable";
 import cnBind from "classnames/bind";
 import { eachDayOfInterval, endOfWeek, startOfWeek } from "date-fns";
 import { DateTime, Info } from "luxon";
 
+import { SwipeableWrapper } from "@/components/SwipeableWrapper";
 import { SvgIcon } from "@/shared/ui/SvgIcon/SvgIcon.tsx";
 
 import styles from "./Calendar.module.scss";
@@ -42,17 +42,8 @@ export const Calendar = ({ dateTrue, onChange }: CalendarProps) => {
         onChange?.(date);
     };
 
-    const [position, setPosition] = useState(0);
-
-    const handlers = useSwipeable({
-        onSwiping: (eventData) => {
-            setPosition(eventData.deltaX);
-        },
-        onSwiped: () => {},
-    });
-
     return (
-        <div className={cx("calendar")} {...handlers}>
+        <div className={cx("calendar")}>
             <div className={cx("header")}>
                 <span className={cx("title")}>
                     {dateTime.setLocale("ru").toFormat("LLLL yyyy")}
@@ -71,7 +62,11 @@ export const Calendar = ({ dateTrue, onChange }: CalendarProps) => {
                 </div>
             </div>
 
-            <div className={cx("content")} style={{ transform: `translateX(${position}px)` }}>
+            <SwipeableWrapper
+                onSwipedLeft={() => onPlusHandler()}
+                onSwipedRight={() => onMinusHandler()}
+                className={cx("content")}
+            >
                 {date.map((day, index) => {
                     const initDay = day.toLocaleDateString();
                     const today = new Date().toLocaleDateString();
@@ -108,7 +103,7 @@ export const Calendar = ({ dateTrue, onChange }: CalendarProps) => {
                         </div>
                     );
                 })}
-            </div>
+            </SwipeableWrapper>
         </div>
     );
 };

@@ -1,7 +1,8 @@
 import type { ReactNode } from "react";
 import { useState } from "react";
-import { useSwipeable } from "react-swipeable";
 import cnBind from "classnames/bind";
+
+import { SwipeableWrapper } from "@/components/SwipeableWrapper";
 
 import styles from "./ModalSwiper.module.scss";
 
@@ -30,51 +31,51 @@ export const ModalSwiper = ({
 }: ModalProps) => {
     const [position, setPosition] = useState(0);
 
-    const handlers = useSwipeable({
-        onSwiping: (eventData) => {
-            setPosition(eventData.deltaX);
-        },
-        onSwiped: () => {
-            setPosition(0);
-            onClose();
-        },
-    });
-
     if (!isOpen) return null;
 
     return (
-        <div className={cx("modal")} {...handlers}>
-            {isClose && (
-                <div className={cx("actions")}>
-                    <button
-                        aria-label="Mute volume"
-                        type="button"
-                        className={cx("action")}
-                        onClick={onClose}
-                    />
-                </div>
-            )}
-            <div
-                className={cx("container", containerClassName, { fullscreen })}
-                style={{ transform: `translateX(${position}px)` }}
-            >
-                {hasHeader && (
-                    <div className={cx("header")}>
-                        <h3 className={cx("title")}>{title}</h3>
-                        {isClose && (
-                            <div className={cx("actions")}>
-                                <button
-                                    aria-label="Mute volume"
-                                    type="button"
-                                    className={cx("action")}
-                                    onClick={onClose}
-                                />
-                            </div>
-                        )}
+        <SwipeableWrapper
+            onSwiping={(eventData) => {
+                setPosition(eventData.deltaX);
+            }}
+            onSwiped={() => {
+                setPosition(0);
+                onClose();
+            }}
+        >
+            <div className={cx("modal")}>
+                {isClose && (
+                    <div className={cx("actions")}>
+                        <button
+                            aria-label="Mute volume"
+                            type="button"
+                            className={cx("action")}
+                            onClick={onClose}
+                        />
                     </div>
                 )}
-                <div className={cx("content", className, { fullscreen })}>{children}</div>
+                <div
+                    className={cx("container", containerClassName, { fullscreen })}
+                    style={{ transform: `translateX(${position}px)` }}
+                >
+                    {hasHeader && (
+                        <div className={cx("header")}>
+                            <h3 className={cx("title")}>{title}</h3>
+                            {isClose && (
+                                <div className={cx("actions")}>
+                                    <button
+                                        aria-label="Mute volume"
+                                        type="button"
+                                        className={cx("action")}
+                                        onClick={onClose}
+                                    />
+                                </div>
+                            )}
+                        </div>
+                    )}
+                    <div className={cx("content", className, { fullscreen })}>{children}</div>
+                </div>
             </div>
-        </div>
+        </SwipeableWrapper>
     );
 };

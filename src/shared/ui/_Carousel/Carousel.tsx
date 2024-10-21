@@ -1,6 +1,9 @@
+import { useState } from "react";
 import cnBind from "classnames/bind";
 import type { CarouselProps } from "primereact/carousel";
 import { Carousel as UICarousel } from "primereact/carousel";
+
+import { SwipeableWrapper } from "@/components/SwipeableWrapper";
 
 import styles from "./Carousel.module.scss";
 
@@ -10,6 +13,10 @@ type UICarouselProps = CarouselProps & {
 };
 export const Carousel = ({ value, className, classNameImage }: UICarouselProps) => {
     const listImage: string[] = value as string[];
+    const [page, setPage] = useState(0);
+
+    const onPageChange = (e: number) => setPage(e);
+
     const responsiveOptions = [
         {
             breakpoint: "767px",
@@ -27,15 +34,24 @@ export const Carousel = ({ value, className, classNameImage }: UICarouselProps) 
     };
 
     return (
-        <UICarousel
-            value={value}
-            numVisible={1}
-            numScroll={1}
-            showIndicators={listImage.length > 1}
-            showNavigators={false}
-            responsiveOptions={responsiveOptions}
-            itemTemplate={productTemplate}
-            className={cx("carousel", className)}
-        />
+        <SwipeableWrapper
+            onSwipedLeft={() => setPage((prevPage) => (prevPage + 1) % listImage.length)}
+            onSwipedRight={() =>
+                setPage((prevPage) => (prevPage - 1 + listImage.length) % listImage.length)
+            }
+        >
+            <UICarousel
+                value={value}
+                numVisible={1}
+                numScroll={1}
+                showIndicators={listImage.length > 1}
+                showNavigators={false}
+                responsiveOptions={responsiveOptions}
+                itemTemplate={productTemplate}
+                className={cx("carousel", className)}
+                page={page}
+                onPageChange={(e) => onPageChange(e.page)}
+            />
+        </SwipeableWrapper>
     );
 };
