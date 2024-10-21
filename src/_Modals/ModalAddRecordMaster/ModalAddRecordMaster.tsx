@@ -16,7 +16,11 @@ type ModalAddRecordMasterProps = {
     onClose: () => void;
     dateTime: string;
 };
-export const ModalAddRecordMaster = ({ isOpen, onClose, dateTime = "2024-09-24 10:30" }: ModalAddRecordMasterProps) => {
+export const ModalAddRecordMaster = ({
+    isOpen,
+    onClose,
+    dateTime = "2024-09-24 10:30",
+}: ModalAddRecordMasterProps) => {
     const formik = useFormik({
         initialValues: {
             service: "Выберите услугу",
@@ -48,7 +52,7 @@ export const ModalAddRecordMaster = ({ isOpen, onClose, dateTime = "2024-09-24 1
                                 { value: "Консультация1", title: "Консультация1" },
                                 { value: "Консультация2", title: "Консультация2" },
                             ]}
-                            onChange={(e) => formik.setFieldValue("service", e)}
+                            onChange={(e) => formik.setFieldValue("service", e.value)}
                             name="service"
                             id="service"
                             value={formik.values.service}
@@ -61,7 +65,7 @@ export const ModalAddRecordMaster = ({ isOpen, onClose, dateTime = "2024-09-24 1
                             ]}
                             name="client"
                             id="client"
-                            onChange={(e) => formik.setFieldValue("client", e)}
+                            onChange={(e) => formik.setFieldValue("client", e.value)}
                             value={formik.values.client}
                             label="Клиент"
                         />

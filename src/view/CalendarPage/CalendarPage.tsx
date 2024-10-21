@@ -1,11 +1,10 @@
 import { useState } from "react";
 import cnBind from "classnames/bind";
 
+import { Calendar } from "@/components/Calendar";
 import type { GetCompanyDto } from "@/entities/company/types.ts";
 import { useGetAllRecordQuery } from "@/entities/record/api/getAllRecord";
 import { Cartulary } from "@/view/CalendarPage/Cartulary";
-
-import { Calendar } from "../../components/Calendar";
 
 import styles from "./CalendarPage.module.scss";
 
@@ -13,6 +12,12 @@ const cx = cnBind.bind(styles);
 type CalendarPageProps = {
     companyInfo: GetCompanyDto | null;
 };
+export type filterDate = { type: string; value: number; title: string };
+const filterViewWeek: filterDate[] = [
+    { type: "days", value: 1, title: "День" },
+    { type: "days", value: 3, title: "3 Дня" },
+    { type: "weeks", value: 7, title: "Неделя" },
+];
 export const CalendarPage = ({ companyInfo }: CalendarPageProps) => {
     const [selectedDate, setSelectedDate] = useState<Date>(new Date());
     const onSelectHandler = (date: Date) => setSelectedDate(date);
@@ -20,11 +25,20 @@ export const CalendarPage = ({ companyInfo }: CalendarPageProps) => {
         selectedDate.toLocaleDateString().replace(/[.]/g, "-").split("-").reverse().join("-"),
     );
 
+    const [filterViewDate, setFilterViewDate] = useState<filterDate>(filterViewWeek[0]);
+    const onChaneFilter = (date: filterDate) => setFilterViewDate(date);
+
     return (
         <div className={cx("wrapper")}>
             <span className={cx("title")}>Календарь</span>
             <div className={cx("list")}>
-                <Calendar onChange={onSelectHandler} dateTrue={[]} />
+                <Calendar
+                    filterViewWeek={filterViewWeek}
+                    filterViewDate={filterViewDate}
+                    onChaneFilter={onChaneFilter}
+                    onChange={onSelectHandler}
+                    dateTrue={[]}
+                />
                 <div className={cx("times")}>
                     <Cartulary records={records} companyInfo={companyInfo} />
                 </div>

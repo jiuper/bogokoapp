@@ -36,9 +36,7 @@
   align-items: center;
 }
 .days{
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  @include flex-center();
   width: 100%;
 
   .day{

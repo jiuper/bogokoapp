@@ -15,7 +15,7 @@ export interface UISelectProps extends Omit<SelectProps, "children" | "onChange"
     error?: string;
     isFullWidth?: boolean;
     options: SelectItem[];
-    onChange?: (value: string) => void;
+    onChange?: (value: any) => void;
 }
 export const Select = ({
     value,
@@ -41,13 +41,13 @@ export const Select = ({
             <div className={cx("select")}>
                 <span className={cx("title", { isShowMenu, error })}>{value}</span>
                 <div className={cx("options", { isShowMenu })}>
-                    {options.map(({ value, title }, index) => (
+                    {options.map((option, index) => (
                         <span
-                            onClick={() => onChange?.(value as string)}
+                            onClick={() => onChange?.(option as any)}
                             className={cx("option")}
                             key={index}
                         >
-                            {title}
+                            {option.title}
                         </span>
                     ))}
                 </div>
