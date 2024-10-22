@@ -38,9 +38,13 @@
 }
 
 .body{
-  display: flex;
-  flex-direction: column;
+  @include flex-column();
   gap: 20px;
+  width: 100%;
+
+  .select{
+    width: 100%;
+  }
 
   .button{
     border-radius: 14px;

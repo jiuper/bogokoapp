@@ -9,6 +9,7 @@ import { TonConnectUIProvider } from "@tonconnect/ui-react";
 import { App } from "@/components/App.tsx";
 import { ErrorBoundary } from "@/components/ErrorBoundary.tsx";
 import { ClientProvider } from "@/shared/context/ClientProvider.tsx";
+import { ModalControllerProvider } from "@/shared/helper";
 import { initStore } from "@/shared/redux/store.ts";
 
 export const queryClient = new QueryClient({
@@ -24,7 +25,11 @@ const ErrorBoundaryError: FC<{ error: unknown }> = ({ error }) => (
         <p>An unhandled error occurred:</p>
         <blockquote>
             <code>
-                {error instanceof Error ? error.message : typeof error === "string" ? error : JSON.stringify(error)}
+                {error instanceof Error
+                    ? error.message
+                    : typeof error === "string"
+                      ? error
+                      : JSON.stringify(error)}
             </code>
         </blockquote>
     </div>
@@ -47,13 +52,15 @@ const Inner: FC = () => {
         <QueryClientProvider client={queryClient}>
             <DndProvider backend={HTML5Backend}>
                 <Provider store={initStore()}>
-                    <ClientProvider>
-                        <TonConnectUIProvider manifestUrl={manifestUrl}>
-                            <SDKProvider acceptCustomStyles debug={debug}>
-                                <App />
-                            </SDKProvider>
-                        </TonConnectUIProvider>
-                    </ClientProvider>
+                    <ModalControllerProvider>
+                        <ClientProvider>
+                            <TonConnectUIProvider manifestUrl={manifestUrl}>
+                                <SDKProvider acceptCustomStyles debug={debug}>
+                                    <App />
+                                </SDKProvider>
+                            </TonConnectUIProvider>
+                        </ClientProvider>
+                    </ModalControllerProvider>
                 </Provider>
             </DndProvider>
         </QueryClientProvider>

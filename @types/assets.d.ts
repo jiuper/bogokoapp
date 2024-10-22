@@ -1,3 +1,5 @@
+import type { BackendFactory } from "dnd-core";
+
 declare module "*.avif" {
     const src: string;
     export default src;
@@ -61,3 +63,5 @@ declare module "*.module.scss" {
     const classes: { readonly [key: string]: string };
     export default classes;
 }
+export type { HTML5BackendContext, HTML5BackendOptions } from "./types.js";
+export declare const HTML5Backend: BackendFactory;

@@ -43,7 +43,7 @@ export const Calendar = ({
             <SwipeableWrapper
                 onSwipedLeft={() => onChangeDate()}
                 onSwipedRight={() => onChangeDate(true)}
-                className={cx("content")}
+                className={cx("content", [3, 7].includes(filterViewDate?.value || 1) && "mode")}
             >
                 {date.map((day, index) => {
                     const initDay = day.date.toLocaleDateString();

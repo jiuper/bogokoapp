@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import cnBind from "classnames/bind";
 
 import { ModalSwiper } from "@/_Modals/ModalSwiper";
+import { DayPicker } from "@/components/DayPicker";
 import type { GetCompanyDto } from "@/entities/company/types.ts";
 import slider3 from "@/shared/assets/Slide01 (2).png";
 import slider2 from "@/shared/assets/Slide02 (2).png";
@@ -61,7 +62,9 @@ export const ClientView = ({ companyInfo, listLink }: IndexPageProps) => {
                     currencyShortTitle={companyInfo?.currencyShortTitle}
                 />
                 <DescriptionCompany description={companyInfo?.description} />
+                <DayPicker />
             </div>
+
             <ModalSwiper isOpen={isOpen} onClose={onClose}>
                 <div className={cx("modal-rating")}>
                     <div className={cx("text")}>

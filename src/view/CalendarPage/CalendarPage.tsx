@@ -4,6 +4,7 @@ import cnBind from "classnames/bind";
 import { Calendar } from "@/components/Calendar";
 import type { GetCompanyDto } from "@/entities/company/types.ts";
 import { useGetAllRecordQuery } from "@/entities/record/api/getAllRecord";
+import { useAppSelector } from "@/shared/redux/configStore.ts";
 import { Cartulary } from "@/view/CalendarPage/Cartulary";
 
 import styles from "./CalendarPage.module.scss";
@@ -19,6 +20,7 @@ const filterViewWeek: filterDate[] = [
     { type: "weeks", value: 7, title: "Неделя" },
 ];
 export const CalendarPage = ({ companyInfo }: CalendarPageProps) => {
+    const user = useAppSelector((state) => state.account.userData);
     const [selectedDate, setSelectedDate] = useState<Date>(new Date());
     const onSelectHandler = (date: Date) => setSelectedDate(date);
     const { data: records } = useGetAllRecordQuery(
@@ -41,9 +43,10 @@ export const CalendarPage = ({ companyInfo }: CalendarPageProps) => {
                 />
                 <div className={cx("times")}>
                     <Cartulary
-                        viewShedule={filterViewDate.value}
+                        viewSchedule={filterViewDate.value}
                         records={records}
                         companyInfo={companyInfo}
+                        mode={user?.role || 50}
                     />
                 </div>
             </div>

@@ -15,7 +15,7 @@
 }
 .select{
   flex: 1 0 20%;
-  border: none;
+  border: none !important;
 
   &>div{
     padding: 0;
@@ -34,6 +34,11 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  transition: $transition-default;
+
+  &.mode{
+    padding-left: 50px;
+  }
 }
 .days{
   @include flex-center();

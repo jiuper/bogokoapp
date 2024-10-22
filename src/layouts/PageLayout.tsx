@@ -12,8 +12,9 @@ import { useAllServicesQuery } from "@/entities/services/api/getAllServicesApi";
 import { ROUTES } from "@/shared/const/Routes.ts";
 import { permissionsPage } from "@/shared/const/routing.ts";
 import { useClientContextMutate } from "@/shared/context/ClientProvider.tsx";
-import { useBooleanState } from "@/shared/hooks";
+import { useModalContextMutate, useModalContextValue } from "@/shared/helper";
 import { useNavigationItems } from "@/shared/hooks/useNavigationItems.ts";
+import { useAppSelector } from "@/shared/redux/configStore.ts";
 import { SvgIcon } from "@/shared/ui/SvgIcon/SvgIcon.tsx";
 
 import styles from "./PageLayout.module.scss";
@@ -26,6 +27,9 @@ interface PageLayoutProps {
 
 export const PageLayout = ({ children }: PageLayoutProps) => {
     const href = useNavigate();
+    const user = useAppSelector((state) => state.account.userData);
+    const { RecordAddModalIsOpen } = useModalContextValue();
+    const { openRecordAddModal, closeRecordAddModal } = useModalContextMutate();
 
     const { data } = useInfoCompanyQuery();
     const { data: listMaster } = useAllMastersQuery(true);
@@ -37,8 +41,6 @@ export const PageLayout = ({ children }: PageLayoutProps) => {
     const location = useLocation().pathname;
     const { handleSetCompanyInfo, handleSetListMaster, handleResetBooking } =
         useClientContextMutate();
-
-    const [isModalOpen, onOpen, onClose] = useBooleanState(false);
 
     useEffect(() => {
         if (data) handleSetCompanyInfo(data);
@@ -58,9 +60,9 @@ export const PageLayout = ({ children }: PageLayoutProps) => {
                     >
                         {children}
                     </main>
-                    {location === ROUTES.CALENDAR && (
+                    {location === ROUTES.CALENDAR && user?.role !== 50 && (
                         <FixedLayout style={{ bottom: 100 }}>
-                            <div onClick={() => onOpen()} className={cx("btn-add")}>
+                            <div onClick={() => openRecordAddModal()} className={cx("btn-add")}>
                                 <SvgIcon name="Add" />
                             </div>
                         </FixedLayout>
@@ -97,7 +99,11 @@ export const PageLayout = ({ children }: PageLayoutProps) => {
                     <Spinner size="l" />
                 </div>
             )}
-            <ModalAddRecordMaster dateTime="2022-01-01" isOpen={isModalOpen} onClose={onClose} />
+            <ModalAddRecordMaster
+                dateTime="2022-01-01"
+                isOpen={RecordAddModalIsOpen}
+                onClose={closeRecordAddModal}
+            />
         </>
     );
 };

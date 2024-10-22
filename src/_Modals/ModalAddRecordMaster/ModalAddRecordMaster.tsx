@@ -57,6 +57,7 @@ export const ModalAddRecordMaster = ({
                             id="service"
                             value={formik.values.service}
                             label="Услуги"
+                            className={cx("select")}
                         />
                         <Select
                             options={[
@@ -68,6 +69,7 @@ export const ModalAddRecordMaster = ({
                             onChange={(e) => formik.setFieldValue("client", e.value)}
                             value={formik.values.client}
                             label="Клиент"
+                            className={cx("select")}
                         />
 
                         <Select
@@ -75,9 +77,10 @@ export const ModalAddRecordMaster = ({
                             name="time"
                             id="time"
                             icon={false}
-                            onChange={(e) => formik.setFieldValue("time", e)}
+                            onChange={(e) => formik.setFieldValue("time", e.value)}
                             value={formik.values.time}
                             label="Время"
+                            className={cx("select")}
                         />
                         <ButtonIcon
                             onClick={() => {}}
