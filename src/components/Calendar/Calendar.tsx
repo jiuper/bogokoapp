@@ -1,6 +1,9 @@
 import cnBind from "classnames/bind";
 
+import { DayPicker } from "@/components/DayPicker";
 import { SwipeableWrapper } from "@/components/SwipeableWrapper";
+import { useBooleanState } from "@/shared/hooks";
+import { useOutsideClick } from "@/shared/hooks/useOutsideClick.tsx";
 import { Select } from "@/shared/ui/_Select";
 import type { filterDate } from "@/view/CalendarPage";
 import { useDateHandler } from "@/view/CalendarPage/useDateHandler.ts";
@@ -25,13 +28,20 @@ export const Calendar = ({
 }: CalendarProps) => {
     const { dateTime, onChangeDate, date, days, selectedDate, formatListDate, onSelectHandler } =
         useDateHandler(filterViewDate, dateTrue, onChange);
+    const [isOpen, , close, toggle] = useBooleanState(false);
+    const ref = useOutsideClick(close);
 
     return (
         <div className={cx("calendar")}>
             <div className={cx("header")}>
-                <span className={cx("title")}>
-                    {dateTime.setLocale("ru").toFormat("LLLL yyyy")}
-                </span>
+                <div className={cx("date")} ref={ref}>
+                    <span onClick={toggle} className={cx("title")}>
+                        {dateTime.setLocale("ru").toFormat("LLLL yyyy")}
+                    </span>
+                    <div className={cx("day-picker-modal", isOpen && "open")}>
+                        <DayPicker />
+                    </div>
+                </div>
                 <Select
                     className={cx("select")}
                     options={filterViewWeek || []}
@@ -39,7 +49,6 @@ export const Calendar = ({
                     value={filterViewDate?.title}
                 />
             </div>
-
             <SwipeableWrapper
                 onSwipedLeft={() => onChangeDate()}
                 onSwipedRight={() => onChangeDate(true)}
@@ -51,18 +60,15 @@ export const Calendar = ({
                     const numberDay = new Date(day.date).getDate();
                     const selectedDay = initDay === selectedDate?.toLocaleDateString();
 
+                    const isWeekend =
+                        new Date(day.date).getDay() === 0 || new Date(day.date).getDay() === 6;
+                    const isWorkDay = formatListDate.includes(initDay);
+                    const isToday = initDay === today;
+
                     return (
                         <div className={cx("days")} key={initDay}>
-                            {days.map((_, i) => {
-                                if (i !== index) return null;
-
-                                const isWeekend =
-                                    new Date(day.date).getDay() === 0 ||
-                                    new Date(day.date).getDay() === 6;
-                                const isWorkDay = formatListDate.includes(initDay);
-                                const isToday = initDay === today;
-
-                                return (
+                            {days.map((_, i) =>
+                                i === index ? (
                                     <div
                                         key={initDay}
                                         className={cx("day", {
@@ -77,8 +83,8 @@ export const Calendar = ({
                                         <span className={cx("day-week")}>{day.dayOfWeek}</span>
                                         <span className={cx("day-number")}>{numberDay}</span>
                                     </div>
-                                );
-                            })}
+                                ) : null,
+                            )}
                         </div>
                     );
                 })}

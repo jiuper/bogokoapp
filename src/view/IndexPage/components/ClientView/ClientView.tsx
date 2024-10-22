@@ -1,8 +1,6 @@
-import { useEffect } from "react";
 import cnBind from "classnames/bind";
 
 import { ModalSwiper } from "@/_Modals/ModalSwiper";
-import { DayPicker } from "@/components/DayPicker";
 import type { GetCompanyDto } from "@/entities/company/types.ts";
 import slider3 from "@/shared/assets/Slide01 (2).png";
 import slider2 from "@/shared/assets/Slide02 (2).png";
@@ -25,13 +23,7 @@ type IndexPageProps = {
     listLink: { name: string; icon: string; onClick: () => void }[][];
 };
 export const ClientView = ({ companyInfo, listLink }: IndexPageProps) => {
-    const [isOpen, onOpen, onClose] = useBooleanState(false);
-
-    useEffect(() => {
-        if (true) {
-            onOpen();
-        }
-    }, []);
+    const [isOpen, _, onClose] = useBooleanState(false);
 
     return (
         <div className={cx("bg-wrapper")}>
@@ -62,7 +54,6 @@ export const ClientView = ({ companyInfo, listLink }: IndexPageProps) => {
                     currencyShortTitle={companyInfo?.currencyShortTitle}
                 />
                 <DescriptionCompany description={companyInfo?.description} />
-                <DayPicker />
             </div>
 
             <ModalSwiper isOpen={isOpen} onClose={onClose}>

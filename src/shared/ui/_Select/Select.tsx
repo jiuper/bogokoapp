@@ -3,6 +3,7 @@ import type { SelectProps } from "@telegram-apps/telegram-ui";
 import cnBind from "classnames/bind";
 import type { SelectItem } from "primereact/selectitem";
 
+import { useOutsideClick } from "@/shared/hooks/useOutsideClick.tsx";
 import { SvgIcon } from "@/shared/ui/SvgIcon/SvgIcon.tsx";
 
 import styles from "./Select.module.scss";
@@ -31,6 +32,7 @@ export const Select = ({
     const [isShowMenu, show] = useState(false);
 
     const handleDropdownShow = () => show(!isShowMenu);
+    const ref = useOutsideClick(() => show(false));
 
     return (
         <div
@@ -38,7 +40,7 @@ export const Select = ({
             className={cx("dropdown", { rootClassName, isFullWidth, error, isShowMenu }, className)}
         >
             {label && <span className={cx("label", { isShowMenu, error })}>{label}</span>}
-            <div className={cx("select")}>
+            <div ref={ref} className={cx("select")}>
                 <span className={cx("title", { isShowMenu, error })}>{value}</span>
                 <div className={cx("options", { isShowMenu })}>
                     {options.map((option, index) => (

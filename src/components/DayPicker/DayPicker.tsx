@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { DayPicker as DayPickerReact } from "react-day-picker";
 import cnBind from "classnames/bind";
+import { ru } from "date-fns/locale";
 import { DateTime } from "luxon";
 
 import "react-day-picker/style.css";
@@ -12,14 +13,15 @@ type DayPickerProps = {
     value?: Date;
 };
 export const DayPicker = ({}: DayPickerProps) => {
-    const [selected, setSelected] = useState<DateTime | null>(null);
+    const [selected, setSelected] = useState<DateTime>(DateTime.now().startOf("day"));
 
     return (
         <div className={cx("day-picker")}>
             <DayPickerReact
+                locale={ru}
                 mode="single"
                 selected={selected?.toJSDate()}
-                onSelect={(date) => setSelected(date ? DateTime.fromJSDate(date) : null)}
+                onSelect={(date) => (date ? setSelected(DateTime.fromJSDate(date)) : () => {})}
             />
         </div>
     );

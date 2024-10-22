@@ -7,12 +7,7 @@
   justify-content: space-between;
   width: 100%;
 }
-.title{
-  @include text-Subtitle3();
-  color: $color-shading-60;
-  text-transform: capitalize;
-  flex: 1 0 70%;
-}
+
 .select{
   flex: 1 0 20%;
   border: none !important;
@@ -132,3 +127,26 @@
   }
 }
 
+.date{
+  position: relative;
+  flex: 1 0 70%;
+  .title{
+    @include text-Subtitle3();
+    color: $color-shading-60;
+    text-transform: capitalize;
+
+  }
+  .day-picker-modal{
+    display: none;
+    position: absolute;
+    top: 0;
+    z-index: 9;
+    border-radius: 12px;
+    background: var(--SURFACE-APP-BG, $color-light);
+    box-shadow: 0px 2px 4px 0px rgba(255, 118, 72, 0.12), 0px 2px 4px 0px rgba(0, 0, 0, 0.12);
+
+    &.open{
+      display: flex;
+    }
+  }
+}
