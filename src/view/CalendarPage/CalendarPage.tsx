@@ -46,7 +46,7 @@ export const CalendarPage = ({ companyInfo }: CalendarPageProps) => {
                         viewSchedule={filterViewDate.value}
                         records={records}
                         companyInfo={companyInfo}
-                        mode={40}
+                        mode={user?.role || 50}
                     />
                 </div>
             </div>

@@ -2,14 +2,13 @@ import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router";
 import cnBind from "classnames/bind";
 
+import { Calendar } from "@/components/Calendar";
 import { useAllTimesMasterInfoQuery } from "@/entities/order/api/getAllTimesMasterInfo";
 import { useTimesMasterInfoQuery } from "@/entities/order/api/getTimesMasterInfo";
 import { ROUTES } from "@/shared/const/Routes.ts";
 import type { BookingData } from "@/shared/context/ClientProvider.tsx";
 import { SvgIcon } from "@/shared/ui/SvgIcon/SvgIcon.tsx";
 import { TimeBooking } from "@/view/TimesBooking/components/TimeBooking";
-
-import { Calendar } from "../../components/Calendar";
 
 import styles from "./TimesBooking.module.scss";
 
@@ -64,7 +63,7 @@ export const TimesBooking = ({ data, handleAddWorkDateBooking }: TimesBookingPro
                 </div>
             </div>
             <div className={cx("content")}>
-                <Calendar onChange={onSelectHandler} dateTrue={dateTrue} />
+                <Calendar isSelect={false} onChange={onSelectHandler} dateTrue={dateTrue} />
                 {loadingSingleTimeDay ? null : listDateTimes.length === 0 ? (
                     <div className={cx("times-not")}>
                         <span className={cx("caption")}>

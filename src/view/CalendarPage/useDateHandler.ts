@@ -1,20 +1,23 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { eachDayOfInterval, endOfWeek, startOfDay, startOfWeek } from "date-fns";
 import { DateTime, Info } from "luxon";
-
-import type { filterDate } from "@/view/CalendarPage/CalendarPage.tsx";
 
 type DateInfo = {
     date: Date;
     dayOfWeek: string;
 };
 export const useDateHandler = (
-    filterViewDate?: filterDate,
+    typeView?: string,
+    valueView?: number,
     dateTrue?: string[],
     onChange?: (date: Date) => void,
+    dateValue?: DateTime,
 ) => {
-    const [dateTime, setDateTime] = useState(DateTime.now().startOf("day"));
+    const [dateTime, setDateTime] = useState<DateTime>(DateTime.now().startOf("day"));
     const [selectedDate, setSelectedDate] = useState(new Date());
+    useEffect(() => {
+        if (dateValue) setDateTime(dateValue);
+    }, [dateValue]);
 
     const getDays = () => [...Info.weekdays("short")];
 
@@ -45,9 +48,9 @@ export const useDateHandler = (
 
         return eachDayOfInterval({
             start: day,
-            end: dateTime.plus({ days: filterViewDate?.value }).toISO() || new Date(),
+            end: dateTime.plus({ days: valueView }).toISO() || new Date(),
         })
-            .slice(0, [1, 3].includes(filterViewDate?.value || 1) ? filterViewDate?.value : 1)
+            .slice(0, [1, 3].includes(valueView || 1) ? valueView : 1)
             .map((date) => ({
                 date,
                 dayOfWeek: new Date(date).toLocaleDateString("ru-RU", { weekday: "short" }),
@@ -55,16 +58,16 @@ export const useDateHandler = (
     };
 
     const date = useMemo(() => {
-        if (filterViewDate?.value === 7) {
+        if (valueView === 7) {
             return getWeekDates();
         }
 
         return getDayOrThreeDates();
-    }, [startWeek, endWeek, filterViewDate]);
+    }, [startWeek, endWeek, valueView]);
 
     const onChangeDate = (operator = false) => {
-        const type = filterViewDate?.type || "weeks";
-        const value = filterViewDate?.value === 7 ? 1 : filterViewDate?.value;
+        const type = typeView || "weeks";
+        const value = valueView === 7 ? 1 : valueView;
         setDateTime(
             operator ? dateTime.minus({ [type]: value }) : dateTime.plus({ [type]: value }),
         );
@@ -76,7 +79,6 @@ export const useDateHandler = (
     };
 
     return {
-        dateTime,
         selectedDate,
         days,
         date,

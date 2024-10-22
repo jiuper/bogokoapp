@@ -9,11 +9,15 @@ import styles from "./DayPicker.module.scss";
 
 const cx = cnBind.bind(styles);
 type DayPickerProps = {
-    onChange?: (date: Date) => void;
-    value?: Date;
+    onChange?: (date: DateTime) => void;
+    value?: DateTime;
 };
-export const DayPicker = ({}: DayPickerProps) => {
-    const [selected, setSelected] = useState<DateTime>(DateTime.now().startOf("day"));
+export const DayPicker = ({ value, onChange }: DayPickerProps) => {
+    const [selected, setSelected] = useState<DateTime>(value || DateTime.now().startOf("day"));
+    const onChangeHandler = (date: DateTime) => {
+        setSelected(date);
+        onChange?.(date);
+    };
 
     return (
         <div className={cx("day-picker")}>
@@ -21,7 +25,7 @@ export const DayPicker = ({}: DayPickerProps) => {
                 locale={ru}
                 mode="single"
                 selected={selected?.toJSDate()}
-                onSelect={(date) => (date ? setSelected(DateTime.fromJSDate(date)) : () => {})}
+                onSelect={(date) => (date ? onChangeHandler(DateTime.fromJSDate(date)) : () => {})}
             />
         </div>
     );

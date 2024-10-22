@@ -1,4 +1,6 @@
+import { useState } from "react";
 import cnBind from "classnames/bind";
+import { DateTime } from "luxon";
 
 import { DayPicker } from "@/components/DayPicker";
 import { SwipeableWrapper } from "@/components/SwipeableWrapper";
@@ -17,6 +19,7 @@ type CalendarProps = {
     filterViewWeek?: filterDate[];
     filterViewDate?: filterDate;
     onChaneFilter?: (date: filterDate) => void;
+    isSelect?: boolean;
 };
 
 export const Calendar = ({
@@ -24,10 +27,14 @@ export const Calendar = ({
     onChange,
     filterViewWeek,
     onChaneFilter,
-    filterViewDate,
+    filterViewDate = { value: 7, type: "weeks", title: "Неделя" },
+    isSelect = true,
 }: CalendarProps) => {
-    const { dateTime, onChangeDate, date, days, selectedDate, formatListDate, onSelectHandler } =
-        useDateHandler(filterViewDate, dateTrue, onChange);
+    const [selected, setSelected] = useState<DateTime>(DateTime.now().startOf("day"));
+    const onChangeHandler = (date: DateTime) => setSelected(date);
+
+    const { onChangeDate, date, days, selectedDate, formatListDate, onSelectHandler } =
+        useDateHandler(filterViewDate?.type, filterViewDate?.value, dateTrue, onChange, selected);
     const [isOpen, , close, toggle] = useBooleanState(false);
     const ref = useOutsideClick(close);
 
@@ -36,23 +43,28 @@ export const Calendar = ({
             <div className={cx("header")}>
                 <div className={cx("date")} ref={ref}>
                     <span onClick={toggle} className={cx("title")}>
-                        {dateTime.setLocale("ru").toFormat("LLLL yyyy")}
+                        {selected.setLocale("ru").toFormat("LLLL yyyy")}
                     </span>
                     <div className={cx("day-picker-modal", isOpen && "open")}>
-                        <DayPicker />
+                        <DayPicker onChange={onChangeHandler} value={selected} />
                     </div>
                 </div>
-                <Select
-                    className={cx("select")}
-                    options={filterViewWeek || []}
-                    onChange={(e: filterDate) => onChaneFilter?.(e)}
-                    value={filterViewDate?.title}
-                />
+                {isSelect && (
+                    <Select
+                        className={cx("select")}
+                        options={filterViewWeek || []}
+                        onChange={(e: filterDate) => onChaneFilter?.(e)}
+                        value={filterViewDate?.title}
+                    />
+                )}
             </div>
             <SwipeableWrapper
                 onSwipedLeft={() => onChangeDate()}
                 onSwipedRight={() => onChangeDate(true)}
-                className={cx("content", [3, 7].includes(filterViewDate?.value || 1) && "mode")}
+                className={cx(
+                    "content",
+                    [3, 7].includes(filterViewDate?.value || 7) && isSelect && "mode",
+                )}
             >
                 {date.map((day, index) => {
                     const initDay = day.date.toLocaleDateString();
