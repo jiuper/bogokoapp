@@ -29,8 +29,13 @@ const dateFormat = (
     }, []);
 };
 
-export const useCartulary = (records: ResponseGetRecordShortInfoDto[] | undefined) => {
-    const hours = Array.from({ length: 24 }, (_, i) => i); // Массив часов от 0 до 23
+export const useCartulary = (
+    records: ResponseGetRecordShortInfoDto[] | undefined,
+    workDate?: { start: number; end: number },
+) => {
+    const hours = Array.from({ length: 24 }, (_, i) => i).filter(
+        (hour) => hour >= (workDate?.start || 8) && hour <= (workDate?.end || 21),
+    );
 
     // Функция для преобразования времени в часы
     const timeToHours = (time: string): number => {

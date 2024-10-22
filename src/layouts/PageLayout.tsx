@@ -61,7 +61,7 @@ export const PageLayout = ({ children }: PageLayoutProps) => {
                         {children}
                     </main>
                     {location === ROUTES.CALENDAR && user?.role !== 50 && (
-                        <FixedLayout style={{ bottom: 100 }}>
+                        <FixedLayout style={{ bottom: 100, zIndex: 999 }}>
                             <div onClick={() => openRecordAddModal()} className={cx("btn-add")}>
                                 <SvgIcon name="Add" />
                             </div>
@@ -70,7 +70,7 @@ export const PageLayout = ({ children }: PageLayoutProps) => {
 
                     {permissionsPage.includes(location) && (
                         <FixedLayout vertical="top">
-                            <Tabbar style={{ height: "80px" }}>
+                            <Tabbar style={{ height: "80px", zIndex: 999 }}>
                                 {tabs.map(({ id, label, Icon, link }) => (
                                     <Tabbar.Item
                                         className={cx("tab", location === link && "tab-active")}
