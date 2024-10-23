@@ -1,39 +1,14 @@
 .calendar{
   @include flex-column();
   gap: 12px;
-}
-.header{
-  display: flex;
-  justify-content: space-between;
   width: 100%;
 }
 
-.select{
-  flex: 1 0 20%;
-  border: none !important;
-
-  &>div{
-    padding: 0;
-  }
-}
-.buttons{
-  display: flex;
-  justify-content: flex-end;
-  gap: 8px;
-
-  .prev{
-    transform: rotate(180deg);
-  }
-}
 .content{
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  transition: $transition-default;
-
-  &.mode{
-    padding-left: 50px;
-  }
+  width: 100%;
+  justify-content: center;
 }
 .days{
   @include flex-center();
@@ -127,27 +102,6 @@
   }
 }
 
-.date{
-  position: relative;
-  flex: 1 0 70%;
-  .title{
-    @include text-Subtitle3();
-    color: $color-shading-60;
-    text-transform: capitalize;
 
-  }
-  .day-picker-modal{
-    display: none;
-    position: absolute;
-    top: 0;
-    z-index: 9;
-    border-radius: 12px;
-    background: var(--SURFACE-APP-BG, $color-light);
-    box-shadow: 0px 2px 4px 0px rgba(255, 118, 72, 0.12), 0px 2px 4px 0px rgba(0, 0, 0, 0.12);
-    padding: 4px 16px 16px 16px;
 
-    &.open{
-      display: flex;
-    }
-  }
-}
+

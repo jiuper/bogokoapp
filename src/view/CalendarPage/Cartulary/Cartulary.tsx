@@ -106,7 +106,7 @@ export const Cartulary = ({
                                     onClick={
                                         mode === UserRole.CLIENT
                                             ? () => {}
-                                            : () => openRecordAddModal
+                                            : () => openRecordAddModal()
                                     }
                                 >
                                     {Array.from({ length: view }).map((_, index) => (
@@ -160,7 +160,7 @@ export const Cartulary = ({
                                             onClick={
                                                 mode === UserRole.CLIENT
                                                     ? () => {}
-                                                    : () => openRecordAddModal
+                                                    : () => openRecordAddModal()
                                             }
                                         />
                                     ),

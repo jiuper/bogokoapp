@@ -44,13 +44,16 @@ export const App: FC = () => {
     useEffect(() => {
         settingsButton.show();
 
-        if (ROUTES.MAIN === location.pathname) backButton.hide();
+        if (ROUTES.MAIN === location.pathname || ROUTES.SETTING === location.pathname)
+            backButton.hide();
         else {
             backButton.show();
         }
 
         // if (!ROUTES.MAIN || !ROUTES.BONUS) backButton.show();
     }, [settingsButton, backButton, location]);
+
+    settingsButton.on("click", () => reactNavigator.push(ROUTES.SETTING));
 
     // Create a new application navigator and attach it to the browser history, so it could modify
     // it and listen to its changes.

@@ -69,7 +69,7 @@ export const PageLayout = ({ children }: PageLayoutProps) => {
                     )}
 
                     {permissionsPage.includes(location) && (
-                        <FixedLayout vertical="top">
+                        <FixedLayout style={{ zIndex: 999 }} vertical="top">
                             <Tabbar style={{ height: "80px", zIndex: 999 }}>
                                 {tabs.map(({ id, label, Icon, link }) => (
                                     <Tabbar.Item

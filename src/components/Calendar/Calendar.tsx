@@ -4,9 +4,6 @@ import { DateTime } from "luxon";
 
 import { DayPicker } from "@/components/DayPicker";
 import { SwipeableWrapper } from "@/components/SwipeableWrapper";
-import { useBooleanState } from "@/shared/hooks";
-import { useOutsideClick } from "@/shared/hooks/useOutsideClick.tsx";
-import { Select } from "@/shared/ui/_Select";
 import type { filterDate } from "@/view/CalendarPage";
 import { useDateHandler } from "@/view/CalendarPage/useDateHandler.ts";
 
@@ -16,55 +13,40 @@ const cx = cnBind.bind(styles);
 type CalendarProps = {
     dateTrue?: string[];
     onChange?: (date: Date) => void;
-    filterViewWeek?: filterDate[];
+    value?: DateTime;
     filterViewDate?: filterDate;
-    onChaneFilter?: (date: filterDate) => void;
-    isSelect?: boolean;
+    isHeader?: boolean;
 };
 
 export const Calendar = ({
     dateTrue,
     onChange,
-    filterViewWeek,
-    onChaneFilter,
     filterViewDate = { value: 7, type: "weeks", title: "Неделя" },
-    isSelect = true,
+    isHeader = true,
+    value,
 }: CalendarProps) => {
     const [selected, setSelected] = useState<DateTime>(DateTime.now().startOf("day"));
-    const onChangeHandler = (date: DateTime) => setSelected(date);
+    const onChangeHandler = (date: DateTime) => {
+        setSelected(date);
+        onChange?.(date.toJSDate());
+    };
 
     const { onChangeDate, date, days, selectedDate, formatListDate, onSelectHandler } =
-        useDateHandler(filterViewDate?.type, filterViewDate?.value, dateTrue, onChange, selected);
-    const [isOpen, , close, toggle] = useBooleanState(false);
-    const ref = useOutsideClick(close);
+        useDateHandler(
+            filterViewDate?.type,
+            filterViewDate?.value,
+            dateTrue,
+            onChange,
+            value || selected,
+        );
 
     return (
         <div className={cx("calendar")}>
-            <div className={cx("header")}>
-                <div className={cx("date")} ref={ref}>
-                    <span onClick={toggle} className={cx("title")}>
-                        {selected.setLocale("ru").toFormat("LLLL yyyy")}
-                    </span>
-                    <div className={cx("day-picker-modal", isOpen && "open")}>
-                        <DayPicker onChange={onChangeHandler} value={selected} />
-                    </div>
-                </div>
-                {isSelect && (
-                    <Select
-                        className={cx("select")}
-                        options={filterViewWeek || []}
-                        onChange={(e: filterDate) => onChaneFilter?.(e)}
-                        value={filterViewDate?.title}
-                    />
-                )}
-            </div>
+            {isHeader && <DayPicker onChange={onChangeHandler} value={selected} />}
             <SwipeableWrapper
                 onSwipedLeft={() => onChangeDate()}
                 onSwipedRight={() => onChangeDate(true)}
-                className={cx(
-                    "content",
-                    [3, 7].includes(filterViewDate?.value || 7) && isSelect && "mode",
-                )}
+                className={cx("content")}
             >
                 {date.map((day, index) => {
                     const initDay = day.date.toLocaleDateString();
