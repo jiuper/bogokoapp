@@ -1,7 +1,9 @@
+import { useNavigate } from "react-router";
 import { Avatar } from "@telegram-apps/telegram-ui";
 import cnBind from "classnames/bind";
 
 import def from "@/shared/assets/images/Empty-image-icon.png";
+import { Button } from "@/shared/ui/_Button";
 import { InputText } from "@/shared/ui/_InputText";
 import { SvgIcon } from "@/shared/ui/SvgIcon/SvgIcon.tsx";
 
@@ -14,6 +16,8 @@ type ProfileSettingProps = {
 const listSetting = ["Кабинет", "Услуги", "Персонал", "Товары", "Отчёты"];
 
 export const ProfileSetting = ({ handleTabClick }: ProfileSettingProps) => {
+    const href = useNavigate();
+
     return (
         <div className={cx("profile-setting")}>
             <div className={cx("wrapper")}>
@@ -52,6 +56,9 @@ export const ProfileSetting = ({ handleTabClick }: ProfileSettingProps) => {
                             </div>
                         ))}
                     </div>
+                </div>
+                <div className={cx("button")}>
+                    <Button variant="outlined" onClick={() => href("/")} label="Выход" />
                 </div>
             </div>
         </div>
