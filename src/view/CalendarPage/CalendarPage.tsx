@@ -22,7 +22,7 @@ const filterViewWeek: filterDate[] = [
     { type: "days", value: 3, title: "3 Дня" },
     { type: "weeks", value: 7, title: "Неделя" },
 ];
-export const CalendarPage = ({ companyInfo, userRole, listMaster }: CalendarPageProps) => {
+export const CalendarPage = ({ companyInfo, listMaster }: CalendarPageProps) => {
     const [selectedDate, setSelectedDate] = useState<Date>(new Date());
     const onSelectHandler = (date: Date) => setSelectedDate(date);
     const { data: records } = useGetAllRecordQuery(

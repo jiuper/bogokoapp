@@ -63,7 +63,7 @@ export const TimesBooking = ({ data, handleAddWorkDateBooking }: TimesBookingPro
                 </div>
             </div>
             <div className={cx("content")}>
-                <Calendar isSelect={false} onChange={onSelectHandler} dateTrue={dateTrue} />
+                <Calendar isHeader={false} onChange={onSelectHandler} dateTrue={dateTrue} />
                 {loadingSingleTimeDay ? null : listDateTimes.length === 0 ? (
                     <div className={cx("times-not")}>
                         <span className={cx("caption")}>
