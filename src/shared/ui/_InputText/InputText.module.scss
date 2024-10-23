@@ -5,7 +5,7 @@
 
     &:focus-within {
         .label {
-            top: 4px;
+            top: -11px;
             @include text-input;
             transform: translateY(-0%);
             color: #FF7648;
@@ -14,7 +14,7 @@
 
     &.with-value {
         .label {
-            top: 4px;
+            top: -11px;
             @include text-input;
             transform: translateY(-0%);
         }
@@ -136,9 +136,6 @@
         padding: 13px 12px;
         @include text-Body1;
 
-        &.with-label {
-            padding: 20px 12px 6px 12px;
-        }
 
         &.icon-start {
             padding-left: 36px;
