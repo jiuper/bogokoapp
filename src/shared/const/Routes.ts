@@ -13,4 +13,5 @@ export const ROUTES = {
     BONUS: "/bonus",
     FEEDBACK: "/feedback",
     CHOOSEPAGE: "/choose-page",
+    SETTING: "/setting",
 };

@@ -13,6 +13,7 @@ import { Profile } from "@/pages/profile.page.tsx";
 import { Record } from "@/pages/record.page.tsx";
 import { Service } from "@/pages/service.page.tsx";
 import { ServicesBooking } from "@/pages/services-booking.page.tsx";
+import { SettingPageIndex } from "@/pages/setting.page.tsx";
 import { TimesBookingPage } from "@/pages/times-booking.page.tsx";
 import { ROUTES } from "@/shared/const/Routes.ts";
 
@@ -39,4 +40,5 @@ export const routes: Route[] = [
     { path: `${ROUTES.BONUS}`, Component: BonusesSystemPage },
     { path: `${ROUTES.FEEDBACK}`, Component: Feedback },
     { path: `${ROUTES.CHOOSEPAGE}`, Component: ChoosePageIndex },
+    { path: `${ROUTES.SETTING}`, Component: SettingPageIndex },
 ];
