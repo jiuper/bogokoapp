@@ -55,8 +55,8 @@ export const DiscountBonus = ({ handleTab }: DiscountBonusProps = {}) => {
                     !isOpen
                         ? "Оформить дисконтную карту для начисления бонусов"
                         : success
-                        ? "Предъявите экран на кассе для начисления бонусов"
-                        : "Активация дисконтной карты"
+                          ? "Предъявите экран на кассе для начисления бонусов"
+                          : "Активация дисконтной карты"
                 }`}</span>
             </div>
             <div className={cx("wrapper", "container")}>
@@ -64,13 +64,15 @@ export const DiscountBonus = ({ handleTab }: DiscountBonusProps = {}) => {
                     <div className={cx("item")}>
                         <span className={cx("caption")}>Получайте бонусы с дисконтной картой</span>
                         <span className={cx("text")}>
-                            При покупке нашей услуги вы получаете кэшбэк в виде бонусных баллов, которые можно
-                            использовать для следующих заказов.
+                            При покупке нашей услуги вы получаете кэшбэк в виде бонусных баллов,
+                            которые можно использовать для следующих заказов.
                         </span>
                     </div>
 
                     <div className={cx("item")}>
-                        <span className={cx("caption", "caption-card")}>Примеры выгодной покупки</span>
+                        <span className={cx("caption", "caption-card")}>
+                            Примеры выгодной покупки
+                        </span>
                         <div className={cx("cards")}>
                             {Array(2)
                                 .fill("")
@@ -90,7 +92,11 @@ export const DiscountBonus = ({ handleTab }: DiscountBonusProps = {}) => {
                     </div>
                 </div>
 
-                <Button onClick={() => handleTab?.(0)} variant="outlined" label="К системе бонусов" />
+                <Button
+                    onClick={() => handleTab?.(0)}
+                    variant="outlined"
+                    label="К системе бонусов"
+                />
             </div>
             <ConfirmModal {...confirmModalProps} />
         </div>

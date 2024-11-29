@@ -41,4 +41,6 @@ export const routes: Route[] = [
     { path: `${ROUTES.FEEDBACK}`, Component: Feedback },
     { path: `${ROUTES.CHOOSEPAGE}`, Component: ChoosePageIndex },
     { path: `${ROUTES.SETTING}`, Component: SettingPageIndex },
+    { path: `${ROUTES.SETTING}/:url`, Component: SettingPageIndex },
+    { path: `${ROUTES.SETTING}/:url/:id`, Component: SettingPageIndex },
 ];

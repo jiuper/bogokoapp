@@ -10,7 +10,10 @@ export const Service = () => {
     const { data } = useAllServicesQuery();
     const listData = useMemo(() => data || [], [data]);
 
-    const filterListData = useMemo(() => listData.filter((el) => el?.id?.toString() === id), [listData, id]);
+    const filterListData = useMemo(
+        () => listData.filter((el) => el?.id?.toString() === id),
+        [listData, id],
+    );
 
     return (
         <PageLayout>

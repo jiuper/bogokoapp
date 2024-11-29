@@ -13,6 +13,18 @@ export interface UIButtonProps extends ButtonProps {
     isFullWidth?: boolean;
 }
 
-export const UIButton = ({ variant = "solid", type = "button", className, isFullWidth, ...props }: UIButtonProps) => {
-    return <Button type={type} className={cx("ui-button", className, variant, { isFullWidth })} {...props} />;
+export const UIButton = ({
+    variant = "solid",
+    type = "button",
+    className,
+    isFullWidth,
+    ...props
+}: UIButtonProps) => {
+    return (
+        <Button
+            type={type}
+            className={cx("ui-button", className, variant, { isFullWidth })}
+            {...props}
+        />
+    );
 };

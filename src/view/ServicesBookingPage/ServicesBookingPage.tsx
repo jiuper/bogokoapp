@@ -15,7 +15,8 @@ type ServiceInfoCardProps = {
 export const ServicesBookingPage = ({ data }: ServiceInfoCardProps) => {
     const [searchValue, setSearchValue] = useState<string | undefined>("");
     const filterListData = useMemo(
-        () => data.filter((el) => el.name?.toLowerCase().includes(searchValue?.toLowerCase() || "")),
+        () =>
+            data.filter((el) => el.name?.toLowerCase().includes(searchValue?.toLowerCase() || "")),
         [data, searchValue],
     );
 

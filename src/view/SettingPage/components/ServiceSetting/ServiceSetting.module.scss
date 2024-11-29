@@ -1,15 +1,14 @@
-.company-setting{
-  height: 100%;
-}
-.form{
-  @include flex-column();
-  gap: 16px;
-}
-.edit-info{
+.wrapper{
   @include flex-column();
   gap: 8px;
-  height: 100lvh;
-  padding-inline: 8px;
+}
+.title{
+  @include text-Title();
+}
+.list{
+  @include flex-column();
+  gap: 8px;
+  margin-bottom: 80px;
 }
 .button{
   padding: 16px;

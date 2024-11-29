@@ -3,6 +3,7 @@ import { Avatar } from "@telegram-apps/telegram-ui";
 import cnBind from "classnames/bind";
 
 import def from "@/shared/assets/images/Empty-image-icon.png";
+import { ROUTES } from "@/shared/const/Routes.ts";
 import { Button } from "@/shared/ui/_Button";
 import { InputText } from "@/shared/ui/_InputText";
 import { SvgIcon } from "@/shared/ui/SvgIcon/SvgIcon.tsx";
@@ -10,12 +11,16 @@ import { SvgIcon } from "@/shared/ui/SvgIcon/SvgIcon.tsx";
 import styles from "./ProfileSetting.module.scss";
 
 const cx = cnBind.bind(styles);
-type ProfileSettingProps = {
-    handleTabClick: (tab: number) => void;
-};
-const listSetting = ["Кабинет", "Услуги", "Персонал", "Товары", "Отчёты"];
 
-export const ProfileSetting = ({ handleTabClick }: ProfileSettingProps) => {
+const listSetting = [
+    { title: "Кабинет", url: `${ROUTES.SETTING}/company` },
+    { title: "Услуги", url: `${ROUTES.SETTING}/services` },
+    { title: "Персонал", url: `${ROUTES.SETTING}/company` },
+    { title: "Товары", url: `${ROUTES.SETTING}/company` },
+    { title: "Отчёты", url: `${ROUTES.SETTING}/company` },
+];
+
+export const ProfileSetting = () => {
     const href = useNavigate();
 
     return (
@@ -46,12 +51,8 @@ export const ProfileSetting = ({ handleTabClick }: ProfileSettingProps) => {
                     <span className={cx("title")}>Настройки</span>
                     <div className={cx("info")}>
                         {listSetting.map((el, i) => (
-                            <div
-                                onClick={() => handleTabClick(i + 1)}
-                                key={i}
-                                className={cx("item")}
-                            >
-                                <span className={cx("name")}>{el}</span>
+                            <div onClick={() => href(el.url)} key={i} className={cx("item")}>
+                                <span className={cx("name")}>{el.title}</span>
                                 <SvgIcon name="ArrowRight" className={cx("arrow")} />
                             </div>
                         ))}

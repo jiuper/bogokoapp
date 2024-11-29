@@ -25,7 +25,9 @@ export const ServicePage = ({ data }: ServicePageProps) => {
     const filterSearchListData = useMemo(
         () =>
             data.length !== 0
-                ? data[0].services.filter((el) => el.name?.toLowerCase().includes(searchValue?.toLowerCase() || ""))
+                ? data[0].services.filter((el) =>
+                      el.name?.toLowerCase().includes(searchValue?.toLowerCase() || ""),
+                  )
                 : [],
         [data, searchValue],
     );

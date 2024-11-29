@@ -46,7 +46,12 @@ export const ConfirmModal = ({
             <div className={cx("wrapper")}>
                 <div className={cx("content")}>{message}</div>
                 <div className={cx("actions")}>
-                    <Button className={cx("btn-submit")} onClick={onSubmit} label="Принять" {...submitBtnParams} />
+                    <Button
+                        className={cx("btn-submit")}
+                        onClick={onSubmit}
+                        label="Принять"
+                        {...submitBtnParams}
+                    />
                     <Button
                         className={cx("btn-close")}
                         variant="outlined"
