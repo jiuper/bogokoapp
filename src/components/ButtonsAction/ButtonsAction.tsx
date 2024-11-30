@@ -31,6 +31,7 @@ export const ButtonsAction = ({
                 background: "rgba(255, 255, 255, 0.95)",
                 boxShadow: "0px -1px 12px 0px rgba(255, 118, 72, 0.12)",
                 backdropFilter: "blur(20px)",
+                zIndex: 1000,
             }}
             className={cx("modal")}
             open={isOpen}

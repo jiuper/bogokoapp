@@ -1,4 +1,4 @@
-import { forwardRef, useImperativeHandle } from "react";
+import { forwardRef, useEffect, useImperativeHandle, useState } from "react";
 import cnBind from "classnames/bind";
 import { useFormik } from "formik";
 
@@ -67,6 +67,25 @@ export const ModalSettingService = forwardRef<ModalSettingServiceRef, ModalSetti
                 })),
         }));
 
+        const [isKeyboardVisible, setIsKeyboardVisible] = useState(false);
+
+        useEffect(() => {
+            const handleFocus = () => setIsKeyboardVisible(true);
+            const handleBlur = () => setIsKeyboardVisible(false);
+            const inputs = document.querySelectorAll("input, textarea");
+            inputs.forEach((input) => {
+                input.addEventListener("focus", handleFocus);
+                input.addEventListener("blur", handleBlur);
+            });
+
+            return () => {
+                inputs.forEach((input) => {
+                    input.removeEventListener("focus", handleFocus);
+                    input.removeEventListener("blur", handleBlur);
+                });
+            };
+        }, []);
+
         return (
             <Modal isOpen={isOpen} onClose={onClose}>
                 <form className={cx("form")} onSubmit={formik.handleSubmit}>
@@ -105,12 +124,14 @@ export const ModalSettingService = forwardRef<ModalSettingServiceRef, ModalSetti
                         />
                     </div>
                 </form>
-                <ButtonsAction
-                    isOpen={isOpen}
-                    onSubmit={formik.handleSubmit}
-                    onClose={onClose}
-                    btnLabel={["Сохранить изменения", "Назад к услугам"]}
-                />
+                {!isKeyboardVisible && (
+                    <ButtonsAction
+                        isOpen={isOpen}
+                        onSubmit={formik.handleSubmit}
+                        onClose={onClose}
+                        btnLabel={["Сохранить изменения", "Назад к услугам"]}
+                    />
+                )}
             </Modal>
         );
     },
