@@ -1,6 +1,7 @@
 .wrapper{
   @include flex-column();
   gap: 8px;
+
 }
 .title{
   @include text-Title();
@@ -8,7 +9,7 @@
 .list{
   @include flex-column();
   gap: 8px;
-  margin-bottom: 80px;
+  margin-bottom: 130px;
 }
 .button{
   padding: 16px;

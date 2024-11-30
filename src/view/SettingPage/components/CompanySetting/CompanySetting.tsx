@@ -3,8 +3,8 @@ import cnBind from "classnames/bind";
 import { useFormik } from "formik";
 
 import { ConfirmModal, useConfirmModal } from "@/_Modals/ConfirmModal/ConfirmModal.tsx";
+import { ButtonsAction } from "@/components/ButtonsAction";
 import { ROUTES } from "@/shared/const/Routes.ts";
-import { Button } from "@/shared/ui/_Button";
 import { InputText } from "@/shared/ui/_InputText";
 import { InputTextarea } from "@/shared/ui/_InputTextarea";
 import { UploadImage } from "@/view/SettingPage/components/UploadImage";
@@ -64,14 +64,12 @@ export const CompanySetting = () => {
                     />
                 </div>
             </form>
-            <div className={cx("button")}>
-                <Button
-                    variant={formik.dirty ? "solid" : "outlined"}
-                    type="button"
-                    onClick={formik.dirty ? handleOnSave : () => href(ROUTES.SETTING)}
-                    label={formik.dirty ? "Сохранить изминения" : "К настройкам"}
-                />
-            </div>
+            <ButtonsAction
+                isOpen
+                onSubmit={formik.dirty ? handleOnSave : () => {}}
+                onClose={() => href(ROUTES.SETTING)}
+                btnLabel={["Сохранить изминения", "К настройкам"]}
+            />
             <ConfirmModal {...confirmModalPropsSave} />
         </div>
     );
