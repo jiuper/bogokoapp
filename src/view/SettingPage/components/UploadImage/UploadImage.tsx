@@ -18,13 +18,20 @@ type UploadImageProps = {
     onChange?: (value: File[]) => void;
     onRemove?: (id: string) => void;
     onMainSlide?: (id: string) => void;
+    classNameImage?: string;
 };
 const buttons = [
     { y: -60, name: "photo" },
     { y: -120, name: "remove" },
     { y: -85, x: -60, name: "image-btn" },
 ];
-export const UploadImage = ({ data, onChange, onRemove, onMainSlide }: UploadImageProps) => {
+export const UploadImage = ({
+    data,
+    onChange,
+    onRemove,
+    onMainSlide,
+    classNameImage,
+}: UploadImageProps) => {
     const fileInputRef = useRef<HTMLInputElement>(null);
     const { withConfirm, modalProps: confirmModalProps } = useConfirmModal();
 
@@ -71,7 +78,7 @@ export const UploadImage = ({ data, onChange, onRemove, onMainSlide }: UploadIma
 
     return (
         <div className={cx("upload-image")}>
-            <Carousel value={listImages} />
+            <Carousel classNameImage={classNameImage} value={listImages} />
             <div className={cx("list-btns")}>
                 <div onClick={toggleIsActiveBtnEdit} className={cx("btn-edit", "main-btn")}>
                     <SvgIcon

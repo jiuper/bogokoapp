@@ -25,7 +25,14 @@ export const UIInputTextarea = ({
     ...props
 }: UIInputTextareaProps) => {
     return (
-        <label className={cx("textarea", rootClassName, { "with-value": value, disabled, error, isFullWidth })}>
+        <label
+            className={cx("textarea", rootClassName, {
+                "with-value": value,
+                disabled,
+                error,
+                isFullWidth,
+            })}
+        >
             <span className={cx("label")}>{label}</span>
             <InputTextarea
                 className={cx("textarea-field", className, { error, isFullWidth })}

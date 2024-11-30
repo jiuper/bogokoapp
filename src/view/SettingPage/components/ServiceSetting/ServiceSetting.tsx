@@ -1,10 +1,12 @@
-import { useMemo } from "react";
+import { useMemo, useRef } from "react";
 import { useNavigate } from "react-router";
 import cnBind from "classnames/bind";
 
+import type { ModalSettingServiceRef } from "@/_Modals/ModalSettingService";
+import { ButtonsAction } from "@/components/ButtonsAction";
 import { useAllServicesQuery } from "@/entities/services/api/getAllServicesApi";
 import { ROUTES } from "@/shared/const/Routes.ts";
-import { Button } from "@/shared/ui/_Button";
+import { useBooleanState } from "@/shared/hooks";
 import { ServiceInfoCard } from "@/view/ServicesBookingPage/components/ServiceInfoCard";
 
 import styles from "./ServiceSetting.module.scss";
@@ -13,8 +15,16 @@ const cx = cnBind.bind(styles);
 
 export const ServiceSetting = () => {
     const href = useNavigate();
+    const modalRef = useRef<ModalSettingServiceRef>(null);
+
     const { data } = useAllServicesQuery();
     const listData = useMemo(() => data || [], [data]);
+    const [isOpenModalSettingService, _, closeModalSettingService] = useBooleanState(false);
+    const handleCloseToBack = () => {
+        closeModalSettingService();
+        modalRef.current?.clearValues();
+        href(`${ROUTES.SETTING}`);
+    };
 
     return (
         <div className={cx("service-setting")}>
@@ -30,14 +40,13 @@ export const ServiceSetting = () => {
                     ))}
                 </div>
             </div>
-            <div className={cx("button")}>
-                <Button
-                    variant="outlined"
-                    type="button"
-                    onClick={() => href(ROUTES.SETTING)}
-                    label="К настройкам"
-                />
-            </div>
+
+            <ButtonsAction
+                isOpen={!isOpenModalSettingService}
+                onSubmit={() => {}}
+                onClose={handleCloseToBack}
+                btnLabel={["Добавить категорию", "К настройкам"]}
+            />
         </div>
     );
 };

@@ -1,37 +1,28 @@
-import { useState } from "react";
 import { Modal as DialogModal } from "@telegram-apps/telegram-ui";
 import cnBind from "classnames/bind";
 import type { ButtonProps } from "primereact/button";
 
-import { useBooleanState } from "@/shared/hooks";
 import { Button } from "@/shared/ui/_Button";
 
-import styles from "./ConfirmModal.module.scss";
+import styles from "./ButtonsAction.module.scss";
 
 const cx = cnBind.bind(styles);
-
-export type ConfirmModalProps = {
+type ButtonsActionProps = {
     isOpen: boolean;
-    onClose: () => void;
-    onSubmit: () => void;
-    message?: string;
+    onSubmit?: () => void;
+    onClose?: () => void;
     btnLabel?: string[];
     submitBtnParams?: Omit<ButtonProps, "handleAction" | "onClick">;
     closeBtnParams?: Omit<ButtonProps, "handleAction" | "onClick">;
 };
-export const ConfirmModal = ({
-    onClose,
-    isOpen,
-    message,
+export const ButtonsAction = ({
+    btnLabel,
     onSubmit,
     submitBtnParams,
     closeBtnParams,
-    btnLabel,
-}: ConfirmModalProps) => {
-    const handleOpen = (open: boolean) => {
-        if (!open) onClose();
-    };
-
+    onClose,
+    isOpen,
+}: ButtonsActionProps) => {
     return (
         <DialogModal
             style={{
@@ -43,10 +34,10 @@ export const ConfirmModal = ({
             }}
             className={cx("modal")}
             open={isOpen}
-            onOpenChange={(open) => handleOpen(open)}
+            modal={false}
+            onOpenChange={() => {}}
         >
             <div className={cx("wrapper")}>
-                {message && <div className={cx("content")}>{message}</div>}
                 <div className={cx("actions")}>
                     <Button
                         className={cx("btn-submit")}
@@ -65,42 +56,4 @@ export const ConfirmModal = ({
             </div>
         </DialogModal>
     );
-};
-
-export type UseConfirmModalTempData = {
-    message?: string;
-    btnLabel?: string[];
-    onSubmit: () => void;
-    onClose: () => void;
-};
-export const useConfirmModal = () => {
-    const [isOpen, open, close] = useBooleanState(false);
-
-    const [tempData, setTempData] = useState<UseConfirmModalTempData>({
-        message: "",
-        btnLabel: [],
-        onSubmit: () => undefined,
-        onClose: () => undefined,
-    });
-
-    const withConfirm = (params: UseConfirmModalTempData) => {
-        setTempData(params);
-        open();
-    };
-
-    const modalProps = {
-        isOpen,
-        message: tempData.message,
-        btnLabel: tempData.btnLabel,
-        onClose: () => {
-            close();
-            tempData.onClose();
-        },
-        onSubmit: () => {
-            close();
-            tempData.onSubmit();
-        },
-    };
-
-    return { withConfirm, modalProps };
 };

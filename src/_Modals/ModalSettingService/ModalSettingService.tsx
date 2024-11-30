@@ -3,7 +3,7 @@ import cnBind from "classnames/bind";
 import { useFormik } from "formik";
 
 import { Modal } from "@/_Modals/Modal";
-import { Button } from "@/shared/ui/_Button";
+import { ButtonsAction } from "@/components/ButtonsAction";
 import { InputText } from "@/shared/ui/_InputText";
 import { InputTextarea } from "@/shared/ui/_InputTextarea";
 import { UploadImage } from "@/view/SettingPage/components/UploadImage";
@@ -17,17 +17,20 @@ export const MODAL_SETTING_SERVICE_DEFAULT_VALUES: ModalSettingServiceState = {
     price: "",
     description: "",
     time: "",
+    picture: [],
 };
 
 export type ModalSettingServiceModel = ModalSettingServiceState;
 
 export type ModalSettingServiceState = {
     id?: string;
+    serviceId?: string;
     files?: File[];
     caption?: string;
     description?: string;
     time?: string;
     price?: string;
+    picture?: string[];
 };
 export type ModalSettingServiceRef = {
     setFormValues: (values: ModalSettingServiceModel) => void;
@@ -43,16 +46,13 @@ interface ModalSettingServiceProps {
     errorMessage?: string;
 }
 export const ModalSettingService = forwardRef<ModalSettingServiceRef, ModalSettingServiceProps>(
-    ({ isLoading, onSubmit, type, onClose, isOpen }, ref) => {
+    ({ onSubmit, onClose, isOpen }, ref) => {
         const formik = useFormik({
             initialValues: MODAL_SETTING_SERVICE_DEFAULT_VALUES,
             onSubmit(values) {
                 onSubmit({ ...values });
             },
         });
-
-        const isEditType = type === "edit";
-        const submitBntLabel = isEditType ? "Редактировать" : "Создать";
 
         useImperativeHandle(ref, () => ({
             setFormValues: (values) =>
@@ -70,8 +70,11 @@ export const ModalSettingService = forwardRef<ModalSettingServiceRef, ModalSetti
         return (
             <Modal isOpen={isOpen} onClose={onClose}>
                 <form className={cx("form")} onSubmit={formik.handleSubmit}>
-                    <UploadImage onChange={(e) => formik.setFieldValue("files", e)} />
-                    <div className={cx("block")}>
+                    <UploadImage
+                        classNameImage={cx("image")}
+                        onChange={(e) => formik.setFieldValue("files", e)}
+                    />
+                    <div className={cx("block", "container")}>
                         <InputText
                             isFullWidth
                             label="Добавьте название"
@@ -101,15 +104,13 @@ export const ModalSettingService = forwardRef<ModalSettingServiceRef, ModalSetti
                             value={formik.values.price}
                         />
                     </div>
-                    <div className={cx("btns")}>
-                        <Button
-                            label={submitBntLabel}
-                            variant="solid"
-                            type="submit"
-                            loading={isLoading}
-                        />
-                    </div>
                 </form>
+                <ButtonsAction
+                    isOpen={isOpen}
+                    onSubmit={formik.handleSubmit}
+                    onClose={onClose}
+                    btnLabel={["Сохранить изменения", "Назад к услугам"]}
+                />
             </Modal>
         );
     },

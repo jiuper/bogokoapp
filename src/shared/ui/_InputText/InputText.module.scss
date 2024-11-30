@@ -9,15 +9,41 @@
             @include text-input;
             transform: translateY(-0%);
             color: #FF7648;
+            &::before {
+                content: "";
+                position: absolute;
+                top: 48%;
+                left: 13px;
+                right: 2px;
+                height: 2px;
+                transform: translateY(-50%);
+                background-color: #fff;
+                z-index: -1;
+            }
         }
+
     }
+
+
 
     &.with-value {
         .label {
             top: -11px;
             @include text-input;
             transform: translateY(-0%);
+            &::before {
+                content: "";
+                position: absolute;
+                top: 48%;
+                left: 13px;
+                right: 2px;
+                height: 2px;
+                transform: translateY(-50%);
+                background-color: #fff;
+                z-index: -1;
+            }
         }
+
     }
 
     &.icon-start {

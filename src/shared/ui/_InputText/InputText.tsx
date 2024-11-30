@@ -71,7 +71,14 @@ export const UIInputText = React.forwardRef<HTMLInputElement, UIInputProps>(
                         {iconElem}
                     </span>
                 )}
-                <span className={cx("label", labelClassName, { [`${size}`]: size, [`${color}`]: color })}>{label}</span>
+                <span
+                    className={cx("label", labelClassName, {
+                        [`${size}`]: size,
+                        [`${color}`]: color,
+                    })}
+                >
+                    {label}
+                </span>
                 <InputText
                     className={cx("text-field", className, {
                         [`${size}`]: size,
