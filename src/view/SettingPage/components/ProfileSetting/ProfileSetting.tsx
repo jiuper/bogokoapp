@@ -2,9 +2,9 @@ import { useNavigate } from "react-router";
 import { Avatar } from "@telegram-apps/telegram-ui";
 import cnBind from "classnames/bind";
 
+import { ButtonsAction } from "@/components/ButtonsAction";
 import def from "@/shared/assets/images/Empty-image-icon.png";
 import { ROUTES } from "@/shared/const/Routes.ts";
-import { Button } from "@/shared/ui/_Button";
 import { InputText } from "@/shared/ui/_InputText";
 import { SvgIcon } from "@/shared/ui/SvgIcon/SvgIcon.tsx";
 
@@ -15,9 +15,10 @@ const cx = cnBind.bind(styles);
 const listSetting = [
     { title: "Кабинет", url: `${ROUTES.SETTING}/company` },
     { title: "Услуги", url: `${ROUTES.SETTING}/services` },
-    { title: "Персонал", url: `${ROUTES.SETTING}/company` },
-    { title: "Товары", url: `${ROUTES.SETTING}/company` },
-    { title: "Отчёты", url: `${ROUTES.SETTING}/company` },
+    { title: "Персонал", url: `${ROUTES.SETTING}/personal` },
+    { title: "Бонусы", url: `${ROUTES.SETTING}/bonus` },
+    { title: "Товары", url: `${ROUTES.SETTING}/products` },
+    { title: "Отчёты", url: `${ROUTES.SETTING}/reports` },
 ];
 
 export const ProfileSetting = () => {
@@ -58,9 +59,7 @@ export const ProfileSetting = () => {
                         ))}
                     </div>
                 </div>
-                <div className={cx("button")}>
-                    <Button variant="outlined" onClick={() => href("/")} label="Выход" />
-                </div>
+                <ButtonsAction isOpen onClose={() => href("/")} btnLabel={["", "Выход"]} />
             </div>
         </div>
     );

@@ -1,6 +1,7 @@
 import react from "@vitejs/plugin-react-swc";
 import { fileURLToPath } from "node:url";
 import { defineConfig } from "vite";
+import svgr from "vite-plugin-svgr";
 import tsconfigPaths from "vite-tsconfig-paths";
 // import basicSsl from '@vitejs/plugin-basic-ssl';
 
@@ -17,6 +18,7 @@ export default defineConfig({
         // Allows using self-signed certificates to run the dev server using HTTPS.
         // https://www.npmjs.com/package/@vitejs/plugin-basic-ssl
         // basicSsl(),
+        svgr(),
     ],
     publicDir: "./public",
     server: {

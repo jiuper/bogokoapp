@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { Modal as DialogModal } from "@telegram-apps/telegram-ui";
 import cnBind from "classnames/bind";
 import type { ButtonProps } from "primereact/button";
+import { Dialog } from "primereact/dialog";
 
 import { useBooleanState } from "@/shared/hooks";
 import { Button } from "@/shared/ui/_Button";
@@ -28,25 +28,14 @@ export const ConfirmModal = ({
     closeBtnParams,
     btnLabel,
 }: ConfirmModalProps) => {
-    const handleOpen = (open: boolean) => {
-        if (!open) onClose();
-    };
-
     return (
-        <DialogModal
-            style={{
-                borderRadius: "44px 44px 0 0",
-                padding: "16px",
-                background: "rgba(255, 255, 255, 0.95)",
-                boxShadow: "0px -1px 12px 0px rgba(255, 118, 72, 0.12)",
-                backdropFilter: "blur(20px)",
-            }}
+        <Dialog
             className={cx("modal")}
-            open={isOpen}
-            onOpenChange={(open) => handleOpen(open)}
+            visible={isOpen}
+            onHide={onClose}
+            header={message && <div className={cx("content")}>{message}</div>}
         >
             <div className={cx("wrapper")}>
-                {message && <div className={cx("content")}>{message}</div>}
                 <div className={cx("actions")}>
                     <Button
                         className={cx("btn-submit")}
@@ -63,7 +52,7 @@ export const ConfirmModal = ({
                     />
                 </div>
             </div>
-        </DialogModal>
+        </Dialog>
     );
 };
 

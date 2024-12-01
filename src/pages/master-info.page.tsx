@@ -8,7 +8,10 @@ import { MasterInfoPage } from "@/view/MasterInfoPage/MasterInfoPage.tsx";
 export function MasterInfo() {
     const { id } = useParams();
     const { listMaster } = useClientContext();
-    const data = useMemo(() => listMaster.filter((el) => el.id?.toString() === id?.toString())[0], [listMaster, id]);
+    const data = useMemo(
+        () => listMaster.filter((el) => el.id?.toString() === id?.toString())[0],
+        [listMaster, id],
+    );
 
     return (
         <PageLayout>

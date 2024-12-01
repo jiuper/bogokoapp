@@ -15,7 +15,11 @@ type ModalSocialNetworksProps = {
     onClose: () => void;
     listHrefNetworks: string[];
 };
-export const ModalSocialNetworks = ({ isOpen, onClose, listHrefNetworks }: ModalSocialNetworksProps) => {
+export const ModalSocialNetworks = ({
+    isOpen,
+    onClose,
+    listHrefNetworks,
+}: ModalSocialNetworksProps) => {
     const listNetworks = [
         { icon: tg, name: "Телеграм", label: "Написать" },
         { icon: inst, name: "Инстаграм", label: "Посетить" },

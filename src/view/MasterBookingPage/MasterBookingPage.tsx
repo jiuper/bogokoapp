@@ -18,7 +18,12 @@ type MasterInfoCardProps = {
     servicesId: string[];
     addMasterBooking?: (masterId: string) => void;
 };
-export const MasterBookingPage = ({ data, isPending, isServices, addMasterBooking }: MasterInfoCardProps) => {
+export const MasterBookingPage = ({
+    data,
+    isPending,
+    isServices,
+    addMasterBooking,
+}: MasterInfoCardProps) => {
     const href = useNavigate();
     const [searchValue, setSearchValue] = useState<string | undefined>("");
     const filterListData = useMemo(
@@ -42,7 +47,9 @@ export const MasterBookingPage = ({ data, isPending, isServices, addMasterBookin
             <div className={cx("list")}>
                 {!isPending ? (
                     filterListData.length !== 0 ? (
-                        filterListData.map((el) => <MasterInfoCard onClick={onRecord} key={el.id} {...el} />)
+                        filterListData.map((el) => (
+                            <MasterInfoCard onClick={onRecord} key={el.id} {...el} />
+                        ))
                     ) : (
                         <div className={cx("not-found")}>Мастеров не найдено</div>
                     )

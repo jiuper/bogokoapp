@@ -17,31 +17,46 @@
 
 .ui-input-switch {
     & [data-pc-section="root"] {
-        width: 36px;
-        height: 20px;
+        width: 52px;
+        height: 32px;
     }
 
     & [aria-checked="true"] {
         & [data-pc-section="slider"] {
-            background: $color-purple;
+            background: #007AFF;
             &::before {
                 background: $color-light;
-                transform: translateX(16px);
+            }
+        }
+    }
+
+    & [aria-checked="false"] {
+        & [data-pc-section="slider"] {
+            background: #F4F4F7;
+            border: 3px solid #707579;
+            &::before {
+                background: $color-light;
+                content: url("@/shared/assets/icon/cancel_16.svg");
+                background: #707579;
+                margin-top: -8px;
+
             }
         }
     }
 
     & [data-pc-section="slider"] {
-        border: 1px solid $color-dark-light;
+        border: none;
         background: transparent;
         &::before {
+            content: url("@/shared/assets/icon/check_16.svg");
             transition: $transition-fast;
-            display: block;
-            width: 14px;
-            height: 14px;
+            @include flex-center();
+            width: 24px;
+            height: 24px;
             margin-top: -7px;
             left: 2px;
             background: $color-dark-light;
+            top: 35%;
         }
     }
 }

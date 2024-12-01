@@ -32,7 +32,10 @@ export const MasterInfoPage = ({ data, masterId }: MasterInfoPageProps) => {
     const [isOpenModalNetWork, onOpenModalNetWork, onCloseModalNetWork] = useBooleanState(false);
 
     const filterListData = useMemo(
-        () => listData.filter((el) => el.name.toLowerCase().includes(searchValue?.toLowerCase() || "")),
+        () =>
+            listData.filter((el) =>
+                el.name.toLowerCase().includes(searchValue?.toLowerCase() || ""),
+            ),
         [listData, searchValue],
     );
 
@@ -57,7 +60,9 @@ export const MasterInfoPage = ({ data, masterId }: MasterInfoPageProps) => {
         { name: "Отзывы", onClick: () => href(ROUTES.FEEDBACK), icon: "star-rate" },
         { name: "Связаться", onClick: () => onOpenModalNetWork(), icon: "message" },
     ];
-    const listLinkBottom = [{ name: "Выполненные работы", onClick: () => onOpenModalNetWork(), icon: "image" }];
+    const listLinkBottom = [
+        { name: "Выполненные работы", onClick: () => onOpenModalNetWork(), icon: "image" },
+    ];
 
     return (
         <div className={cx("master-info")}>
@@ -103,7 +108,11 @@ export const MasterInfoPage = ({ data, masterId }: MasterInfoPageProps) => {
                     </div>
                 </div>
             </div>
-            <ModalSocialNetworks listHrefNetworks={[]} isOpen={isOpenModalNetWork} onClose={onCloseModalNetWork} />
+            <ModalSocialNetworks
+                listHrefNetworks={[]}
+                isOpen={isOpenModalNetWork}
+                onClose={onCloseModalNetWork}
+            />
             <ModalDetailedService
                 {...service}
                 isOpen={isOpenModalService}

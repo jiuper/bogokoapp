@@ -7,6 +7,7 @@ import slider3 from "@/shared/assets/Slide01 (2).png";
 import slider2 from "@/shared/assets/Slide02 (2).png";
 import slider1 from "@/shared/assets/Slide03.png";
 import { useBooleanState } from "@/shared/hooks";
+import { useOutsideClick } from "@/shared/hooks/useOutsideClick.tsx";
 import { Carousel } from "@/shared/ui/_Carousel";
 import { SvgIcon } from "@/shared/ui/SvgIcon/SvgIcon.tsx";
 
@@ -36,7 +37,8 @@ export const UploadImage = ({
     const { withConfirm, modalProps: confirmModalProps } = useConfirmModal();
 
     const [listImages, setListImages] = useState<string[]>([slider1, slider2, slider3]);
-    const [isActiveBtnEdit, , , toggleIsActiveBtnEdit] = useBooleanState(false);
+    const [isActiveBtnEdit, , closeIsActiveBtnEdit, toggleIsActiveBtnEdit] = useBooleanState(false);
+    const containerRef = useOutsideClick(closeIsActiveBtnEdit);
     const [_, setFile] = useState<File | null>(null);
 
     const handleFileInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -77,7 +79,7 @@ export const UploadImage = ({
     );
 
     return (
-        <div className={cx("upload-image")}>
+        <div ref={containerRef} className={cx("upload-image")}>
             <Carousel classNameImage={classNameImage} value={listImages} />
             <div className={cx("list-btns")}>
                 <div onClick={toggleIsActiveBtnEdit} className={cx("btn-edit", "main-btn")}>

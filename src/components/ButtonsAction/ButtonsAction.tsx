@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { Modal as DialogModal } from "@telegram-apps/telegram-ui";
 import cnBind from "classnames/bind";
 import type { ButtonProps } from "primereact/button";
@@ -15,6 +16,8 @@ type ButtonsActionProps = {
     submitBtnParams?: Omit<ButtonProps, "handleAction" | "onClick">;
     closeBtnParams?: Omit<ButtonProps, "handleAction" | "onClick">;
 };
+const isMobileDevice = () => /Mobi|Android/i.test(navigator.userAgent);
+
 export const ButtonsAction = ({
     btnLabel,
     onSubmit,
@@ -23,6 +26,40 @@ export const ButtonsAction = ({
     onClose,
     isOpen,
 }: ButtonsActionProps) => {
+    const [isKeyboardVisible, setIsKeyboardVisible] = useState(false);
+
+    useEffect(() => {
+        if (isMobileDevice()) {
+            const handleResize = () => {
+                const viewport = window.visualViewport;
+
+                if (viewport && viewport.height < window.innerHeight) {
+                    setIsKeyboardVisible(true);
+                } else {
+                    setIsKeyboardVisible(false);
+                }
+            };
+
+            if (window.visualViewport) {
+                window.visualViewport.addEventListener("resize", handleResize);
+            } else {
+                window.addEventListener("resize", handleResize);
+            }
+
+            return () => {
+                if (window.visualViewport) {
+                    window.visualViewport.removeEventListener("resize", handleResize);
+                } else {
+                    window.removeEventListener("resize", handleResize);
+                }
+            };
+        }
+    }, []);
+
+    if (!isOpen || isKeyboardVisible) {
+        return null;
+    }
+
     return (
         <DialogModal
             style={{
@@ -30,8 +67,9 @@ export const ButtonsAction = ({
                 padding: "16px",
                 background: "rgba(255, 255, 255, 0.95)",
                 boxShadow: "0px -1px 12px 0px rgba(255, 118, 72, 0.12)",
-                backdropFilter: "blur(20px)",
-                zIndex: 1000,
+                backdropFilter: "blur(40px)",
+                zIndex: 50,
+                position: "fixed",
             }}
             className={cx("modal")}
             open={isOpen}
@@ -40,12 +78,14 @@ export const ButtonsAction = ({
         >
             <div className={cx("wrapper")}>
                 <div className={cx("actions")}>
-                    <Button
-                        className={cx("btn-submit")}
-                        onClick={onSubmit}
-                        label={btnLabel ? btnLabel[0] : "Принять"}
-                        {...submitBtnParams}
-                    />
+                    {btnLabel?.[0] !== "" && (
+                        <Button
+                            className={cx("btn-submit")}
+                            onClick={onSubmit}
+                            label={btnLabel ? btnLabel[0] : "Принять"}
+                            {...submitBtnParams}
+                        />
+                    )}
                     <Button
                         className={cx("btn-close")}
                         variant="outlined"
