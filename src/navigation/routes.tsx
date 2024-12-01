@@ -38,6 +38,7 @@ export const routes: Route[] = [
     { path: `${ROUTES.PROFILE}`, Component: Profile },
     { path: `${ROUTES.CALENDAR}`, Component: СalendarPageIndex },
     { path: `${ROUTES.BONUS}`, Component: BonusesSystemPage },
+    { path: `${ROUTES.BONUS}/:url`, Component: BonusesSystemPage },
     { path: `${ROUTES.FEEDBACK}`, Component: Feedback },
     { path: `${ROUTES.CHOOSEPAGE}`, Component: ChoosePageIndex },
     { path: `${ROUTES.SETTING}`, Component: SettingPageIndex },

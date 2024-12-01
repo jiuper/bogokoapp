@@ -1,33 +1,39 @@
+import { useNavigate } from "react-router";
 import cnBind from "classnames/bind";
 
-import { Button } from "@/shared/ui/_Button";
+import { ButtonsAction } from "@/components/ButtonsAction";
+import { ROUTES } from "@/shared/const/Routes.ts";
 import { SvgIcon } from "@/shared/ui/SvgIcon/SvgIcon.tsx";
 
 import styles from "./MainBonus.module.scss";
 
 const cx = cnBind.bind(styles);
-type MainBonusProps = {
-    handleTab?: (num: number) => void;
-};
-export const MainBonus = ({ handleTab }: MainBonusProps) => {
-    const listBtn = [
-        "Бонус за подписку",
-        "Получайте бонусы с дисконтной картой",
-        "Приглашайте друзей и получайте бонусы",
+
+export const MainBonus = () => {
+    const href = useNavigate();
+
+    const listBonus = [
+        { title: "Бонус за подписку", url: `${ROUTES.BONUS}/discount` },
+        { title: "Получайте бонусы с дисконтной картой", url: `${ROUTES.BONUS}/friends` },
+        { title: "Приглашайте друзей и получайте бонусы", url: `${ROUTES.BONUS}/rules` },
     ];
 
     return (
         <div className={cx("main-bonus")}>
             <div className={cx("wrapper", "container")}>
-                <div className={cx("list")}>
-                    {listBtn.map((el, i) => (
-                        <div onClick={() => handleTab?.(i + 1)} className={cx("item")} key={el}>
-                            <span className={cx("text")}>{el}</span>
-                            <SvgIcon name="ArrowRight" />
+                <div className={cx("info")}>
+                    {listBonus.map((el, i) => (
+                        <div onClick={() => href(el.url)} key={i} className={cx("item")}>
+                            <span className={cx("name")}>{el.title}</span>
+                            <SvgIcon name="ArrowRight" className={cx("arrow")} />
                         </div>
                     ))}
                 </div>
-                <Button variant="outlined" label="Ввести промокод" />
+                <ButtonsAction
+                    isOpen
+                    onClose={() => href("/")}
+                    btnLabel={["Вести промокод", "Выход"]}
+                />
             </div>
         </div>
     );

@@ -28,20 +28,27 @@ export const RulesBonus = ({ handleTab, isActive }: RulesBonusProps) => {
                     <div className={cx("item")}>
                         <span className={cx("caption")}>Бонус за подписку</span>
                         <span className={cx("text")}>
-                            Подписавшись на наш Telegram-канал, вам автоматически зачисляются бонусы на баланс.
+                            Подписавшись на наш Telegram-канал, вам автоматически зачисляются бонусы
+                            на баланс.
                         </span>
                     </div>
                     <div className={cx("item")}>
                         <span className={cx("caption", "caption-card")}>Правила</span>
                         <span className={cx("text")}>
-                            Бонусы накапливаются за покупки услуг и не только, где 1 бонус равен 1 рублю. Их можно
-                            использовать для частичной или полной оплаты услуг на сайте при оформлении заказа.
+                            Бонусы накапливаются за покупки услуг и не только, где 1 бонус равен 1
+                            рублю. Их можно использовать для частичной или полной оплаты услуг на
+                            сайте при оформлении заказа.
                         </span>
                     </div>
                     <div className={cx("items")}>
                         {list.map((el, i) => (
                             <div key={i} className={cx("item")}>
-                                <Avatar size={40} className={cx("avatar")} src={el.image} alt={el.title} />
+                                <Avatar
+                                    size={40}
+                                    className={cx("avatar")}
+                                    src={el.image}
+                                    alt={el.title}
+                                />
                                 <div className={cx("info")}>
                                     <span className={cx("title")}>{el.title}</span>
                                     {isActive && <span className={cx("text")}>Бонус получен</span>}
@@ -54,7 +61,11 @@ export const RulesBonus = ({ handleTab, isActive }: RulesBonusProps) => {
                     </div>
                 </div>
 
-                <Button variant="outlined" onClick={() => handleTab?.(0)} label="К системе бонусов" />
+                <Button
+                    variant="outlined"
+                    onClick={() => handleTab?.(0)}
+                    label="К системе бонусов"
+                />
             </div>
         </div>
     );

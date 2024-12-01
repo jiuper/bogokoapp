@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useParams } from "react-router";
 import cnBind from "classnames/bind";
 
 import { DiscountBonus } from "@/view/BonusSystemPage/components/DiscountBonus";
@@ -9,17 +9,25 @@ import { RulesBonus } from "@/view/BonusSystemPage/components/RulesBonus";
 import styles from "./BonusSystemPage.module.scss";
 
 const cx = cnBind.bind(styles);
+type FunctionType = "discount" | "friends" | "main" | "rules";
+const componentMap = {
+    discount: DiscountBonus,
+    friends: FriendsBonus,
+    main: MainBonus,
+    rules: RulesBonus,
+};
 type BonusSystemPage = {};
 export const BonusSystemPage = ({}: BonusSystemPage) => {
-    const [tab, setTab] = useState(0);
-    const handleTab = useCallback((num: number) => setTab(num), []);
+    const { url } = useParams<{ url?: string }>();
+    const Component = url ? componentMap[url as FunctionType] : componentMap.main;
 
     return (
         <div className={cx("bonus-system-page")}>
-            {tab === 0 ? <MainBonus handleTab={handleTab} /> : null}
-            {tab === 3 ? <FriendsBonus handleTab={handleTab} /> : null}
-            {tab === 2 ? <DiscountBonus handleTab={handleTab} /> : null}
-            {tab === 1 ? <RulesBonus handleTab={handleTab} /> : null}
+            <div className={cx("wrapper")}>
+                <div className={cx("tab-content")}>
+                    <Component />
+                </div>
+            </div>
         </div>
     );
 };
