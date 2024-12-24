@@ -1,65 +1,91 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import cnBind from "classnames/bind";
-import type { CarouselProps } from "primereact/carousel";
-import { Carousel as UICarousel } from "primereact/carousel";
+import type SwiperCore from "swiper";
+import { Swiper, SwiperSlide } from "swiper/react";
 
-import { SwipeableWrapper } from "@/components/SwipeableWrapper";
+import "swiper/css";
 
 import styles from "./Carousel.module.scss";
 
 const cx = cnBind.bind(styles);
-type UICarouselProps = CarouselProps & {
+
+type UICarouselProps = {
+    value: any[];
     classNameImage?: string;
     template?: (product: any) => JSX.Element;
+    loop?: boolean;
+    pagination?: boolean;
+    numVisible?: number;
+    className?: string;
 };
+
 export const Carousel = ({
     value,
     className,
     classNameImage,
     template,
-    numScroll,
-    numVisible,
+    loop = false,
+    numVisible = 1,
+    pagination = true,
 }: UICarouselProps) => {
-    const listImage: string[] = value as string[];
-    const [page, setPage] = useState(0);
+    const listImage = value;
+    const [activeIndex, setActiveIndex] = useState(0);
+    const [swiperInstance, setSwiperInstance] = useState<SwiperCore | null>(null);
 
-    const onPageChange = (e: number) => setPage(e);
-
-    const responsiveOptions = [
-        {
-            breakpoint: "767px",
-            numVisible: numVisible || 1,
-            numScroll: numScroll || 1,
-        },
-        {
-            breakpoint: "575px",
-            numVisible: numVisible || 1,
-            numScroll: numScroll || 1,
-        },
-    ];
-    const productTemplate = (product: string) => {
-        return <img className={cx("image-company", classNameImage)} src={product} alt="DEF" />;
+    const goToSlide = (index: number) => {
+        setActiveIndex(index);
+        swiperInstance?.slideTo(index);
     };
 
+    const handleSwiper = (swiper: SwiperCore) => {
+        setSwiperInstance(swiper);
+    };
+
+    useEffect(() => {
+        if (swiperInstance) {
+            swiperInstance.on("slideChange", () => {
+                setActiveIndex(swiperInstance.realIndex);
+            });
+        }
+    }, [swiperInstance]);
+
     return (
-        <SwipeableWrapper
-            onSwipedLeft={() => setPage((prevPage) => (prevPage + 1) % listImage.length)}
-            onSwipedRight={() =>
-                setPage((prevPage) => (prevPage - 1 + listImage.length) % listImage.length)
-            }
-        >
-            <UICarousel
-                value={value}
-                numVisible={numVisible || 1}
-                numScroll={numScroll || 1}
-                showIndicators={listImage.length > 1}
-                showNavigators={false}
-                responsiveOptions={responsiveOptions}
-                itemTemplate={template || productTemplate}
-                className={cx("carousel", className)}
-                page={page}
-                onPageChange={(e) => onPageChange(e.page)}
-            />
-        </SwipeableWrapper>
+        <div className={cx("carousel", className)}>
+            <Swiper
+                onSwiper={handleSwiper}
+                slidesPerView={numVisible}
+                spaceBetween={0}
+                loop={loop}
+                onSlideChange={(swiper) => setActiveIndex(swiper.realIndex)}
+            >
+                {listImage.map((item, i) => (
+                    <SwiperSlide key={i}>
+                        {template ? (
+                            template(item)
+                        ) : (
+                            <img
+                                className={cx("image-company", classNameImage)}
+                                src={item as string}
+                                alt="image-company"
+                            />
+                        )}
+                    </SwiperSlide>
+                ))}
+            </Swiper>
+            {pagination && listImage.length > 1 && (
+                <div className={cx("swiper-pagination")}>
+                    {listImage.map((_, index) => (
+                        <span
+                            key={index}
+                            className={cx(
+                                "swiper-pagination-bullet",
+                                activeIndex === index && "active",
+                            )}
+                            onClick={() => goToSlide(index)}
+                        />
+                    ))}
+                </div>
+            )}
+        </div>
     );
 };

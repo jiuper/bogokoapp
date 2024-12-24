@@ -75,8 +75,9 @@ export const Journal = ({
                             )}
                             value={listMaster}
                             numVisible={5}
-                            numScroll={1}
                             className={cx("carousel-master")}
+                            loop={false}
+                            pagination={false}
                         />
                     </div>
                     <span className={cx("title")}>Записи мастера {filterMaster?.name}</span>

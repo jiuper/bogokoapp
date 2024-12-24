@@ -11,9 +11,9 @@ export const permissionsPage = [
 ];
 
 export const ROUTING = {
-    PROFILE: () => ROUTES.MAIN,
+    MAIN: () => ROUTES.MAIN,
     SERVICES: () => ROUTES.CHOOSEPAGE,
-    MASTERS: () => ROUTES.BOOKING,
+    PROFILE: () => ROUTES.PROFILE,
     CALENDAR: () => ROUTES.CALENDAR,
 };
 
@@ -27,7 +27,7 @@ export const ROUTING_MAP: {
     {
         id: "1",
         label: "Главная",
-        link: ROUTING.PROFILE(),
+        link: ROUTING.MAIN(),
         accessRoles: [UserRole.USER, UserRole.MASTER, UserRole.CLIENT, 0],
         Icon: "home",
     },
@@ -40,16 +40,16 @@ export const ROUTING_MAP: {
     },
     {
         id: "3",
-        label: "Товары",
-        link: ROUTING.MASTERS(),
+        label: "Календарь",
+        link: ROUTING.CALENDAR(),
         accessRoles: [UserRole.USER, UserRole.MASTER, UserRole.CLIENT, 0],
-        Icon: "bag-handle",
+        Icon: "calendar-add",
     },
     {
         id: "4",
-        label: "Корзина",
-        link: ROUTING.CALENDAR(),
+        label: "Профиль",
+        link: ROUTING.PROFILE(),
         accessRoles: [UserRole.USER, UserRole.MASTER, UserRole.CLIENT, 0],
-        Icon: "basket",
+        Icon: "personal",
     },
 ];

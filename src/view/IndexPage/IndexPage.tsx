@@ -1,17 +1,20 @@
 import { useNavigate } from "react-router";
 
 import type { GetCompanyDto } from "@/entities/company/types.ts";
-import { UserRole } from "@/entities/user/types.ts";
+import { NavigationLayout } from "@/layouts/NavigationLayout";
 import { ROUTES } from "@/shared/const/Routes.ts";
 import { useClientContextMutate } from "@/shared/context/ClientProvider.tsx";
-import { ClientView } from "@/view/IndexPage/components/ClientView";
-import { MasterView } from "@/view/IndexPage/components/MasterView";
+import type { CompanyViewProps } from "@/view/IndexPage/components/CompanyView";
+import { CompanyView } from "@/view/IndexPage/components/CompanyView";
 
 type IndexPageProps = {
-    userRole: UserRole;
     companyInfo: GetCompanyDto | null;
 };
-export const IndexPage = ({ userRole, companyInfo }: IndexPageProps) => {
+
+const componentMap = {
+    [ROUTES.MAIN]: (props: CompanyViewProps) => <CompanyView {...props} />,
+};
+export const IndexPage = ({ companyInfo }: IndexPageProps) => {
     const href = useNavigate();
     const listLink = [
         [
@@ -22,7 +25,7 @@ export const IndexPage = ({ userRole, companyInfo }: IndexPageProps) => {
             { name: "Товары", icon: "bag-handle", onClick: () => onClick(ROUTES.SERVICES) },
             {
                 name: "Календарь",
-                icon: "personal-calendar",
+                icon: "calendar-add",
                 onClick: () => onClick(ROUTES.CALENDAR),
             },
         ],
@@ -33,9 +36,15 @@ export const IndexPage = ({ userRole, companyInfo }: IndexPageProps) => {
         handleResetBooking();
     };
 
-    return userRole === UserRole.CLIENT ? (
-        <ClientView companyInfo={companyInfo} listLink={listLink} />
-    ) : (
-        <MasterView />
+    const componentProps = {
+        [ROUTES.MAIN]: { listLink, companyInfo },
+    };
+
+    return (
+        <NavigationLayout
+            initialComponent={ROUTES.MAIN}
+            componentMap={componentMap}
+            componentProps={componentProps}
+        />
     );
 };

@@ -15,20 +15,20 @@ import { DescriptionCompany } from "@/view/IndexPage/components/DescriptionCompa
 import { LinkGroup } from "@/view/IndexPage/components/LinkGroup";
 import { ReferralBlock } from "@/view/IndexPage/components/ReferralBlock";
 
-import styles from "./ClientView.module.scss";
+import styles from "./CompanyView.module.scss";
 
 const cx = cnBind.bind(styles);
-type IndexPageProps = {
+export type CompanyViewProps = {
     companyInfo: GetCompanyDto | null;
     listLink: { name: string; icon: string; onClick: () => void }[][];
 };
-export const ClientView = ({ companyInfo, listLink }: IndexPageProps) => {
+export const CompanyView = ({ companyInfo, listLink }: CompanyViewProps) => {
     const [isOpen, _, onClose] = useBooleanState(false);
 
     return (
         <div className={cx("bg-wrapper")}>
             <div className={cx("main-banner")}>
-                <Carousel value={[slider1, slider2, slider3]} />
+                <Carousel loop value={[slider1, slider2, slider3]} />
                 <Link to={ROUTES.CALENDAR}>
                     <SvgIcon
                         className={cx("notifications", { active: !isOpen })}

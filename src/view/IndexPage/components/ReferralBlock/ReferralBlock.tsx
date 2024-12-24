@@ -18,7 +18,9 @@ export const ReferralBlock = ({ countCredits = 10, currencyShortTitle }: Referra
         <div className={cx("wrapper")}>
             <div className={cx("referral-block")}>
                 <span className={cx("referral-title")}>Ваш баланс</span>
-                <span className={cx("referral-value")}>{`${countCredits} ${currencyShortTitle}`}</span>
+                <span
+                    className={cx("referral-value")}
+                >{`${countCredits} ${currencyShortTitle}`}</span>
             </div>
             <Button onClick={() => href(ROUTES.BONUS)} className={cx("referral-button")}>
                 Заработать бонусы

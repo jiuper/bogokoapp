@@ -15,7 +15,11 @@ export const LinkGroup = ({ listLink }: LinkGroupProps) => {
     return (
         <div className={cx("links")}>
             {listLink.map((item, i) => (
-                <div key={i} className={cx("link")} onClick={item.href ? () => href(item.href || "") : item.onClick}>
+                <div
+                    key={i}
+                    className={cx("link")}
+                    onClick={item.href ? () => href(item.href || "") : item.onClick}
+                >
                     <div className={cx("link-container")}>
                         <SvgIcon className={cx("icon")} name={item.icon} />
                         <span>{item.name}</span>

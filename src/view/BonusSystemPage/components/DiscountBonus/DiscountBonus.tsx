@@ -16,10 +16,10 @@ import styles from "./DiscountBonus.module.scss";
 const cx = cnBind.bind(styles);
 
 type DiscountBonusProps = {
-    handleTab?: (num: number) => void;
+    onBack?: () => void;
 };
 
-export const DiscountBonus = ({ handleTab }: DiscountBonusProps = {}) => {
+export const DiscountBonus = ({ onBack }: DiscountBonusProps) => {
     const { companyInfo } = useClientContext();
     const [isOpen, onOpen, onClose] = useBooleanState(false);
     const [success, onSuccess] = useBooleanState(false);
@@ -92,11 +92,7 @@ export const DiscountBonus = ({ handleTab }: DiscountBonusProps = {}) => {
                     </div>
                 </div>
 
-                <Button
-                    onClick={() => handleTab?.(0)}
-                    variant="outlined"
-                    label="К системе бонусов"
-                />
+                <Button onClick={onBack} variant="outlined" label="К системе бонусов" />
             </div>
             <ConfirmModal {...confirmModalProps} />
         </div>

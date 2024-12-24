@@ -11,10 +11,10 @@ import styles from "./RulesBonus.module.scss";
 
 const cx = cnBind.bind(styles);
 type RulesBonusProps = {
-    handleTab?: (num: number) => void;
+    onBack?: () => void;
     isActive?: boolean;
 };
-export const RulesBonus = ({ handleTab, isActive }: RulesBonusProps) => {
+export const RulesBonus = ({ onBack, isActive }: RulesBonusProps) => {
     const list = [
         { image: tg, title: "Telegram" },
         { image: inst, title: "Instagram" },
@@ -61,11 +61,7 @@ export const RulesBonus = ({ handleTab, isActive }: RulesBonusProps) => {
                     </div>
                 </div>
 
-                <Button
-                    variant="outlined"
-                    onClick={() => handleTab?.(0)}
-                    label="К системе бонусов"
-                />
+                <Button variant="outlined" onClick={onBack} label="К системе бонусов" />
             </div>
         </div>
     );

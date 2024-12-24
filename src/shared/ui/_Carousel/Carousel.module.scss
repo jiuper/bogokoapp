@@ -4,15 +4,9 @@
   pointer-events: none;
 
 }
-.test{
-  cursor: grab;
-}
 .carousel{
-  [data-pc-section="content"]{
-    position: relative;
-    padding: 0;
-  }
-  [data-pc-section="indicators"]{
+  position: relative;
+  .swiper-pagination{
     position: absolute;
     bottom: 31px;
     left: 40%;
@@ -20,11 +14,12 @@
     background: rgba(0, 0, 0, 0.25);
     backdrop-filter: blur(22px);
     padding: 0.5rem;
+    z-index: 5;
+    @include flex-row();
+    gap: 8px;
   }
-  [data-pc-section="indicator"]{
-    margin-bottom: 0;
-  }
-  [data-pc-section="indicatorbutton"]{
+  .swiper-pagination-bullet{
+    @include flex-column();
     background-color: #FFFFFF;
     width: 0.5rem;
     height: 0.5rem;
@@ -32,9 +27,11 @@
     border-radius: 50%;
     opacity: 0.25;
 
-  }
-  [data-p-highlight="true"]{
-    background-color: #FFF;
-    border-radius: 50%;
+    &.active{
+      background-color: #FFF;
+      border-radius: 50%;
+      opacity: 1;
+    }
   }
 }
+

@@ -9,7 +9,7 @@ import { MasterBooking } from "@/pages/master-booking.page.tsx";
 import { MasterFilter } from "@/pages/master-filter.page.tsx";
 import { MasterInfo } from "@/pages/master-info.page.tsx";
 import { IndexOrderPage } from "@/pages/order.page.tsx";
-import { Profile } from "@/pages/profile.page.tsx";
+import { ProfilePage } from "@/pages/profile.page.tsx";
 import { Record } from "@/pages/record.page.tsx";
 import { Service } from "@/pages/service.page.tsx";
 import { ServicesBooking } from "@/pages/services-booking.page.tsx";
@@ -26,6 +26,8 @@ interface Route {
 
 export const routes: Route[] = [
     { path: ROUTES.MAIN, Component: Index },
+    { path: `${ROUTES.MAIN}/:url`, Component: Index },
+    { path: `${ROUTES.MAIN}/:url/:id`, Component: Index },
     { path: ROUTES.BOOKING, Component: MasterBooking },
     { path: ROUTES.SERVICES, Component: ServicesBooking },
     { path: `${ROUTES.SERVICE}/:id`, Component: Service },
@@ -35,7 +37,9 @@ export const routes: Route[] = [
     { path: `${ROUTES.MASTERFILTER}`, Component: MasterFilter },
     { path: `${ROUTES.RECORD}/:id`, Component: Record },
     { path: `${ROUTES.RECORD}`, Component: Record },
-    { path: `${ROUTES.PROFILE}`, Component: Profile },
+    { path: `${ROUTES.PROFILE}`, Component: ProfilePage },
+    { path: `${ROUTES.PROFILE}/:url`, Component: ProfilePage },
+    { path: `${ROUTES.PROFILE}/:url/:id`, Component: ProfilePage },
     { path: `${ROUTES.CALENDAR}`, Component: СalendarPageIndex },
     { path: `${ROUTES.BONUS}`, Component: BonusesSystemPage },
     { path: `${ROUTES.BONUS}/:url`, Component: BonusesSystemPage },
