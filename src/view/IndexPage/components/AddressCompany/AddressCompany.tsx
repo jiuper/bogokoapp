@@ -4,7 +4,7 @@ import cnBind from "classnames/bind";
 
 import { SvgIcon } from "@/shared/ui/SvgIcon/SvgIcon.tsx";
 
-import styles from "./AdressCompany.module.scss";
+import styles from "./AddressCompany.module.scss";
 
 const cx = cnBind.bind(styles);
 type AddressCompanyProps = {
@@ -19,6 +19,7 @@ declare global {
         Telegram: { WebApp?: { openLink: (url: string) => void; ready: () => void } };
     }
 }
+
 export const AddressCompany = ({
     city,
     address,
@@ -26,31 +27,16 @@ export const AddressCompany = ({
     dateTime,
     map,
 }: AddressCompanyProps) => {
-    const endCoords1 = `${map?.lat}`;
-    const endCoords2 = `${map?.lon}`;
     const openMap = () => {
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(
-                (position) => {
-                    const userCoords = `${position.coords.latitude},${position.coords.longitude}`;
-                    const yandexMapUrl = `https://yandex.ru/maps/?rtext=${userCoords}~${endCoords1}~${endCoords2}&rtt=auto`;
+        const yandexMapUrl = `https://yandex.ru/maps/?pt=${map?.lon},${map?.lat}&z=14&l=map`;
 
-                    if (window.Telegram?.WebApp) {
-                        window.Telegram.WebApp.openLink(yandexMapUrl);
-                    } else {
-                        window.open(yandexMapUrl, "_blank");
-                    }
-                },
-                (error) => {
-                    console.error("Ошибка при определении местоположения", error);
-                    alert("Не удалось определить ваше местоположение.");
-                },
-                { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 },
-            );
+        if (window.Telegram?.WebApp) {
+            window.Telegram.WebApp.openLink(yandexMapUrl);
         } else {
-            alert("Геолокация не поддерживается вашим браузером.");
+            window.open(yandexMapUrl, "_blank");
         }
     };
+
     useEffect(() => {
         if (window.Telegram?.WebApp) {
             window.Telegram.WebApp.ready();
