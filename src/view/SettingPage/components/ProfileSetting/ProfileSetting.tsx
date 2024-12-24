@@ -1,3 +1,4 @@
+import { memo } from "react";
 import { useNavigate } from "react-router";
 import { Avatar } from "@telegram-apps/telegram-ui";
 import cnBind from "classnames/bind";
@@ -21,7 +22,7 @@ const listSetting = [
     { title: "Отчёты", url: `${ROUTES.SETTING}/reports` },
 ];
 
-export const ProfileSetting = () => {
+const ProfileSettingComponent = () => {
     const href = useNavigate();
 
     return (
@@ -64,3 +65,5 @@ export const ProfileSetting = () => {
         </div>
     );
 };
+
+export const ProfileSetting = memo(ProfileSettingComponent);

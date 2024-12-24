@@ -1,7 +1,8 @@
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { useLocation, useParams } from "react-router";
 import { useNavigate } from "react-router-dom";
 import cnBind from "classnames/bind";
+import { motion } from "framer-motion";
 
 import styles from "./NavigationLayout.module.scss";
 
@@ -32,6 +33,7 @@ export const NavigationLayout = ({
             ? initialComponent
             : location.pathname.split("/").slice(1).join("/");
     const [currentComponent, setCurrentComponent] = useState<string>(url || initialComponent);
+
     useEffect(() => {
         if (initialComponent === urlInit) {
             navigate(`${initialComponent}`, { replace: true });
@@ -52,9 +54,17 @@ export const NavigationLayout = ({
     return (
         <div className={cx("control-panel")}>
             <div className={cx("wrapper")}>
-                <div className={cx("tab-content")}>
-                    <Component {...props} />
-                </div>
+                <Suspense fallback={<div>Loading...</div>}>
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        transition={{ duration: 0.5 }}
+                        className={cx("tab-content")}
+                    >
+                        <Component {...props} />
+                    </motion.div>
+                </Suspense>
             </div>
         </div>
     );

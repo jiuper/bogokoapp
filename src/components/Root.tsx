@@ -5,6 +5,7 @@ import { Provider } from "react-redux";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { SDKProvider, useLaunchParams } from "@telegram-apps/sdk-react";
 import { TonConnectUIProvider } from "@tonconnect/ui-react";
+import { AnimatePresence } from "framer-motion";
 
 import { App } from "@/components/App.tsx";
 import { ErrorBoundary } from "@/components/ErrorBoundary.tsx";
@@ -50,19 +51,21 @@ const Inner: FC = () => {
 
     return (
         <QueryClientProvider client={queryClient}>
-            <DndProvider backend={HTML5Backend}>
-                <Provider store={initStore()}>
-                    <ModalControllerProvider>
-                        <ClientProvider>
-                            <TonConnectUIProvider manifestUrl={manifestUrl}>
-                                <SDKProvider acceptCustomStyles debug={debug}>
-                                    <App />
-                                </SDKProvider>
-                            </TonConnectUIProvider>
-                        </ClientProvider>
-                    </ModalControllerProvider>
-                </Provider>
-            </DndProvider>
+            <AnimatePresence>
+                <DndProvider backend={HTML5Backend}>
+                    <Provider store={initStore()}>
+                        <ModalControllerProvider>
+                            <ClientProvider>
+                                <TonConnectUIProvider manifestUrl={manifestUrl}>
+                                    <SDKProvider acceptCustomStyles debug={debug}>
+                                        <App />
+                                    </SDKProvider>
+                                </TonConnectUIProvider>
+                            </ClientProvider>
+                        </ModalControllerProvider>
+                    </Provider>
+                </DndProvider>
+            </AnimatePresence>
         </QueryClientProvider>
     );
 };
