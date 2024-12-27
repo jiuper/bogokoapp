@@ -1,4 +1,5 @@
 import { NavigationLayout } from "@/layouts/NavigationLayout";
+import { ROUTES } from "@/shared/const/Routes.ts";
 import { BonusSetting } from "@/view/SettingPage/components/BonusSetting";
 import { CompanySetting } from "@/view/SettingPage/components/CompanySetting";
 import { PersonalSetting } from "@/view/SettingPage/components/PersonalSetting";
@@ -9,21 +10,36 @@ import { ServiceSetting } from "@/view/SettingPage/components/ServiceSetting";
 import { ServicesSetting } from "@/view/SettingPage/components/ServiceSetting/ServicesSetting";
 
 const componentMap = {
-    company: CompanySetting,
-    services: ServiceSetting,
-    setting: ProfileSetting,
-    serviceDetail: ServicesSetting,
-    personal: PersonalSetting,
-    personalDetail: PersonalInfoSetting,
-    personalAdd: PersonalAddSetting,
-    bonus: BonusSetting,
+    [`${ROUTES.SETTING}/company`]: (props: object) => <CompanySetting {...props} />,
+    [`${ROUTES.SETTING}/services`]: (props: object) => <ServiceSetting {...props} />,
+    [`${ROUTES.SETTING}`]: (props: object) => <ProfileSetting {...props} />,
+    [`${ROUTES.SETTING}/serviceDetail/:id`]: (props: object) => (
+        <ServicesSetting id="" {...props} />
+    ),
+    [`${ROUTES.SETTING}/personal`]: (props: object) => <PersonalSetting {...props} />,
+    [`${ROUTES.SETTING}/personalDetail/:id`]: (props: object) => (
+        <PersonalInfoSetting id="" {...props} />
+    ),
+    [`${ROUTES.SETTING}/personalAdd`]: (props: object) => <PersonalAddSetting {...props} />,
+    [`${ROUTES.SETTING}/bonus`]: (props: object) => <BonusSetting {...props} />,
 };
 export const SettingPage = () => {
+    const componentProps = {
+        [`${ROUTES.SETTING}/company`]: {},
+        [`${ROUTES.SETTING}/services`]: {},
+        [`${ROUTES.SETTING}`]: {},
+        [`${ROUTES.SETTING}/serviceDetail/:id`]: {},
+        [`${ROUTES.SETTING}/personal`]: {},
+        [`${ROUTES.SETTING}/personalDetail/:id`]: {},
+        [`${ROUTES.SETTING}/personalAdd`]: {},
+        [`${ROUTES.SETTING}/bonus`]: {},
+    };
+
     return (
         <NavigationLayout
             initialComponent="setting"
             componentMap={componentMap}
-            componentProps={{}}
+            componentProps={componentProps}
         />
     );
 };

@@ -8,7 +8,7 @@ import { DayPicker } from "@/components/DayPicker";
 import type { GetMasterDto } from "@/entities/masters/types";
 import { Carousel } from "@/shared/ui/_Carousel";
 import { Select } from "@/shared/ui/_Select";
-import type { filterDate } from "@/view/CalendarPage";
+import type { filterDate } from "@/view/CalendarPage/components/CalendarView";
 
 import styles from "./Journal.module.scss";
 

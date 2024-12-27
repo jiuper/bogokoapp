@@ -4,7 +4,7 @@ import { DateTime } from "luxon";
 
 import { DayPicker } from "@/components/DayPicker";
 import { SwipeableWrapper } from "@/components/SwipeableWrapper";
-import type { filterDate } from "@/view/CalendarPage";
+import type { filterDate } from "@/view/CalendarPage/components/CalendarView";
 import { useDateHandler } from "@/view/CalendarPage/useDateHandler.ts";
 
 import styles from "./Calendar.module.scss";
