@@ -15,7 +15,7 @@ const componentMap = {
 
 export const Profile = ({ user }: ProfileProps) => {
     const componentProps = {
-        client: { user },
+        profile: { user },
         personal: {},
     };
     const mainUrl = user?.role === UserRole.CLIENT ? "profile" : "personal";

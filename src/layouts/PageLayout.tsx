@@ -26,43 +26,46 @@ interface PageLayoutProps {
 }
 
 export const PageLayout = ({ children }: PageLayoutProps) => {
-    const href = useNavigate();
+    const navigate = useNavigate();
     const user = useAppSelector((state) => state.account.userData);
     const { RecordAddModalIsOpen } = useModalContextValue();
     const { openRecordAddModal, closeRecordAddModal } = useModalContextMutate();
 
-    const { data } = useInfoCompanyQuery();
-    const { data: listMaster } = useAllMastersQuery(true);
-    const { data: listService } = useAllServicesQuery();
+    const { data: companyData } = useInfoCompanyQuery();
+    const { data: mastersData } = useAllMastersQuery(true);
+    const { data: servicesData } = useAllServicesQuery();
 
-    const listMasterData = useMemo(() => listMaster || [], [listMaster]);
-    const listMasterFullInfo = useMasterQuery(listMasterData.map((el) => el.id));
-    const tabs = useNavigationItems();
+    const mastersList = useMemo(() => mastersData || [], [mastersData]);
+    const mastersFullInfo = useMasterQuery(mastersList.map((master) => master.id));
+    const navigationItems = useNavigationItems();
     const location = useLocation().pathname;
     const { handleSetCompanyInfo, handleSetListMaster, handleResetBooking } =
         useClientContextMutate();
 
     useEffect(() => {
-        if (data) handleSetCompanyInfo(data);
+        if (companyData) {
+            handleSetCompanyInfo(companyData);
+        }
 
-        if (listMasterFullInfo) handleSetListMaster(listMasterFullInfo);
-    }, [data, handleSetCompanyInfo, handleSetListMaster, listMasterFullInfo]);
+        if (mastersFullInfo) {
+            handleSetListMaster(mastersFullInfo);
+        }
+    }, [companyData, handleSetCompanyInfo, handleSetListMaster, mastersFullInfo]);
 
     return (
         <>
-            {data && listMaster && listService ? (
+            {companyData && mastersData && servicesData ? (
                 <div className={cx("main-container")}>
                     <main
-                        className={cx(
-                            "main",
-                            permissionsPage.includes(location) && "main-with-tabbar",
-                        )}
+                        className={cx("main", {
+                            "main-with-tabbar": permissionsPage.includes(location),
+                        })}
                     >
                         {children}
                     </main>
                     {location === ROUTES.CALENDAR && user?.role !== 50 && (
                         <FixedLayout style={{ bottom: 100, zIndex: 999 }}>
-                            <div onClick={() => openRecordAddModal()} className={cx("btn-add")}>
+                            <div onClick={openRecordAddModal} className={cx("btn-add")}>
                                 <SvgIcon name="Add" />
                             </div>
                         </FixedLayout>
@@ -71,21 +74,22 @@ export const PageLayout = ({ children }: PageLayoutProps) => {
                     {permissionsPage.includes(location) && (
                         <FixedLayout style={{ zIndex: 999 }} vertical="top">
                             <Tabbar style={{ height: "80px", zIndex: 999 }}>
-                                {tabs.map(({ id, label, Icon, link }) => (
+                                {navigationItems.map(({ id, label, Icon, link }) => (
                                     <Tabbar.Item
-                                        className={cx("tab", location === link && "tab-active")}
+                                        className={cx("tab", { "tab-active": location === link })}
                                         key={id}
                                         text={label}
                                         selected={location === link}
                                         onClick={() => {
-                                            href(link);
+                                            navigate(link);
                                             handleResetBooking();
                                         }}
                                     >
                                         <SvgIcon
-                                            className={cx(
-                                                location === link ? "tab-icon-active" : "tab-icon",
-                                            )}
+                                            className={cx({
+                                                "tab-icon-active": location === link,
+                                                "tab-icon": location !== link,
+                                            })}
                                             name={Icon}
                                         />
                                     </Tabbar.Item>

@@ -11,9 +11,10 @@ import { ROUTES } from "@/shared/const/Routes.ts";
 import { Button } from "@/shared/ui/_Button";
 import { AddressCompany } from "@/view/IndexPage/components/AddressCompany";
 import { LinkGroup } from "@/view/IndexPage/components/LinkGroup";
-import { CardOrder } from "@/view/OrderPage/components/CardOrder";
 
 import "dayjs/locale/ru";
+
+import { CardOrder } from "../OrderPage/components/OrderView/components/CardOrder";
 
 import styles from "./RecordPage.module.scss";
 

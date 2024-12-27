@@ -8,7 +8,8 @@ import notFound from "@/shared/assets/images/Empty-image-icon.png";
 import { Button } from "@/shared/ui/_Button";
 import { UIInputText } from "@/shared/ui/_InputText/InputText.tsx";
 import { SignupSchema } from "@/shared/utils/validation.ts";
-import { CardOrder } from "@/view/OrderPage/components/CardOrder";
+
+import { CardOrder } from "../../view/OrderPage/components/OrderView/components/CardOrder";
 
 import styles from "./ModalFeedBack.module.scss";
 
