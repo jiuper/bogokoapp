@@ -1,6 +1,5 @@
-import { Suspense, useEffect, useState } from "react";
-import { useLocation, useParams } from "react-router";
-import { useNavigate } from "react-router-dom";
+import { memo, Suspense, useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import cnBind from "classnames/bind";
 import { motion } from "framer-motion";
 
@@ -20,52 +19,67 @@ interface NavigationLayoutProps {
     initialComponent: string;
 }
 
-export const NavigationLayout = ({
+const generateComponentKey = (
+    initialComponent: string,
+    params: { [key: string]: string | undefined },
+): string => {
+    const filteredParams = Object.entries(params)
+        .filter(([_, value]) => value !== undefined)
+        .map(([_, value]) => `/${value}`);
+
+    return initialComponent + filteredParams.join("");
+};
+
+const NavigationLayoutComponent = ({
     componentMap,
     componentProps,
     initialComponent,
 }: NavigationLayoutProps) => {
-    const { url } = useParams<{ url: string }>();
-    const navigate = useNavigate();
-    const location = useLocation();
-    const urlInit =
-        initialComponent === "/"
-            ? initialComponent
-            : location.pathname.split("/").slice(1).join("/");
-    const [currentComponent, setCurrentComponent] = useState<string>(url || initialComponent);
+    const params = useParams<{ [key: string]: string | undefined }>();
+
+    const [currentComponent, setCurrentComponent] = useState<string>(
+        generateComponentKey(initialComponent, params),
+    );
 
     useEffect(() => {
-        if (initialComponent === urlInit) {
-            navigate(`${initialComponent}`, { replace: true });
-            setCurrentComponent(initialComponent);
-        } else {
-            setCurrentComponent(url || "");
-        }
-    }, [url, initialComponent, navigate, urlInit]);
+        setCurrentComponent(generateComponentKey(initialComponent, params));
+    }, [params, initialComponent]);
 
-    const Component = componentMap[currentComponent as keyof typeof componentMap];
+    const uniquePath = Array.from(new Set(currentComponent.split("/"))).join("/");
 
-    if (!Component) {
-        return <div>Component not found</div>;
+    const possibleKeys = [
+        currentComponent,
+        uniquePath,
+        `${initialComponent}/:id`,
+        `${initialComponent}/:url`,
+        `${initialComponent}/:url/:id`,
+    ];
+    const componentKey = possibleKeys.find((key) => componentMap[key]);
+
+    if (componentKey) {
+        const Component = componentMap[componentKey];
+        const props = componentProps[componentKey] || {};
+
+        return (
+            <div className={cx("control-panel")}>
+                <div className={cx("wrapper")}>
+                    <Suspense fallback={<div>Loading...</div>}>
+                        <motion.div
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            exit={{ opacity: 0 }}
+                            transition={{ duration: 0.8 }}
+                            className={cx("tab-content")}
+                        >
+                            <Component {...props} />
+                        </motion.div>
+                    </Suspense>
+                </div>
+            </div>
+        );
     }
 
-    const props = componentProps[currentComponent as keyof typeof componentProps] || {};
-
-    return (
-        <div className={cx("control-panel")}>
-            <div className={cx("wrapper")}>
-                <Suspense fallback={<div>Loading...</div>}>
-                    <motion.div
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        exit={{ opacity: 0 }}
-                        transition={{ duration: 0.5 }}
-                        className={cx("tab-content")}
-                    >
-                        <Component {...props} />
-                    </motion.div>
-                </Suspense>
-            </div>
-        </div>
-    );
+    return <div>Component not found: {currentComponent}</div>;
 };
+
+export const NavigationLayout = memo(NavigationLayoutComponent);

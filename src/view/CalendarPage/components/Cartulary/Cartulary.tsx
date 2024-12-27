@@ -6,8 +6,8 @@ import type { GetCompanyDto } from "@/entities/company/types.ts";
 import type { ResponseGetRecordShortInfoDto } from "@/entities/record/types.ts";
 import { UserRole } from "@/entities/user/types.ts";
 import { useModalContextMutate } from "@/shared/helper";
-import { CardCalendar } from "@/view/CalendarPage/CardCalendar";
-import { useCartulary } from "@/view/CalendarPage/Cartulary/useCartulary.ts";
+import { CardCalendar } from "@/view/CalendarPage/components/CardCalendar";
+import { useCartulary } from "@/view/CalendarPage/components/Cartulary/useCartulary.ts";
 
 import styles from "./Cartulary.module.scss";
 

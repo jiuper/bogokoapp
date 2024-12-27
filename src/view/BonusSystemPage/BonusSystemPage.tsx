@@ -8,24 +8,24 @@ import { MainBonus } from "@/view/BonusSystemPage/components/MainBonus";
 import { RulesBonus } from "@/view/BonusSystemPage/components/RulesBonus";
 
 const componentMap = {
-    discount: (props: () => void) => <DiscountBonus {...props} />,
-    friends: (props: () => void) => <FriendsBonus {...props} />,
-    bonus: (props: object) => <MainBonus {...props} />,
-    rules: (props: () => void) => <RulesBonus {...props} />,
+    [`${ROUTES.BONUS}/discount`]: (props: () => void) => <DiscountBonus {...props} />,
+    [`${ROUTES.BONUS}/friends`]: (props: () => void) => <FriendsBonus {...props} />,
+    [ROUTES.BONUS]: (props: object) => <MainBonus {...props} />,
+    [`${ROUTES.BONUS}/rules`]: (props: () => void) => <RulesBonus {...props} />,
 };
 export const BonusSystemPage = () => {
     const href = useNavigate();
     const onBack = () => href(ROUTES.BONUS);
 
     const componentProps = {
-        discount: { onBack },
-        friends: { onBack },
-        rules: { onBack },
+        [`${ROUTES.BONUS}/discount`]: { onBack },
+        [`${ROUTES.BONUS}/friends`]: { onBack },
+        [`${ROUTES.BONUS}/rules`]: { onBack },
     };
 
     return (
         <NavigationLayout
-            initialComponent="bonus"
+            initialComponent={ROUTES.BONUS}
             componentMap={componentMap}
             componentProps={componentProps}
         />

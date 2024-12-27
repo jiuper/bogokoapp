@@ -3,11 +3,11 @@ import { useClientContext } from "@/shared/context/ClientProvider.tsx";
 import { IndexPage } from "@/view/IndexPage/IndexPage.tsx";
 
 export function Index() {
-    const { companyInfo } = useClientContext();
+    const { companyInfo, listMaster } = useClientContext();
 
     return (
         <PageLayout>
-            <IndexPage companyInfo={companyInfo} />
+            <IndexPage companyInfo={companyInfo} personal={listMaster} />
         </PageLayout>
     );
 }

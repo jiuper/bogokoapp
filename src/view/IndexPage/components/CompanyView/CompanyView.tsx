@@ -2,6 +2,7 @@ import cnBind from "classnames/bind";
 
 import { ModalSwiper } from "@/_Modals/ModalSwiper";
 import type { GetCompanyDto } from "@/entities/company/types.ts";
+import type { GetMasterFullInfoDto } from "@/entities/masters/types.ts";
 import slider3 from "@/shared/assets/Slide01 (2).png";
 import slider2 from "@/shared/assets/Slide02 (2).png";
 import slider1 from "@/shared/assets/Slide03.png";
@@ -13,6 +14,7 @@ import { SvgIcon } from "@/shared/ui/SvgIcon/SvgIcon.tsx";
 import { AddressCompany } from "@/view/IndexPage/components/AddressCompany";
 import { DescriptionCompany } from "@/view/IndexPage/components/DescriptionCompany";
 import { LinkGroup } from "@/view/IndexPage/components/LinkGroup";
+import { ListTop } from "@/view/IndexPage/components/ListTop";
 import { ReferralBlock } from "@/view/IndexPage/components/ReferralBlock";
 
 import styles from "./CompanyView.module.scss";
@@ -21,8 +23,9 @@ const cx = cnBind.bind(styles);
 export type CompanyViewProps = {
     companyInfo: GetCompanyDto | null;
     listLink: { name: string; icon: string; onClick: () => void }[][];
+    personal: GetMasterFullInfoDto[];
 };
-export const CompanyView = ({ companyInfo, listLink }: CompanyViewProps) => {
+export const CompanyView = ({ companyInfo, listLink, personal }: CompanyViewProps) => {
     const [isOpen, _, onClose] = useBooleanState(false);
 
     return (
@@ -53,6 +56,7 @@ export const CompanyView = ({ companyInfo, listLink }: CompanyViewProps) => {
                     countCredits={10}
                     currencyShortTitle={companyInfo?.currencyShortTitle}
                 />
+                <ListTop personal={personal} />
                 <DescriptionCompany description={companyInfo?.description} />
             </div>
 

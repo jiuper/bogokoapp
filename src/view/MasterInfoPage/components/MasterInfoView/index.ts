@@ -1,0 +1,1 @@
+export * from "./MasterInfoView.tsx";
