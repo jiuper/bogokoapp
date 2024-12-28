@@ -1,36 +1,26 @@
-import { useMemo, useState } from "react";
-import cnBind from "classnames/bind";
+import type { GetCategoryWithServiceDto } from "@/entities/services/types.ts";
+import { NavigationLayout } from "@/layouts/NavigationLayout";
+import { ROUTES } from "@/shared/const/Routes.ts";
+import { ServicesBookingView } from "@/view/ServicesBookingPage/components/ServicesBookingView";
 
-import type { GetAllServicesApiResponse } from "@/entities/services/api/getAllServicesApi/types.ts";
-import { InputSearch } from "@/shared/ui/_InputSearch";
-import { ServiceInfoCard } from "@/view/ServicesBookingPage/components/ServiceInfoCard";
-
-import styles from "./ServicesBookingPage.module.scss";
-
-const cx = cnBind.bind(styles);
-
-type ServiceInfoCardProps = {
-    data: GetAllServicesApiResponse;
+type ServicesBookingPageProps = {
+    data: GetCategoryWithServiceDto[];
 };
-export const ServicesBookingPage = ({ data }: ServiceInfoCardProps) => {
-    const [searchValue, setSearchValue] = useState<string | undefined>("");
-    const filterListData = useMemo(
-        () =>
-            data.filter((el) => el.name?.toLowerCase().includes(searchValue?.toLowerCase() || "")),
-        [data, searchValue],
-    );
+const componentMap = {
+    [ROUTES.SERVICES]: (props: ServicesBookingPageProps) => <ServicesBookingView {...props} />,
+};
+export const ServicesBookingPage = ({ data }: ServicesBookingPageProps) => {
+    const componentProps = {
+        [ROUTES.SERVICES]: {
+            data,
+        },
+    };
 
     return (
-        <div className={cx("wrapper", "container")}>
-            <h2 className={cx("title")}>Услуги</h2>
-            <InputSearch value={searchValue} onChange={setSearchValue} />
-            <div className={cx("list")}>
-                {filterListData.length !== 0 ? (
-                    filterListData.map((el) => <ServiceInfoCard key={el.id} {...el} />)
-                ) : (
-                    <div className={cx("not-found")}>Данной категории услуг нет</div>
-                )}
-            </div>
-        </div>
+        <NavigationLayout
+            initialComponent={ROUTES.SERVICES}
+            componentMap={componentMap}
+            componentProps={componentProps}
+        />
     );
 };

@@ -14,7 +14,7 @@ import { Record } from "@/pages/record.page.tsx";
 import { Service } from "@/pages/service.page.tsx";
 import { ServicesBooking } from "@/pages/services-booking.page.tsx";
 import { SettingPageIndex } from "@/pages/setting.page.tsx";
-import { TimesBookingPage } from "@/pages/times-booking.page.tsx";
+import { TimesBookingPageIndex } from "@/pages/times-booking.page.tsx";
 import { ROUTES } from "@/shared/const/Routes.ts";
 
 interface Route {
@@ -32,18 +32,19 @@ export const routes: Route[] = [
     { path: ROUTES.SERVICES, Component: ServicesBooking },
     { path: `${ROUTES.SERVICE}/:id`, Component: Service },
     { path: `${ROUTES.MASTER}/:id`, Component: MasterInfo },
-    { path: `${ROUTES.TIMESBOOKING}/:id`, Component: TimesBookingPage },
+    { path: `${ROUTES.TIMESBOOKING}/:id`, Component: TimesBookingPageIndex },
     { path: `${ROUTES.ORDER}`, Component: IndexOrderPage },
     { path: `${ROUTES.MASTERFILTER}`, Component: MasterFilter },
     { path: `${ROUTES.RECORD}/:id`, Component: Record },
     { path: `${ROUTES.RECORD}`, Component: Record },
     { path: `${ROUTES.PROFILE}`, Component: ProfilePage },
     { path: `${ROUTES.PROFILE}/:url`, Component: ProfilePage },
+    { path: `${ROUTES.PROFILE}/:url`, Component: ProfilePage },
     { path: `${ROUTES.PROFILE}/:url/:id`, Component: ProfilePage },
     { path: `${ROUTES.CALENDAR}`, Component: СalendarPageIndex },
     { path: `${ROUTES.BONUS}`, Component: BonusesSystemPage },
     { path: `${ROUTES.BONUS}/:url`, Component: BonusesSystemPage },
-    { path: `${ROUTES.FEEDBACK}`, Component: Feedback },
+    { path: `${ROUTES.FEEDBACK}/:id`, Component: Feedback },
     { path: `${ROUTES.CHOOSEPAGE}`, Component: ChoosePageIndex },
     { path: `${ROUTES.SETTING}`, Component: SettingPageIndex },
     { path: `${ROUTES.SETTING}/:url`, Component: SettingPageIndex },

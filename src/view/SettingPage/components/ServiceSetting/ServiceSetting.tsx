@@ -7,7 +7,8 @@ import { ButtonsAction } from "@/components/ButtonsAction";
 import { useAllServicesQuery } from "@/entities/services/api/getAllServicesApi";
 import { ROUTES } from "@/shared/const/Routes.ts";
 import { useBooleanState } from "@/shared/hooks";
-import { ServiceInfoCard } from "@/view/ServicesBookingPage/components/ServiceInfoCard";
+
+import { ServiceInfoCard } from "../../../ServicesBookingPage/components/ServicesBookingView/components/ServiceInfoCard";
 
 import styles from "./ServiceSetting.module.scss";
 

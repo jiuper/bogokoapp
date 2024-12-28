@@ -22,12 +22,23 @@ interface NavigationLayoutProps {
 const generateComponentKey = (
     initialComponent: string,
     params: { [key: string]: string | undefined },
-): string => {
-    const filteredParams = Object.entries(params)
-        .filter(([_, value]) => value !== undefined)
-        .map(([_, value]) => `/${value}`);
+) => {
+    let path = initialComponent;
+    for (const key in params) {
+        if (params[key]) {
+            path += `/${params[key]}`;
+        }
+    }
 
-    return initialComponent + filteredParams.join("");
+    return path;
+};
+
+const getMatchingComponent = (currentComponent: string, componentMap: ComponentMap) => {
+    return Object.keys(componentMap).find((key) => {
+        const regex = new RegExp(`^${key.replace(/:\w+/g, "\\w+")}$`);
+
+        return regex.test(currentComponent);
+    });
 };
 
 const NavigationLayoutComponent = ({
@@ -45,41 +56,31 @@ const NavigationLayoutComponent = ({
         setCurrentComponent(generateComponentKey(initialComponent, params));
     }, [params, initialComponent]);
 
-    const uniquePath = Array.from(new Set(currentComponent.split("/"))).join("/");
+    const matchingComponentKey = getMatchingComponent(currentComponent, componentMap);
 
-    const possibleKeys = [
-        currentComponent,
-        uniquePath,
-        `${initialComponent}/:id`,
-        `${initialComponent}/:url`,
-        `${initialComponent}/:url/:id`,
-    ];
-    const componentKey = possibleKeys.find((key) => componentMap[key]);
-
-    if (componentKey) {
-        const Component = componentMap[componentKey];
-        const props = componentProps[componentKey] || {};
-
-        return (
-            <div className={cx("control-panel")}>
-                <div className={cx("wrapper")}>
-                    <Suspense fallback={<div>Loading...</div>}>
-                        <motion.div
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            exit={{ opacity: 0 }}
-                            transition={{ duration: 0.8 }}
-                            className={cx("tab-content")}
-                        >
-                            <Component {...props} />
-                        </motion.div>
-                    </Suspense>
-                </div>
-            </div>
-        );
+    if (!matchingComponentKey) {
+        return <div>Component not found: {currentComponent}</div>;
     }
+    const Component = componentMap[matchingComponentKey];
+    const props = { ...componentProps[matchingComponentKey], ...params };
 
-    return <div>Component not found: {currentComponent}</div>;
+    return (
+        <div className={cx("control-panel")}>
+            <div className={cx("wrapper")}>
+                <Suspense fallback={<div>Loading...</div>}>
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        transition={{ duration: 0.8 }}
+                        className={cx("tab-content")}
+                    >
+                        <Component {...props} />
+                    </motion.div>
+                </Suspense>
+            </div>
+        </div>
+    );
 };
 
 export const NavigationLayout = memo(NavigationLayoutComponent);

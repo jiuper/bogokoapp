@@ -1,5 +1,5 @@
 .wrapper{
- @include flex-column();
+  @include flex-column();
   gap: 8px;
   height: 100%;
 }

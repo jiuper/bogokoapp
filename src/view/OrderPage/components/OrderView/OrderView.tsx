@@ -8,7 +8,7 @@ import notFoundMaster from "@/shared/assets/images/Empty-image-icon.png";
 import { ROUTES } from "@/shared/const/Routes.ts";
 import type { BookingData } from "@/shared/context/ClientProvider.tsx";
 import { CardOrder } from "@/view/OrderPage/components/OrderView/components/CardOrder";
-import { dateFormat } from "@/view/RecordPage";
+import { dateFormat } from "@/view/RecordPage/components/RecordView";
 
 import styles from "./OrderView.module.scss";
 

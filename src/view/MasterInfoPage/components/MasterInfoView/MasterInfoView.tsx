@@ -13,7 +13,8 @@ import { useBookingService } from "@/shared/hooks/useBookingService.ts";
 import { useBooleanState } from "@/shared/hooks/useBooleanState.ts";
 import { InputSearch } from "@/shared/ui/_InputSearch";
 import { LinkGroup } from "@/view/IndexPage/components/LinkGroup";
-import { ServiceCard } from "@/view/ServicePage/ServiceCard";
+
+import { ServiceCard } from "../../../ServicePage/components/ServiceView/components/ServiceCard";
 
 import styles from "./MasterInfoView.module.scss";
 

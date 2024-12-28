@@ -3,9 +3,9 @@ import { useParams } from "react-router";
 
 import { PageLayout } from "@/layouts/PageLayout.tsx";
 import { useClientContext, useClientContextMutate } from "@/shared/context/ClientProvider.tsx";
-import { TimesBooking } from "@/view/TimesBooking";
+import { TimesBookingPage } from "@/view/TimesBookingPage";
 
-export const TimesBookingPage = () => {
+export const TimesBookingPageIndex = () => {
     const { id } = useParams();
     const { booking } = useClientContext();
     const { handleAddWorkDateBooking } = useClientContextMutate();
@@ -16,7 +16,10 @@ export const TimesBookingPage = () => {
 
     return (
         <PageLayout>
-            <TimesBooking data={filterListData} handleAddWorkDateBooking={handleAddWorkDateBooking} />
+            <TimesBookingPage
+                data={filterListData}
+                handleAddWorkDateBooking={handleAddWorkDateBooking}
+            />
         </PageLayout>
     );
 };

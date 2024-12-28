@@ -8,16 +8,16 @@ import { useTimesMasterInfoQuery } from "@/entities/order/api/getTimesMasterInfo
 import { ROUTES } from "@/shared/const/Routes.ts";
 import type { BookingData } from "@/shared/context/ClientProvider.tsx";
 import { SvgIcon } from "@/shared/ui/SvgIcon/SvgIcon.tsx";
-import { TimeBooking } from "@/view/TimesBooking/components/TimeBooking";
+import { TimeBooking } from "@/view/TimesBookingPage/components/TimesBookingView/components/TimeBooking";
 
-import styles from "./TimesBooking.module.scss";
+import styles from "./TimesBookingView.module.scss";
 
 const cx = cnBind.bind(styles);
-type TimesBookingProps = {
+type TimesBookingViewProps = {
     data?: BookingData;
     handleAddWorkDateBooking?: (date: string, time: string) => void;
 };
-export const TimesBooking = ({ data, handleAddWorkDateBooking }: TimesBookingProps) => {
+export const TimesBookingView = ({ data, handleAddWorkDateBooking }: TimesBookingViewProps) => {
     const href = useNavigate();
     const [selectedDate, setSelectedDate] = useState<Date>(new Date());
     const [dateTo, setDateTo] = useState<Date>(

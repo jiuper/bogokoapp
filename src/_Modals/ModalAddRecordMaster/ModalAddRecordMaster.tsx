@@ -6,7 +6,7 @@ import { Button } from "@/shared/ui/_Button";
 import { ButtonIcon } from "@/shared/ui/_ButtonIcon";
 import { Select } from "@/shared/ui/_Select";
 import { SvgIcon } from "@/shared/ui/SvgIcon/SvgIcon.tsx";
-import { dateFormat } from "@/view/RecordPage";
+import { dateFormat } from "@/view/RecordPage/components/RecordView";
 
 import styles from "./ModalAddRecordMaster.module.scss";
 

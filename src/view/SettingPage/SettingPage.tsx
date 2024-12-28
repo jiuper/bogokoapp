@@ -12,32 +12,29 @@ import { ServicesSetting } from "@/view/SettingPage/components/ServiceSetting/Se
 const componentMap = {
     [`${ROUTES.SETTING}/company`]: (props: object) => <CompanySetting {...props} />,
     [`${ROUTES.SETTING}/services`]: (props: object) => <ServiceSetting {...props} />,
-    [`${ROUTES.SETTING}`]: (props: object) => <ProfileSetting {...props} />,
-    [`${ROUTES.SETTING}/serviceDetail/:id`]: (props: object) => (
-        <ServicesSetting id="" {...props} />
-    ),
+    [ROUTES.SETTING]: (props: object) => <ProfileSetting {...props} />,
+    [`${ROUTES.SETTING}/serviceDetail/:id`]: (props: object) => <ServicesSetting {...props} />,
     [`${ROUTES.SETTING}/personal`]: (props: object) => <PersonalSetting {...props} />,
-    [`${ROUTES.SETTING}/personalDetail/:id`]: (props: object) => (
-        <PersonalInfoSetting id="" {...props} />
-    ),
+    [`${ROUTES.SETTING}/personalDetail/:id`]: (props: object) => <PersonalInfoSetting {...props} />,
     [`${ROUTES.SETTING}/personalAdd`]: (props: object) => <PersonalAddSetting {...props} />,
     [`${ROUTES.SETTING}/bonus`]: (props: object) => <BonusSetting {...props} />,
 };
-export const SettingPage = () => {
-    const componentProps = {
-        [`${ROUTES.SETTING}/company`]: {},
-        [`${ROUTES.SETTING}/services`]: {},
-        [`${ROUTES.SETTING}`]: {},
-        [`${ROUTES.SETTING}/serviceDetail/:id`]: {},
-        [`${ROUTES.SETTING}/personal`]: {},
-        [`${ROUTES.SETTING}/personalDetail/:id`]: {},
-        [`${ROUTES.SETTING}/personalAdd`]: {},
-        [`${ROUTES.SETTING}/bonus`]: {},
-    };
 
+const componentProps = {
+    [`${ROUTES.SETTING}/company`]: {},
+    [`${ROUTES.SETTING}/services`]: {},
+    [ROUTES.SETTING]: {},
+    [`${ROUTES.SETTING}/serviceDetail/:id`]: {},
+    [`${ROUTES.SETTING}/personal`]: {},
+    [`${ROUTES.SETTING}/personalDetail/:id`]: {},
+    [`${ROUTES.SETTING}/personalAdd`]: {},
+    [`${ROUTES.SETTING}/bonus`]: {},
+};
+
+export const SettingPage = () => {
     return (
         <NavigationLayout
-            initialComponent="setting"
+            initialComponent={ROUTES.SETTING}
             componentMap={componentMap}
             componentProps={componentProps}
         />

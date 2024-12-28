@@ -9,7 +9,8 @@ import Qr from "@/shared/assets/Stories.png";
 import { useClientContext } from "@/shared/context/ClientProvider.tsx";
 import { useBooleanState } from "@/shared/hooks";
 import { Button } from "@/shared/ui/_Button";
-import { ServiceCard } from "@/view/ServicePage/ServiceCard";
+
+import { ServiceCard } from "../../../ServicePage/components/ServiceView/components/ServiceCard";
 
 import styles from "./DiscountBonus.module.scss";
 

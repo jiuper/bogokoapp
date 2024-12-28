@@ -1,5 +1,5 @@
 import { useMemo, useRef } from "react";
-import { useNavigate } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import { Avatar, Badge } from "@telegram-apps/telegram-ui";
 import cnBind from "classnames/bind";
 import { useFormik } from "formik";
@@ -15,15 +15,14 @@ import { CardNetwork } from "@/view/SettingPage/components/PersonalSetting/Perso
 import styles from "./PersonalInfoSetting.module.scss";
 
 const cx = cnBind.bind(styles);
-type PersonalInfoSettingProps = {
-    id: string;
-};
-export const PersonalInfoSetting = ({ id }: PersonalInfoSettingProps) => {
+type PersonalInfoSettingProps = {};
+export const PersonalInfoSetting = ({}: PersonalInfoSettingProps) => {
     const href = useNavigate();
+    const { id } = useParams();
     const fileInputRef = useRef<HTMLInputElement>(null);
     const { withConfirm, modalProps } = useConfirmModal();
     const { withConfirm: withConfirmData, modalProps: modalSaveData } = useConfirmModal();
-    const listMasterFullInfo = useMasterQuery([id]);
+    const listMasterFullInfo = useMasterQuery([id || ""]);
     const listMasterData = useMemo(() => listMasterFullInfo[0] || [], [listMasterFullInfo]);
     const formik = useFormik({
         initialValues: {
