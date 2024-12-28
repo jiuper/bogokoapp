@@ -5,10 +5,12 @@ import { FeedbackView } from "@/view/FeedbackPage/components/FeedbackView";
 type FeedbackPageProps = {};
 const componentMap = {
     [`${ROUTES.FEEDBACK}/:id`]: (props: FeedbackPageProps) => <FeedbackView {...props} />,
+    [`${ROUTES.FEEDBACK}`]: (props: FeedbackPageProps) => <FeedbackView {...props} />,
 };
 export const FeedbackPage = ({}: FeedbackPageProps) => {
     const componentProps = {
         [`${ROUTES.FEEDBACK}/:id`]: {},
+        [`${ROUTES.FEEDBACK}`]: {},
     };
 
     return (

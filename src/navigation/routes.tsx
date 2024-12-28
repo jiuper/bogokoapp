@@ -45,6 +45,7 @@ export const routes: Route[] = [
     { path: `${ROUTES.BONUS}`, Component: BonusesSystemPage },
     { path: `${ROUTES.BONUS}/:url`, Component: BonusesSystemPage },
     { path: `${ROUTES.FEEDBACK}/:id`, Component: Feedback },
+    { path: `${ROUTES.FEEDBACK}`, Component: Feedback },
     { path: `${ROUTES.CHOOSEPAGE}`, Component: ChoosePageIndex },
     { path: `${ROUTES.SETTING}`, Component: SettingPageIndex },
     { path: `${ROUTES.SETTING}/:url`, Component: SettingPageIndex },
