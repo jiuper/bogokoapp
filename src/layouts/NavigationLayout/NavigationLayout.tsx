@@ -22,15 +22,13 @@ interface NavigationLayoutProps {
 const generateComponentKey = (
     initialComponent: string,
     params: { [key: string]: string | undefined },
-) => {
-    let path = initialComponent;
-    for (const key in params) {
-        if (params[key]) {
-            path += `/${params[key]}`;
-        }
-    }
+): string => {
+    const pathSegments = Object.entries(params)
+        .filter(([_, value]) => value)
+        .map(([_, value]) => `/${value}`)
+        .join("");
 
-    return path;
+    return `${initialComponent}${pathSegments}`;
 };
 
 const getMatchingComponent = (currentComponent: string, componentMap: ComponentMap) => {
@@ -64,19 +62,33 @@ const NavigationLayoutComponent = ({
     const Component = componentMap[matchingComponentKey];
     const props = { ...componentProps[matchingComponentKey], ...params };
 
+    const renderAnimatedDiv = (key: string) => {
+        const animationProps = key.includes(":id")
+            ? {
+                  initial: { opacity: 0 },
+                  animate: { opacity: 1 },
+                  exit: { opacity: 0 },
+                  transition: { duration: 0.3 },
+              }
+            : {
+                  initial: { opacity: 0, x: -100 },
+                  animate: { opacity: 1, x: 0 },
+                  exit: { opacity: 0, x: -100 },
+                  transition: { duration: 0.3 },
+              };
+
+        return (
+            <motion.div {...animationProps} className={cx("tab-content")}>
+                <Component {...props} />
+            </motion.div>
+        );
+    };
+
     return (
         <div className={cx("control-panel")}>
             <div className={cx("wrapper")}>
                 <Suspense fallback={<div>Loading...</div>}>
-                    <motion.div
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        exit={{ opacity: 0 }}
-                        transition={{ duration: 0.8 }}
-                        className={cx("tab-content")}
-                    >
-                        <Component {...props} />
-                    </motion.div>
+                    {renderAnimatedDiv(matchingComponentKey)}
                 </Suspense>
             </div>
         </div>
